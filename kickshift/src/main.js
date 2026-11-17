@@ -168,13 +168,20 @@ addEventListener('keydown', (e) => {
   const k = e.key;
   if (['ArrowRight', 'PageDown', ' ', 'Enter', 'ArrowDown'].includes(k)) { e.preventDefault(); go(cur + 1); }
   else if (['ArrowLeft', 'PageUp', 'ArrowUp', 'Backspace'].includes(k)) { e.preventDefault(); go(cur - 1); }
-  else if (k === 'f' || k === 'F') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  else if (k === 'f' || k === 'F') { try { const r = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); r && r.catch && r.catch(() => {}); } catch (_) {} }
   else if (k === 'n' || k === 'N') document.getElementById('notes').classList.toggle('on');
   else if (k === 'r' || k === 'R') go(cur);
   else if (k === 'Home') go(0);
   else if (/^[1-9]$/.test(k)) go(Number(k) - 1);
 });
-addEventListener('click', (e) => { if (window.KS && !CAPTURE && !e.target.closest('#notes')) go(cur + 1); });
+let touchX = null, swiped = false;
+addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; swiped = false; }, { passive: true });
+addEventListener('touchend', (e) => {
+  if (touchX === null || !window.KS || CAPTURE) return;
+  const dx = e.changedTouches[0].clientX - touchX; touchX = null;
+  if (Math.abs(dx) > 50) { swiped = true; go(dx < 0 ? cur + 1 : cur - 1); }
+});
+addEventListener('click', (e) => { if (swiped) { swiped = false; return; } if (window.KS && !CAPTURE && !e.target.closest('#notes')) go(cur + 1); });
 setTimeout(() => { const h = document.getElementById('hint'); if (h) h.style.opacity = 0; }, 5000);
 
 boot().catch(err => { console.error(err); const l = document.getElementById('loading'); if (l) l.textContent = 'ERROR: ' + err.message; });
