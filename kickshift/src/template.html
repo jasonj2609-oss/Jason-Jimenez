@@ -29,7 +29,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
 .eqn { position: absolute; display: flex; align-items: center; gap: 48px; font-size: 44px; color: var(--ink); }
 .eqn .no { font: 400 30px var(--serif); color: var(--mid); }
 .eqn.sm { font-size: 34px; }
-.cap { position: absolute; left: 120px; bottom: 64px; max-width: 1180px; font: 400 22px/1.4 var(--serif); color: var(--dim); }
+.cap { position: absolute; left: 120px; bottom: 34px; max-width: 1680px; font: 400 22px/1.4 var(--serif); color: var(--dim); }
 .cap b { color: var(--ink); font-weight: 700; margin-right: 8px; }
 .rule { position: absolute; height: 1px; background: var(--line); }
 .big { font: 400 120px/1 var(--serif); letter-spacing: -.02em; }
@@ -152,66 +152,60 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
   <section class="slide" data-id="momentum">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§2</b>Momentum</div><h2 class="title" data-in="chars" data-at="0.4">Momentum does<br><em>the kicking.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:150px" data-in="up" data-at="4.4"><span data-tex="v_{\mathrm{ball}} = \dfrac{(1+e)\,M v}{M+m}"></span><span class="no">(1)</span></div>
-    <div class="copy" style="position:absolute; right:205px; top:300px; text-align:right" data-in="up" data-at="4.9">
-      <div class="eqn sm" style="position:static; justify-content:flex-end"><span data-tex="= \dfrac{1.6 \times 900 \times 15}{920} \approx 23.5\ \mathrm{m/s}"></span></div>
-      <div style="margin-top:14px; font:italic 400 30px var(--serif); color:var(--silver)">≈ <span data-count="85" data-at="5.0" data-dur="1.4">0</span> km/h ball speed</div>
-    </div>
-    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 1.</b>A 900 kg car meets a 20 kg ball at 15 m/s with restitution <i>e</i> = 0.6. Shown at ⅓ speed.</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="0.9"><span data-tex="M v_0 = M v_M + m\,v_m"></span><span class="no">(1)</span></div>
+    <div class="eqn copy" style="right:120px; top:215px" data-in="up" data-at="3.4"><span data-tex="v_m = \dfrac{(1+e)\,M v_0}{M+m} \approx 23.5\ \mathrm{m/s}"></span><span class="no">(2)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 1.</b>A 900 kg car <i>M</i> meets a 20 kg ball <i>m</i> at 15 m/s, restitution <i>e</i> = 0.6, shown at half speed. (a) Velocities. (b) Total momentum is conserved.</div>
   </section>
 
   <!-- 5 · IMPULSE -->
   <section class="slide" data-id="impulse">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§3</b>Impulse</div><h2 class="title" data-in="chars" data-at="0.4">Soft bumpers.<br><em>Hard hits.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:120px" data-in="up" data-at="1.2"><span data-tex="J = \int F\,dt = \Delta p"></span><span class="no">(2)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.4"><b>Fig. 2.</b>Same impulse, 4.5 kN·s, spread over five times the contact time. The module swaps out in 60 s.</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="J = \int F\,dt = M\,\Delta v"></span><span class="no">(3)</span></div>
+    <div class="eqn sm copy" style="right:120px; top:200px" data-in="up" data-at="6.4"><span data-tex="\bar F\,d = \tfrac12 M v^2 = 11.25\ \mathrm{kJ}"></span><span class="no">(4)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.4"><b>Fig. 2.</b>A 900 kg car stops from 5 m/s against a wall, shown at 1/50 speed. Idealised half-sine force pulses with the same impulse, 4.5 kN·s.</div>
   </section>
 
   <!-- 6 · ENERGY -->
   <section class="slide" data-id="energy">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§4</b>Kinetic energy</div><h2 class="title" data-in="chars" data-at="0.4">Boost, <em>on a leash.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E_k = \tfrac{1}{2}\,m v^{2}"></span><span class="no">(3)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 3.</b>Twice the speed carries four times the energy, so the arena caps speed at 80 km/h.</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E_k = \tfrac{1}{2}\,M v^{2}"></span><span class="no">(5)</span></div>
+    <div class="eqn sm copy" style="right:120px; top:205px" data-in="up" data-at="3.6"><span data-tex="\mu M g\,d = \tfrac12 M v^2 \;\Rightarrow\; d = \dfrac{v^2}{2\mu g}"></span><span class="no">(6)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 3.</b>Braking from 30, 60 and 80 km/h with <i>μ</i> = 1, shown at 0.6× speed. Energy and stopping distance both grow as <i>v</i>², so the arena caps speed at 80 km/h.</div>
   </section>
 
   <!-- 7 · AIM -->
   <section class="slide" data-id="aim">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§5</b>Collision angles</div><h2 class="title" data-in="chars" data-at="0.4">Aim with <em>geometry.</em></h2></div>
-    <div class="eqn copy" style="left:120px; top:330px" data-in="up" data-at="2.4"><span data-tex="\theta = \arcsin\!\left(\dfrac{d}{R + r}\right)"></span><span class="no">(4)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 4.</b>The ball leaves along the contact normal. Nose radius <i>R</i> = 1.5 m, ball radius <i>r</i> = 0.75 m.</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="2.4"><span data-tex="\theta = \arcsin\!\left(\dfrac{d}{R + r}\right)"></span><span class="no">(7)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 4.</b>Top view. The ball leaves along the contact normal <i>n̂</i> through both centres. Nose radius <i>R</i> = 1.5 m, ball radius <i>r</i> = 0.75 m, offset <i>d</i>.</div>
   </section>
 
   <!-- 8 · ARENA -->
   <section class="slide" data-id="arena">
-    <div class="arena-wrap" data-in="tilt" data-at="0"><canvas class="c2d"></canvas></div>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§6</b>The system</div><h2 class="title" data-in="chars" data-at="0.4">The arena is<br><em>the pit crew.</em></h2></div>
-    <div class="feat copy">
-      <div data-in="right" data-at="1.8"><i>(a)</i>Wireless charging pads</div>
-      <div data-in="right" data-at="3.2"><i>(b)</i>Live tracking</div>
-      <div data-in="right" data-at="4.4"><i>(c)</i>Auto-referee and boost control</div>
-    </div>
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§6</b>The system</div><h2 class="title" data-in="chars" data-at="0.4">The arena is <em>the pit crew.</em></h2></div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="\mathbf v \approx \dfrac{\Delta \mathbf r}{\Delta t}, \quad a_c = \dfrac{v^2}{\rho}"></span><span class="no">(8)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 5.</b>Cameras sample each car 120 times a second (Δ<i>t</i> = 8.3 ms). Velocity, acceleration and turn radius <i>ρ</i> follow by finite differences, and drive the boost limiter, the referee and the charging pads.</div>
   </section>
 
   <!-- 9 · COST -->
   <section class="slide" data-id="cost">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Operating cost</div><h2 class="title" data-in="chars" data-at="0.4">What a match <em>costs.</em></h2></div>
-    <div class="stat copy" style="top:350px" data-in="up" data-at="3.6"><div class="v">≈ <span data-count="1.5" data-dec="1" data-at="3.6">0</span><small>kWh</small></div><div class="l">per car, per 10-minute match (est.)</div></div>
-    <div class="stat copy" style="top:600px" data-in="up" data-at="4.4"><div class="v">≈ $<span data-count="0.25" data-dec="2" data-at="4.4">0</span></div><div class="l">electricity per car, per match</div></div>
-    <div class="eqn sm copy" style="right:120px; bottom:84px" data-in="up" data-at="5.2"><span data-tex="E_{\mathrm{match}} \approx \dfrac{N \cdot \tfrac12 M v^{2}}{\eta} - E_{\mathrm{regen}}"></span><span class="no">(5)</span></div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \int_0^{T} P(t)\,dt"></span><span class="no">(9)</span></div>
+    <div class="stat copy" style="top:350px" data-in="up" data-at="7.4"><div class="v">≈ <span data-count="1.5" data-dec="1" data-at="7.4">0</span><small>kWh</small></div><div class="l">per car, per 10-minute match (est.)</div></div>
+    <div class="stat copy" style="top:600px" data-in="up" data-at="8.0"><div class="v">≈ $<span data-count="0.25" data-dec="2" data-at="8.0">0</span></div><div class="l">electricity per car, per match</div></div>
+    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 6.</b>Simulated power draw for one car over a match: 40 hard accelerations, with regenerative braking below zero. The energy used is the area under <i>P</i>(<i>t</i>).</div>
   </section>
 
   <!-- 10 · ROADMAP -->
   <section class="slide" data-id="road">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§8</b>Roadmap</div><h2 class="title" data-in="chars" data-at="0.4">The road to <em>kickoff.</em></h2></div>
-    <div class="ms copy" data-ms="0"><div class="p">Months 0–6</div><div class="h">Build</div><div class="s">two prototype cars</div></div>
-    <div class="ms copy" data-ms="1"><div class="p">Months 6–9</div><div class="h">Break</div><div class="s">1,000-hit bumper test</div></div>
-    <div class="ms copy" data-ms="2"><div class="p">Months 9–12</div><div class="h">Play</div><div class="s">50 full test matches</div></div>
-    <div class="ms copy" data-ms="3"><div class="p">Year 2</div><div class="h">Launch</div><div class="s">pilot league and venue</div></div>
+    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 7.</b>Programme schedule. Each stage ends with a measurable result before the next begins.</div>
   </section>
 
   <!-- 11 · ASK -->

@@ -94,21 +94,6 @@ function meetCallouts(d, t, stage) {
   svg.innerHTML = html;
 }
 
-let reachT = null;
-function roadCards(d, t) {
-  if (!reachT) {
-    reachT = S.MILESTONES.map(mu => { for (let x = 0; x < 12; x += 0.01) if (S.roadU(x) >= mu) return x; return 99; });
-    d.el.querySelectorAll('[data-ms]').forEach(el => {
-      const i = Number(el.dataset.ms), p = S.roadAt(S.MILESTONES[i]);
-      el.style.left = p.x + 'px'; el.style.top = (i % 2 === 0 ? p.y - 210 : p.y + 50) + 'px';
-    });
-  }
-  d.el.querySelectorAll('[data-ms]').forEach(el => {
-    const i = Number(el.dataset.ms), a = E.outCubic(prog(t, reachT[i] - 0.1, reachT[i] + 0.6));
-    el.style.opacity = a; el.style.transform = `translateX(-50%) translateY(${(1 - a) * (i % 2 ? -30 : 30)}px)`; el.style.filter = `blur(${(1 - a) * 8}px)`;
-  });
-}
-
 // ---------- boot ----------
 let stage, SP, tls = [], ctxs = [], cur = -1, t0 = 0;
 const glEl = document.getElementById('gl'), flashEl = document.getElementById('flash');
@@ -125,7 +110,6 @@ function renderSlide(i, t) {
     flashEl.style.opacity = r.flash || 0;
     if (d.id === 'meet') meetCallouts(d, t, stage);
   }
-  if (d.id === 'road') roadCards(d, t);
   if (!d.gl) flashEl.style.opacity = 0;
 }
 
