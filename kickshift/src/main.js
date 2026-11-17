@@ -1,4 +1,6 @@
+import './styles.css';
 import gsap from 'gsap';
+import katex from 'katex';
 import { createStage } from './car3d.js';
 import * as S from './slides2d.js';
 import { NOTES } from './notes.js';
@@ -79,15 +81,15 @@ function meetCallouts(d, t, stage) {
     const a = stage.anchors[el.dataset.co], p = stage.project(a.x, a.y, a.z);
     const right = el.classList.contains('r');
     const top = parseFloat(el.style.top), left = parseFloat(el.style.left);
-    const lx = right ? left - 24 : left + 350, ly = top + 52;
+    const lx = right ? left - 24 : left + 420, ly = top + 22;
     const t0 = Number(el.dataset.at), pr = E.outCubic(prog(t, t0 - 0.2, t0 + 0.7));
     if (pr <= 0) return;
     const ex = right ? lx - 60 : lx + 60;
     const pts = [[lx, ly], [ex, ly], [p.x, p.y]];
     let len = 0; for (let i = 1; i < 3; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
     const pulse = 10 + 14 * ((t * 0.9) % 1);
-    html += `<polyline points="${pts.map(q => q.join(',')).join(' ')}" fill="none" stroke="#C6FF3A" stroke-width="2" stroke-dasharray="${len}" stroke-dashoffset="${len * (1 - pr)}" opacity=".85"/>`;
-    if (pr > 0.95) html += `<circle cx="${p.x}" cy="${p.y}" r="7" fill="#C6FF3A"/><circle cx="${p.x}" cy="${p.y}" r="${pulse}" fill="none" stroke="#C6FF3A" stroke-width="2" opacity="${1 - ((t * 0.9) % 1)}"/>`;
+    html += `<polyline points="${pts.map(q => q.join(',')).join(' ')}" fill="none" stroke="#F2F2EE" stroke-width="1.4" stroke-dasharray="${len}" stroke-dashoffset="${len * (1 - pr)}" opacity=".7"/>`;
+    if (pr > 0.95) html += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="#F2F2EE"/><circle cx="${p.x}" cy="${p.y}" r="${pulse}" fill="none" stroke="#F2F2EE" stroke-width="1.2" opacity="${0.8 * (1 - ((t * 0.9) % 1))}"/>`;
   });
   svg.innerHTML = html;
 }
@@ -141,7 +143,9 @@ async function boot() {
   for (let k = 0; k < id.data.length; k += 4) { const v = Math.random() * 255; id.data[k] = id.data[k + 1] = id.data[k + 2] = v; id.data[k + 3] = 255; }
   g.putImageData(id, 0, 0);
   document.getElementById('grain').style.cssText += 'width:1920px;height:1080px';
-  await Promise.all(['400 40px "Bebas Neue"', '300 20px Inter', '400 20px Inter', 'italic 400 20px Inter', '600 20px Inter', '500 20px "JetBrains Mono"', '600 20px "JetBrains Mono"', '700 20px "JetBrains Mono"'].map(f => document.fonts.load(f)));
+  document.querySelectorAll('[data-tex]').forEach(el => { try { katex.render(el.dataset.tex, el, { throwOnError: false, displayMode: false }); } catch (_) {} });
+  await Promise.all(['400 40px "CMU Serif"', 'italic 400 40px "CMU Serif"', '700 40px "CMU Serif"', '400 20px KaTeX_Main', 'italic 400 20px KaTeX_Math', '400 20px KaTeX_Size1', '400 20px KaTeX_Size2'].map(f => document.fonts.load(f).catch(() => {})));
+  await document.fonts.ready;
   stage = await createStage(glEl, { dpr: GL_DPR, capture: CAPTURE });
   SP = stage.bake();
   DEF.forEach((d, i) => {

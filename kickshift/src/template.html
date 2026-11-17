@@ -1,0 +1,247 @@
+<title>KickShift</title>
+<meta name="description" content="KickShift: an electric supercar built for car-soccer. Investor pitch by Jason Jimenez.">
+<style>
+/*__LIB_CSS__*/
+/* Monochrome studio: black stage, silver and white ink, set in Computer Modern like a physics paper. */
+:root {
+  color-scheme: dark;
+  --bg: #050505; --ink: #F2F2EE; --silver: #B9BDC3; --mid: #7E838A; --dim: rgba(242,242,238,.6); --line: rgba(242,242,238,.16);
+  --serif: "CMU Serif", "Latin Modern Roman", "Computer Modern", Georgia, serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; color: var(--ink); overflow: hidden; font-family: var(--serif); -webkit-font-smoothing: antialiased; touch-action: manipulation; }
+#stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 50% 50%; overflow: hidden; background: var(--bg); }
+#gl { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: 0; transition: opacity .7s ease; }
+#gl.on { opacity: 1; }
+.slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility 0s linear .7s; }
+.slide.on { opacity: 1; visibility: visible; transition: opacity .7s ease, visibility 0s; }
+.capture .slide, .capture #gl { transition: none !important; }
+.clean .copy { display: none !important; }
+canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+.katex { font-size: 1em; color: inherit; }
+
+/* paper typography */
+.hdr { position: absolute; left: 120px; top: 92px; }
+.sec { font: italic 400 28px/1 var(--serif); color: var(--silver); letter-spacing: .01em; }
+.sec b { font-style: normal; font-weight: 400; margin-right: 14px; color: var(--ink); }
+.title { font: 400 88px/1.02 var(--serif); letter-spacing: -.012em; margin: 18px 0 0; color: var(--ink); }
+.title em { font-style: italic; color: var(--silver); }
+.eqn { position: absolute; display: flex; align-items: center; gap: 48px; font-size: 44px; color: var(--ink); }
+.eqn .no { font: 400 30px var(--serif); color: var(--mid); }
+.eqn.sm { font-size: 34px; }
+.cap { position: absolute; left: 120px; bottom: 64px; max-width: 1180px; font: 400 22px/1.4 var(--serif); color: var(--dim); }
+.cap b { color: var(--ink); font-weight: 700; margin-right: 8px; }
+.rule { position: absolute; height: 1px; background: var(--line); }
+.big { font: 400 120px/1 var(--serif); letter-spacing: -.02em; }
+.smallcaps { font: 400 18px var(--serif); letter-spacing: .32em; text-transform: uppercase; color: var(--silver); }
+.ch { display: inline-block; white-space: pre; }
+
+/* overlays */
+#grain { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: .05; mix-blend-mode: overlay; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+#bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--silver); transition: width .5s ease; }
+#count { position: absolute; right: 44px; bottom: 26px; font: 400 18px var(--serif); color: rgba(242,242,238,.35); }
+.capture #bar, .capture #count, .capture #notes, .capture #hint { display: none !important; }
+#hint { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); font: italic 400 15px var(--serif); color: rgba(255,255,255,.5); transition: opacity 1s; pointer-events: none; white-space: nowrap; }
+#notes { position: fixed; left: 0; right: 0; bottom: 0; max-height: 42vh; overflow: auto; background: rgba(8,8,8,.95); border-top: 1px solid var(--line); padding: 18px max(28px, env(safe-area-inset-right, 0px)) 22px max(28px, env(safe-area-inset-left, 0px)); display: none; font: 400 19px/1.5 var(--serif); white-space: pre-wrap; z-index: 10; }
+#notes.on { display: block; }
+#notes h4 { margin: 0 0 8px; font: italic 400 17px var(--serif); color: var(--silver); display: flex; justify-content: space-between; gap: 20px; }
+#loading { position: absolute; inset: 0; display: grid; place-items: center; font: italic 400 22px var(--serif); color: rgba(255,255,255,.45); background: #000; z-index: 5; }
+
+/* 1 intro */
+.intro-word { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font: italic 400 48px var(--serif); letter-spacing: .28em; padding-left: .28em; color: #fff; }
+.hero-title { position: absolute; left: 0; right: 0; top: 60px; text-align: center; }
+.mega { font: 400 196px/0.95 var(--serif); letter-spacing: -.025em; margin: 0; color: #fff; text-shadow: 0 0 60px rgba(255,255,255,.12); }
+.tag { font: italic 400 42px var(--serif); color: var(--silver); margin-top: 4px; }
+.author { margin-top: 20px; }
+
+/* 2 idea */
+.idea { position: absolute; left: 0; right: 0; top: 200px; text-align: center; }
+.idea .w { font: 400 220px/0.98 var(--serif); letter-spacing: -.02em; }
+.idea .w.it { font-style: italic; color: var(--silver); }
+.idea .q { position: absolute; left: 0; right: 0; top: 60px; font: 400 128px/1.05 var(--serif); letter-spacing: -.015em; }
+.idea .q em { color: var(--silver); }
+
+/* 3 meet */
+#callouts { position: absolute; inset: 0; pointer-events: none; }
+.co { position: absolute; width: 400px; }
+.co .h { font: 400 38px/1.05 var(--serif); }
+.co .h i { color: var(--silver); margin-right: 10px; }
+.co .s { font: italic 400 21px var(--serif); color: var(--dim); margin-top: 6px; }
+.co.r { text-align: right; }
+.meetfade { position: absolute; left: 0; right: 0; bottom: 0; height: 330px; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.88) 70%); pointer-events: none; }
+.specs { position: absolute; left: 120px; right: 120px; bottom: 74px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); padding-top: 26px; }
+.specs > div { font: 400 50px var(--serif); color: var(--ink); white-space: nowrap; }
+.specs .u { color: var(--silver); font-size: 34px; margin-left: 8px; }
+.specs .l { display: block; font: italic 400 20px var(--serif); color: var(--dim); margin-top: 8px; }
+
+/* 8 arena */
+.arena-wrap { position: absolute; left: 0; top: 150px; width: 1920px; height: 1080px; }
+.arena-wrap canvas { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+.feat { position: absolute; top: 104px; right: 120px; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; font: 400 26px var(--serif); }
+.feat i { color: var(--silver); margin-right: 10px; }
+
+/* 9 cost */
+.stat { position: absolute; left: 1420px; width: 440px; }
+.stat .v { font: 400 128px/1 var(--serif); letter-spacing: -.02em; }
+.stat .v small { font-size: 52px; color: var(--silver); margin-left: 10px; letter-spacing: 0; }
+.stat .l { font: italic 400 22px var(--serif); color: var(--dim); margin-top: 10px; }
+
+/* 10 road */
+.ms { position: absolute; width: 320px; transform: translateX(-50%); text-align: center; }
+.ms .p { font: italic 400 22px var(--serif); color: var(--silver); }
+.ms .h { font: 400 58px/1 var(--serif); margin: 8px 0 6px; letter-spacing: -.01em; }
+.ms .s { font: 400 22px var(--serif); color: var(--dim); }
+
+/* 11 ask */
+.ask { position: absolute; left: 120px; top: 300px; }
+.ask .v { font: 400 270px/0.9 var(--serif); letter-spacing: -.04em; color: #fff; }
+.ask .l { font: italic 400 28px var(--serif); color: var(--silver); margin-top: 18px; }
+.gets { position: absolute; left: 120px; bottom: 96px; display: flex; gap: 46px; font: 400 26px var(--serif); color: var(--dim); }
+.gets b { color: var(--ink); font-weight: 400; font-size: 44px; margin-right: 10px; }
+
+/* 12 outro */
+.end { position: absolute; left: 120px; top: 120px; }
+.end .mega { font-size: 150px; text-align: left; line-height: 1.02; }
+.end .mega em { color: var(--silver); }
+.end .thx { margin-top: 44px; font: italic 400 34px var(--serif); color: var(--silver); }
+.credit { position: absolute; right: 44px; bottom: 26px; font: italic 400 14px var(--serif); color: rgba(242,242,238,.3); }
+</style>
+
+<div id="stage">
+  <canvas id="gl" width="1920" height="1080"></canvas>
+
+  <!-- 1 · INTRO -->
+  <section class="slide" data-id="intro">
+    <div class="intro-word copy" data-in="chars" data-at="0.6" data-out="2.9" data-stagger="0.06">Introducing</div>
+    <div class="hero-title copy">
+      <h1 class="mega" data-in="chars" data-at="7.7" data-stagger="0.07">KickShift</h1>
+      <div class="tag" data-in="up" data-at="8.8">A car built to score.</div>
+      <div class="smallcaps author" data-in="up" data-at="9.4">Jason Jimenez</div>
+    </div>
+  </section>
+
+  <!-- 2 · IDEA -->
+  <section class="slide" data-id="idea">
+    <canvas class="c2d"></canvas>
+    <div class="idea copy">
+      <div class="w" data-in="slam" data-at="0.4" data-out="3.0">Soccer.</div>
+      <div class="w it" data-in="slam" data-at="1.3" data-out="3.0">Supercars.</div>
+      <div class="q" data-in="chars" data-at="3.3" data-stagger="0.03">What if the car<br><em>was the player?</em></div>
+    </div>
+  </section>
+
+  <!-- 3 · MEET THE CAR -->
+  <section class="slide" data-id="meet">
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.4"><b>§1</b>The machine</div><h2 class="title" data-in="chars" data-at="0.6">Meet the car</h2></div>
+    <svg id="callouts" class="copy" viewBox="0 0 1920 1080"></svg>
+    <div class="co copy" data-co="wing" style="left:120px; top:400px" data-in="left" data-at="2.2"><div class="h"><i>(a)</i>Boost on demand</div><div class="s">short bursts, arena-controlled</div></div>
+    <div class="co copy" data-co="sill" style="left:120px; top:640px" data-in="left" data-at="2.8"><div class="h"><i>(b)</i>900 kg EV chassis</div><div class="s">battery low, centre of mass low</div></div>
+    <div class="co r copy" data-co="corner" style="left:1400px; top:300px" data-in="right" data-at="3.4"><div class="h"><i>(c)</i>Swap-in bumpers</div><div class="s">absorb the hit, replace in 60 s</div></div>
+    <div class="co r copy" data-co="nose" style="left:1400px; top:640px" data-in="right" data-at="4.0"><div class="h"><i>(d)</i>Strike-face nose</div><div class="s">curved to aim the ball</div></div>
+    <div class="meetfade copy"></div>
+    <div class="specs copy" data-in="up" data-at="5.0">
+      <div><span data-tex="m =">m =</span> <span data-count="900" data-at="5.0">0</span><span class="u">kg</span><span class="l">mass</span></div>
+      <div><span data-tex="P_{\max} =">P =</span> <span data-count="150" data-at="5.2">0</span><span class="u">kW</span><span class="l">peak power</span></div>
+      <div><span data-tex="t_{0\to 60} =">t =</span> <span data-count="2.4" data-dec="1" data-at="5.4">0</span><span class="u">s</span><span class="l">0 to 60 km/h</span></div>
+      <div><span data-tex="E_{\mathrm{bat}} =">E =</span> <span data-count="8" data-at="5.6">0</span><span class="u">kWh</span><span class="l">battery</span></div>
+    </div>
+  </section>
+
+  <!-- 4 · MOMENTUM -->
+  <section class="slide" data-id="momentum">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§2</b>Momentum</div><h2 class="title" data-in="chars" data-at="0.4">Momentum does<br><em>the kicking.</em></h2></div>
+    <div class="eqn copy" style="right:120px; top:150px" data-in="up" data-at="4.4"><span data-tex="v_{\mathrm{ball}} = \dfrac{(1+e)\,M v}{M+m}"></span><span class="no">(1)</span></div>
+    <div class="copy" style="position:absolute; right:205px; top:300px; text-align:right" data-in="up" data-at="4.9">
+      <div class="eqn sm" style="position:static; justify-content:flex-end"><span data-tex="= \dfrac{1.6 \times 900 \times 15}{920} \approx 23.5\ \mathrm{m/s}"></span></div>
+      <div style="margin-top:14px; font:italic 400 30px var(--serif); color:var(--silver)">≈ <span data-count="85" data-at="5.0" data-dur="1.4">0</span> km/h ball speed</div>
+    </div>
+    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 1.</b>A 900 kg car meets a 20 kg ball at 15 m/s with restitution <i>e</i> = 0.6. Shown at ⅓ speed.</div>
+  </section>
+
+  <!-- 5 · IMPULSE -->
+  <section class="slide" data-id="impulse">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§3</b>Impulse</div><h2 class="title" data-in="chars" data-at="0.4">Soft bumpers.<br><em>Hard hits.</em></h2></div>
+    <div class="eqn copy" style="right:120px; top:120px" data-in="up" data-at="1.2"><span data-tex="J = \int F\,dt = \Delta p"></span><span class="no">(2)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.4"><b>Fig. 2.</b>Same impulse, 4.5 kN·s, spread over five times the contact time. The module swaps out in 60 s.</div>
+  </section>
+
+  <!-- 6 · ENERGY -->
+  <section class="slide" data-id="energy">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§4</b>Kinetic energy</div><h2 class="title" data-in="chars" data-at="0.4">Boost, <em>on a leash.</em></h2></div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E_k = \tfrac{1}{2}\,m v^{2}"></span><span class="no">(3)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 3.</b>Twice the speed carries four times the energy, so the arena caps speed at 80 km/h.</div>
+  </section>
+
+  <!-- 7 · AIM -->
+  <section class="slide" data-id="aim">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§5</b>Collision angles</div><h2 class="title" data-in="chars" data-at="0.4">Aim with <em>geometry.</em></h2></div>
+    <div class="eqn copy" style="left:120px; top:330px" data-in="up" data-at="2.4"><span data-tex="\theta = \arcsin\!\left(\dfrac{d}{R + r}\right)"></span><span class="no">(4)</span></div>
+    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 4.</b>The ball leaves along the contact normal. Nose radius <i>R</i> = 1.5 m, ball radius <i>r</i> = 0.75 m.</div>
+  </section>
+
+  <!-- 8 · ARENA -->
+  <section class="slide" data-id="arena">
+    <div class="arena-wrap" data-in="tilt" data-at="0"><canvas class="c2d"></canvas></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§6</b>The system</div><h2 class="title" data-in="chars" data-at="0.4">The arena is<br><em>the pit crew.</em></h2></div>
+    <div class="feat copy">
+      <div data-in="right" data-at="1.8"><i>(a)</i>Wireless charging pads</div>
+      <div data-in="right" data-at="3.2"><i>(b)</i>Live tracking</div>
+      <div data-in="right" data-at="4.4"><i>(c)</i>Auto-referee and boost control</div>
+    </div>
+  </section>
+
+  <!-- 9 · COST -->
+  <section class="slide" data-id="cost">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Operating cost</div><h2 class="title" data-in="chars" data-at="0.4">What a match <em>costs.</em></h2></div>
+    <div class="stat copy" style="top:350px" data-in="up" data-at="3.6"><div class="v">≈ <span data-count="1.5" data-dec="1" data-at="3.6">0</span><small>kWh</small></div><div class="l">per car, per 10-minute match (est.)</div></div>
+    <div class="stat copy" style="top:600px" data-in="up" data-at="4.4"><div class="v">≈ $<span data-count="0.25" data-dec="2" data-at="4.4">0</span></div><div class="l">electricity per car, per match</div></div>
+    <div class="eqn sm copy" style="right:120px; bottom:84px" data-in="up" data-at="5.2"><span data-tex="E_{\mathrm{match}} \approx \dfrac{N \cdot \tfrac12 M v^{2}}{\eta} - E_{\mathrm{regen}}"></span><span class="no">(5)</span></div>
+  </section>
+
+  <!-- 10 · ROADMAP -->
+  <section class="slide" data-id="road">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§8</b>Roadmap</div><h2 class="title" data-in="chars" data-at="0.4">The road to <em>kickoff.</em></h2></div>
+    <div class="ms copy" data-ms="0"><div class="p">Months 0–6</div><div class="h">Build</div><div class="s">two prototype cars</div></div>
+    <div class="ms copy" data-ms="1"><div class="p">Months 6–9</div><div class="h">Break</div><div class="s">1,000-hit bumper test</div></div>
+    <div class="ms copy" data-ms="2"><div class="p">Months 9–12</div><div class="h">Play</div><div class="s">50 full test matches</div></div>
+    <div class="ms copy" data-ms="3"><div class="p">Year 2</div><div class="h">Launch</div><div class="s">pilot league and venue</div></div>
+  </section>
+
+  <!-- 11 · ASK -->
+  <section class="slide" data-id="ask">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§9</b>The ask</div></div>
+    <div class="ask copy"><div class="v" data-in="up" data-at="0.4">$<span data-count="250" data-at="0.5" data-dur="1.8">0</span>K</div><div class="l" data-in="up" data-at="1.2">Seed round · 12-month prototype programme</div></div>
+    <div class="gets copy">
+      <div data-in="up" data-at="3.4"><b>2</b>working cars</div>
+      <div data-in="up" data-at="3.6"><b>1</b>test arena</div>
+      <div data-in="up" data-at="3.8"><b>50</b>matches of cost data</div>
+    </div>
+  </section>
+
+  <!-- 12 · CLOSE -->
+  <section class="slide" data-id="outro">
+    <div class="end copy">
+      <div class="smallcaps" data-in="left" data-at="end+0.5">KickShift · Jason Jimenez</div>
+      <h1 class="mega" data-in="chars" data-at="end+0.7" data-stagger="0.05">A car built<br><em>to score.</em></h1>
+      <div class="thx" data-in="up" data-at="end+2.0">Thank you. Questions?</div>
+    </div>
+    <div class="credit copy" data-in="up" data-at="end+2.4">Concept render; base 3D model “Ferrari 458 Italia” by vicent091036 (CC BY 4.0), restyled.</div>
+  </section>
+
+  <canvas id="grain" width="512" height="512"></canvas>
+  <div id="flash"></div>
+  <div id="bar"></div>
+  <div id="count"></div>
+  <div id="loading">Loading…</div>
+</div>
+<div id="notes"></div>
+<div id="hint">Tap or swipe to move · keys: → ← F (fullscreen) N (notes) R (replay)</div>
+<script src="deck.js"></script>

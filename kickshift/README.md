@@ -7,6 +7,7 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 | Path | What it is |
 |---|---|
 | `deck/index.html` | **The live presentation.** Double-click to open in Chrome/Edge. Runs fully offline. |
+| `../docs/` | The same deck, set up for GitHub Pages: **https://jasonj2609-oss.github.io/Jason-Jimenez/** once Pages is switched on (see below). |
 | `export/videos/*.mp4` | One 1080p video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
 | `export/stills/*.png` | The final frame of every slide (a backup, or for thumbnails/handouts). |
 | `SCRIPT.md` | A ~9-minute speaker script plus a physics cheat-sheet for Q&A. |
@@ -17,6 +18,12 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 - **→ / Space / click**: next slide · **←**: back · **F**: fullscreen · **N**: speaker notes + timer · **R**: replay the slide's animation · **1–9**: jump to a slide
 - Clickers work (they send PageDown/PageUp).
 - Use Chrome or Edge on a laptop with a decent GPU for smooth 3D.
+
+## Your own link (GitHub Pages)
+
+1. On github.com open the repository **jasonj2609-oss/Jason-Jimenez** → **Settings** → **Pages**.
+2. Under **Build and deployment** pick **Deploy from a branch**, branch **`claude/festive-darwin-vsdtza`**, folder **`/docs`**, then **Save**.
+3. After a minute or two the deck is live at **https://jasonj2609-oss.github.io/Jason-Jimenez/**.
 
 ## Using it in Canva
 
@@ -54,6 +61,7 @@ node tools/script.mjs               # regenerate SCRIPT.md from src/notes.js
 
 ## Credits
 
-- The base 3D car model is "Ferrari 458 Italia" by vicent091036 (Sketchfab, CC BY 4.0), distributed with the three.js examples. In this deck it has a new paint, a rear wing, a strike splitter, LED sills, and no badges. Credited on the final slide.
-- three.js (MIT), GSAP, Bebas Neue / Inter / JetBrains Mono (SIL OFL).
-- Design direction informed by the ui-ux-pro-max skill (sports / bold display type / high-motion guidance).
+- The base 3D car model is "Ferrari 458 Italia" by vicent091036 (Sketchfab, CC BY 4.0), distributed with the three.js examples. In this deck it has a silver paint, a carbon rear wing and strike splitter, and no badges. Credited on the final slide.
+- three.js (MIT), GSAP.
+- Type: Computer Modern (CMU Serif, SIL OFL) and KaTeX (MIT) for equations, as in a LaTeX physics paper.
+- Palette: black, silver and white only.

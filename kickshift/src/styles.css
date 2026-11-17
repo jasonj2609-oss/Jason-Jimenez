@@ -1,0 +1,5 @@
+@import "katex/dist/katex.min.css";
+
+@font-face { font-family: "CMU Serif"; font-style: normal; font-weight: 400; src: url("../assets/fonts/cmu-serif-500-roman.woff2") format("woff2"); }
+@font-face { font-family: "CMU Serif"; font-style: italic; font-weight: 400; src: url("../assets/fonts/cmu-serif-500-italic.woff2") format("woff2"); }
+@font-face { font-family: "CMU Serif"; font-style: normal; font-weight: 700; src: url("../assets/fonts/cmu-serif-700-roman.woff2") format("woff2"); }
