@@ -380,7 +380,7 @@ export function sHitboxOverlay(ctx, t, SP, st) {
   circle(ctx, P.x, P.y, 6, { fill: C.ink, stroke: null, alpha: ga });
   const dx = F.x - 28;
   if (P.y < F.y - 14) { arrow(ctx, dx, (F.y + P.y) / 2, dx, F.y, { w: 1.2, head: 10, alpha: ga }); arrow(ctx, dx, (F.y + P.y) / 2, dx, P.y, { w: 1.2, head: 10, alpha: ga }); }
-  mtext(ctx, `*h* = ${st.hf >= r ? '≥ 0.75' : st.hf.toFixed(2)} m`, dx, F.y + 36, { size: 26, align: 'center', alpha: ga });
+  mtext(ctx, st.hf >= r ? '*h* ≥ *r*  (face covers the centre)' : `*h* = ${st.hf.toFixed(2)} m`, dx, F.y + 36, { size: 26, align: 'center', alpha: ga });
 }
 
 // ================= §8 COST: power over a match =================

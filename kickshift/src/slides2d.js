@@ -31,11 +31,16 @@ export function mtext(ctx, s, x, y, { size = 26, color = C.ink, align = 'left', 
     if (!p) return;
     const it = italicAll || i % 2 === 1;
     const m = p.match(/^_(\w+)(.*)$/s);
-    if (m) { parts.push({ p: m[1], it: false, sub: true }); if (m[2]) parts.push({ p: m[2], it }); }
-    else parts.push({ p, it });
+    const push = (txt, o) => {
+      // italic Greek uses KaTeX's math font so labels match the typeset equations
+      if (!o.it) { parts.push({ p: txt, ...o }); return; }
+      txt.split(/([\u0370-\u03ff])/).forEach((g, k) => { if (g) parts.push({ p: g, ...o, math: k % 2 === 1 }); });
+    };
+    if (m) { parts.push({ p: m[1], it: false, sub: true }); if (m[2]) push(m[2], { it }); }
+    else push(p, { it });
   });
   ctx.save(); ctx.globalAlpha *= alpha; ctx.fillStyle = color; ctx.textBaseline = base; ctx.textAlign = 'left';
-  const font = (q) => `${q.it ? 'italic ' : ''}${weight} ${q.sub ? Math.round(size * 0.68) : size}px ${SERIF}`;
+  const font = (q) => (q.math ? `italic 400 ${Math.round(size * 1.04)}px KaTeX_Math, ${SERIF}` : `${q.it ? 'italic ' : ''}${weight} ${q.sub ? Math.round(size * 0.68) : size}px ${SERIF}`);
   let total = 0; for (const q of parts) { ctx.font = font(q); q.w = ctx.measureText(q.p).width + (q.sub ? 2 : 0); total += q.w; }
   let cx = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
   for (const q of parts) { ctx.font = font(q); ctx.fillText(q.p, cx + (q.sub ? 1 : 0), y + (q.sub ? size * 0.28 : 0)); cx += q.w; }
