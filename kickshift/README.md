@@ -66,7 +66,7 @@ node tools/script.mjs               # regenerate SCRIPT.md from src/notes.js
 
 ## Credits
 
-- The base 3D car model is "Ferrari 458 Italia" by vicent091036 (Sketchfab, CC BY 4.0), distributed with the three.js examples. In this deck it has a silver paint, a carbon rear wing and strike splitter, and no badges. Credited on the final slide.
+- The base 3D car model is "Ferrari 458 Italia" by vicent091036 (Sketchfab, CC BY 4.0), distributed with the three.js examples. In this deck it has a silver paint, a carbon rear wing and strike splitter, and no badges. Credited here and in the speaker notes for the final slide.
 - three.js (MIT), GSAP.
 - Type: Computer Modern (CMU Serif, SIL OFL) and KaTeX (MIT) for equations, as in a LaTeX physics paper.
 - Palette: black, silver and white only.

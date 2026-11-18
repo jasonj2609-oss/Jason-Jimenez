@@ -74,7 +74,7 @@ function arenaEnv(renderer) {
   return tex;
 }
 
-export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackPaint, barPts, beamMaterial, radialTex }) {
+export function buildArena({ scene, renderer, capture, car, keepChildren, bodyMat, blackPaint, barPts, beamMaterial, radialTex }) {
   const P = PITCH, A = new THREE.Group(); A.visible = false; scene.add(A);
   const R = rng(11);
 
@@ -194,8 +194,8 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
       A.add(new THREE.Mesh(geo, tierMat));
       roundedRect(P.WX + d + 0.6, P.WZ + d + 0.6, P.WR + d + 0.6, 0.62).pts.forEach(p => { if (R() > 0.2) people.push({ ...p, y: h, k: R() }); });
     }
-    const body = instanced(new THREE.CapsuleGeometry(0.2, 0.36, 3, 8), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 }), people, (o, p) => { o.position.set(p.x, p.y + 0.36, p.z); o.rotation.set(0, Math.atan2(p.x, p.z) + (p.k - 0.5) * 0.6, 0); o.scale.set(1, 0.9 + 0.25 * p.k, 1); });
-    const head = instanced(new THREE.SphereGeometry(0.12, 10, 8), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 }), people, (o, p) => { o.position.set(p.x, p.y + 0.78 + 0.18 * p.k, p.z); o.rotation.set(0, 0, 0); o.scale.setScalar(1); });
+    const body = instanced(new THREE.CapsuleGeometry(0.2, 0.36, 2, 6), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 }), people, (o, p) => { o.position.set(p.x, p.y + 0.36, p.z); o.rotation.set(0, Math.atan2(p.x, p.z) + (p.k - 0.5) * 0.6, 0); o.scale.set(1, 0.9 + 0.25 * p.k, 1); });
+    const head = instanced(new THREE.SphereGeometry(0.12, 7, 5), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.9 }), people, (o, p) => { o.position.set(p.x, p.y + 0.78 + 0.18 * p.k, p.z); o.rotation.set(0, 0, 0); o.scale.setScalar(1); });
     people.forEach((p, i) => { const r = R(), v = r > 0.9 ? 0.45 + 0.25 * R() : 0.03 + 0.2 * Math.pow(R(), 1.5); body.setColorAt(i, col.setScalar(v)); head.setColorAt(i, col.setScalar(0.08 + 0.14 * R())); });
     A.add(body, head);
   }
@@ -211,8 +211,8 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
       const s = new THREE.Mesh(new THREE.BoxGeometry(len * 0.96, 0.06, 0.14), stripMat); s.position.copy(m.position); s.position.y -= 0.28; s.rotation.copy(m.rotation); A.add(s);
     };
     beam(-tx, -tz, tx, -tz); beam(-tx, tz, tx, tz); beam(-tx, -tz, -tx, tz); beam(tx, -tz, tx, tz); beam(-6, -tz, -6, tz); beam(6, -tz, 6, tz);
-    const podMat = new THREE.MeshStandardMaterial({ color: 0x2a2b2f, metalness: 0.6, roughness: 0.35 });
-    const lensMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.8, 0.82, 0.85) });
+    const podMat = new THREE.MeshStandardMaterial({ color: 0x45474c, metalness: 0.6, roughness: 0.35 });
+    const lensMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.32, 0.33, 0.35) });
     const spots = [[tx, -tz], [tx, 0], [tx, tz], [0, tz], [-tx, tz], [-tx, 0], [-tx, -tz], [0, -tz]];
     spots.forEach(([x, z]) => {
       const pod = new THREE.Group(); pod.position.set(x, Y - 1.1, z);
@@ -240,7 +240,7 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
   {
     const key = new THREE.DirectionalLight(0xffffff, 1.7);
     key.position.set(9, 42, 14); key.target.position.set(0, 0, 0);
-    key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 5;
+    key.castShadow = true; key.shadow.mapSize.set(capture ? 2048 : 1024, capture ? 2048 : 1024); key.shadow.radius = 5;
     key.shadow.bias = -0.0004; key.shadow.normalBias = 0.04;
     Object.assign(key.shadow.camera, { left: -33, right: 33, top: 38, bottom: -38, near: 10, far: 90 });
     A.add(key, key.target);
@@ -265,6 +265,8 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
     for (const y of [8.95, 12.25]) { const r = new THREE.Mesh(new THREE.BoxGeometry(7.32, 0.07, 5.12), new THREE.MeshBasicMaterial({ color: new THREE.Color(1.2, 1.22, 1.26) })); r.position.set(0, y, 0); A.add(r); }
   }
   function drawBoard(b, st) {
+    const key = `${st.a}${st.b}${st.clock}${st.energy.map(e => Math.round(e * 200)).join()}`;
+    if (b.key === key) return; b.key = key;
     const { g, c } = b, w = c.width, h = c.height;
     g.fillStyle = '#040404'; g.fillRect(0, 0, w, h);
     g.strokeStyle = 'rgba(255,255,255,0.18)'; g.lineWidth = 3; g.strokeRect(10, 10, w - 20, h - 20);
@@ -304,10 +306,10 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
 
   // ---------- choreography (seconds into the slide) ----------
   const paths = [
-    K([[0, 10.6, 19], [2.4, 10.6, 14], [6.8, 10.6, -14], [8.2, 7, -19], [9.6, 2, -20], [11.4, -3, -15], [13.4, -7, -12], [15.4, -12, -8], [18, -13, -1]]),
-    K([[0, -8, 6], [2.5, -3, 10], [5, 3, 8], [7.5, 5, 2], [10, 2, -4], [12.5, -4, -6], [15, -8, -1], [18, -7, 5]]),
-    K([[0, 6, -10], [2.5, 2, -12], [5, -4, -11], [7.5, -9, -5], [10, -3, 7], [12.5, 4, 9], [15, 9, 3], [18, 8, -5]]),
-    K([[0, -10.6, -22], [5, -10.6, -20], [11, -10.6, 12], [12.6, -6, 17], [14.4, 2, 15], [16.2, 6, 8], [18, 4, 2]]),
+    K([[0, 10.6, 19], [2.4, 10.6, 14], [6.8, 10.6, -14], [8.2, 7, -19], [9.6, 2, -20], [11.4, -3, -15], [13.4, -7, -12], [15.4, -12, -8], [18, -13, -1], [20, -12, 6]]),
+    K([[0, -8, 6], [2.5, -3, 10], [5, 3, 8], [7.5, 5, 2], [10, 2, -4], [12.5, -4, -6], [15, -8, -1], [18, -7, 5], [20, -4, 9]]),
+    K([[0, 6, -10], [2.5, 2, -12], [5, -4, -11], [7.5, -9, -5], [10, -3, 7], [12.5, 4, 9], [15, 9, 3], [18, 8, -5], [20, 5, -10]]),
+    K([[0, -10.6, -22], [5, -10.6, -20], [11, -10.6, 12], [12.6, -6, 17], [14.4, 2, 15], [16.2, 6, 8], [18, 4, 2], [20, 1, -3]]),
   ];
   const pose = (f, t) => {
     const [x, z] = f(t);
@@ -361,7 +363,7 @@ export function buildArena({ scene, renderer, car, keepChildren, bodyMat, blackP
   function reset() { A.visible = false; }
 
   const anchors = {
-    lane: V3(P.LANE_X, 0.02, -6.5), cams: camPods[5].position.clone(), board: V3(-1.2, 10.6, 2.5), wall: V3(-P.WX, 3.0, 10.5),
+    lane: V3(P.LANE_X, 0.02, -6.5), cams: camPods[5].position.clone(), board: V3(3.62, 10.6, -0.6), wall: V3(P.WX, 3.0, 1.5),
   };
   return { group: A, frame, reset, anchors, paths, pods: camPods.map(p => p.position.clone()), env: arenaEnv(renderer) };
 }

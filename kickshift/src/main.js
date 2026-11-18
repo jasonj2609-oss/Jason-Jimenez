@@ -21,7 +21,7 @@ fit(); addEventListener('resize', fit);
 
 const slides = [...document.querySelectorAll('.slide')];
 const PLAN = {
-  intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, features: { gl: 'features', dur: 18 }, arena: { gl: 'arena', overlay: D.sArenaOverlay, dur: 18 },
+  intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, features: { gl: 'features', dur: 18 }, arena: { gl: 'arena', overlay: D.sArenaOverlay, dur: 20 },
   lane: { draw: D.sLane, dur: 10 }, store: { draw: D.sStore, dur: 9 }, boost: { draw: D.sBoost, dur: 11 },
   pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 }, hitbox: { gl: 'hitbox', overlay: D.sHitboxOverlay, dur: 12 },
   biz: { draw: B.sBiz, dur: 11 }, costs: { draw: B.sCosts, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, return: { draw: B.sReturn, dur: 10 },
@@ -145,6 +145,8 @@ async function boot() {
     const c = d.el.querySelector('canvas.c2d');
     if (c) { c.width = 1920 * DPR; c.height = 1080 * DPR; ctxs[i] = c.getContext('2d'); }
   });
+  // compile every 3D scene's shaders up front so entering a slide never stutters
+  if (!CAPTURE) for (const d of DEF) if (d.gl) { try { stage[d.gl](d.dur * 0.5); } catch (_) {} }
   document.getElementById('loading').remove();
   window.KS = {
     count: DEF.length, durations: DEF.map(d => d.dur), ids: DEF.map(d => d.id),
@@ -152,7 +154,17 @@ async function boot() {
   };
   if (CAPTURE) { window.KS.stage = stage; window.KS_READY = true; return; }
   show(Number(qs.get('s') || 1) - 1);
-  const loop = (now) => { renderSlide(cur, (now - t0) / 1000); const c = document.getElementById('clock'); if (c) c.textContent = clockText(); requestAnimationFrame(loop); };
+  // keep 3D motion smooth on any device: drop render resolution when frames run long, raise it when there is headroom
+  let dpr = GL_DPR, last = performance.now(), slow = 0, fast = 0;
+  const loop = (now) => {
+    const dt = now - last; last = now;
+    if (DEF[cur].gl && dt < 250) {
+      if (dt > 21) { slow++; fast = 0; } else if (dt < 14) { fast++; slow = 0; } else { slow = Math.max(0, slow - 1); fast = Math.max(0, fast - 1); }
+      if (slow > 20 && dpr > 0.6) { dpr = Math.max(0.6, +(dpr - 0.15).toFixed(2)); stage.setDPR(dpr); slow = 0; }
+      if (fast > 240 && dpr < GL_DPR) { dpr = Math.min(GL_DPR, +(dpr + 0.15).toFixed(2)); stage.setDPR(dpr); fast = 0; }
+    }
+    renderSlide(cur, (now - t0) / 1000); const c = document.getElementById('clock'); if (c) c.textContent = clockText(); requestAnimationFrame(loop);
+  };
   requestAnimationFrame(loop);
 }
 

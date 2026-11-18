@@ -306,7 +306,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   const X = buildFeatures({ car, model, parts, reflection, bb, wheels, hit, renderer });
   [model, parts].forEach(r => r.traverse(o => { if (o.isMesh) { o.castShadow = true; mirrorFade(o.material); } }));
   mirrorFade(ball.material); ball.castShadow = true;
-  const AR = buildArena({ scene, renderer, car, keepChildren: [model, parts, shadow], bodyMat, blackPaint: PAINT.black, barPts: X.barPts, beamMaterial, radialTex });
+  const AR = buildArena({ scene, renderer, capture, car, keepChildren: [model, parts, shadow], bodyMat, blackPaint: PAINT.black, barPts: X.barPts, beamMaterial, radialTex });
   const studioEnv = scene.environment;
 
   // ---------- post ----------
@@ -370,11 +370,12 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     camera.updateProjectionMatrix(); camera.lookAt(tx, ty, tz);
   }
   function draw() { composer.render(); }
+  function setDPR(d) { renderer.setPixelRatio(d); composer.setPixelRatio(d); }
   // every scene starts from the same clean state
   function base() {
     X.reset(); AR.reset(); scene.fog.near = 16; scene.fog.far = 40; scene.fog.color.setHex(0x000000); scene.environment = studioEnv;
     car.position.set(0, 0, 0); car.rotation.set(0, 0, 0); reflection.position.set(0, 0, 0); reflection.rotation.set(0, 0, 0);
-    reflection.visible = true; floor.visible = true;
+    reflection.visible = true; floor.visible = true; renderer.toneMappingExposure = 1;
   }
 
   const NOSE = bb.min.z, TAIL = bb.max.z;
@@ -545,10 +546,11 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
 
   // The arena: a match in progress; the camera tours lanes, tracking cameras, scoreboard and walls.
+  // Gentle, continuous moves: turn rate stays under ~25°/s so pans read smoothly.
   const ARENA_CAM = track([
-    [0, 13, 12, 26, 0, 0, -3, 44], [3.0, 16, 4.5, -10, 10.6, 0.3, 4, 38], [5.4, 16.8, 2.6, -17, 10.6, 0.4, -2, 36],
-    [7.2, 18, 9, -12, 2, 3, 0, 40], [9.2, 29, 10.5, -6, -4, 7.0, 2, 40], [11.8, 6.5, 9.4, 16.5, 0, 10.4, 2.5, 32],
-    [14.8, -11.4, 2.4, 21, -16, 2.6, 6, 36], [18, -12, 12.5, 24, 1, 0, -2, 42],
+    [0, 13, 12, 26, 2, 0, 2, 44], [3.2, 17.5, 7, 17, 10.6, 0.3, 5, 40], [5.6, 15.6, 2.6, -2, 10.6, 0.4, -8, 38],
+    [8.0, 17.0, 4.8, -10, 5, 1.4, -9.5, 38], [10.4, 29, 10.5, -6, -4, 7, 2, 40], [13.4, 15, 9.0, -3.5, 0, 11.0, 3.2, 38],
+    [16.6, 21.5, 4.6, 3.5, 9, 1.0, -1, 40], [20, 25, 12.5, 15, 0, 0, -1, 42],
 ].map(([t, ...v]) => ({ t, v })));
   function arena(t, cam = null) {
     base(); floor.visible = false; reflection.visible = false; ring.visible = false; paint('silver'); scan.amt.value = 0;
@@ -556,7 +558,8 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     scene.environment = AR.env; scene.environmentIntensity = 0.8;
     lights({ drl: 1, head: 0.5, beam: 0, spot: 0, tail: 1 });
     bloom.strength = 0.6;
-    const coneAmt = E.outCubic(prog(t, 7.2, 8.0)) * (1 - E.inOutSine(prog(t, 10.6, 11.4)));
+    const coneAmt = E.outCubic(prog(t, 9.4, 10.2)) * (1 - E.inOutSine(prog(t, 12.6, 13.2)));
+    renderer.toneMappingExposure = cam ? 1 : E.outCubic(prog(t, 0, 0.7));
     const st = AR.frame(t, { car, wheels, bars: X.bars, coneAmt: 0 });
     placeBall(0.5 - 0.08 * t, BALL_R, 1.5 - 0.06 * t, -t * 0.13, t * 0.1, true);
     const c = cam || ARENA_CAM(t);
@@ -671,7 +674,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
 
   return {
-    renderer, intro, meet, features, arena, outro, finale, hitbox, HITBOX, project, bake, OUT, HB,
+    renderer, camera, setDPR, intro, meet, features, arena, outro, finale, hitbox, HITBOX, project, bake, OUT, HB,
     anchors: { ...X.anchors, ...AR.anchors, nose: V3(0, 0.35, NOSE + 0.1), corner: V3(0.85, 0.35, NOSE + 0.55), sill: V3(1.0, 0.3, 0.2), wing: V3(0.45, deckY + 0.27, TAIL - 0.6), bb },
   };
 }

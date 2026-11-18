@@ -106,6 +106,7 @@ export const NOTES = [
     title: 'Close', time: '9:15 – 9:35',
     say: `(Let the car light up and the title appear.)
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
-"Thank you. I'm happy to take your questions."`,
+"Thank you. I'm happy to take your questions."
+(If anyone asks about the car model: it's a concept render restyled from the 3D model "Ferrari 458 Italia" by vicent091036, licensed CC BY 4.0.)`,
   },
 ];

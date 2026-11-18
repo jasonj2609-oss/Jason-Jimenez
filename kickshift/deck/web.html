@@ -14,6 +14,9 @@ html, body { margin: 0; height: 100%; background: #000; color: var(--ink); overf
 #stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 50% 50%; overflow: hidden; background: var(--bg); }
 #gl { position: absolute; inset: 0; width: 1920px; height: 1080px; opacity: 0; transition: opacity .7s ease; }
 #gl.on { opacity: 1; }
+#vig { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .7s ease; background: radial-gradient(ellipse 75% 70% at 50% 52%, rgba(0,0,0,0) 55%, rgba(0,0,0,.42) 100%); }
+#gl.on + #vig { opacity: 1; }
+.capture #vig { transition: none; }
 .slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility 0s linear .7s; }
 .slide.on { opacity: 1; visibility: visible; transition: opacity .7s ease, visibility 0s; }
 .capture .slide, .capture #gl { transition: none !important; }
@@ -132,6 +135,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
 
 <div id="stage">
   <canvas id="gl" width="1920" height="1080"></canvas>
+  <div id="vig"></div>
 
   <!-- 1 · INTRO -->
   <section class="slide" data-id="intro">
@@ -186,11 +190,11 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <div class="topfade copy"></div><div class="botfade copy"></div>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.3"><b>§1.2</b>The arena</div><h2 class="title" data-in="chars" data-at="0.5">The field <em>is the charger.</em></h2></div>
     <svg class="callouts copy" viewBox="0 0 1920 1080"></svg>
-    <div class="co copy" data-co="lane" style="left:120px; top:600px" data-in="left" data-at="3.9" data-out="7.4"><div class="h"><i>(a)</i>Charging lanes</div><div class="s">coils under the floor switch on only under a car</div></div>
-    <div class="co copy" data-co="cams" style="left:120px; top:640px" data-in="left" data-at="7.8" data-out="10.8"><div class="h"><i>(b)</i>Tracking cameras</div><div class="s">every car and the ball, 120 times a second</div></div>
-    <div class="co copy" data-co="board" style="left:120px; top:640px" data-in="left" data-at="11.1" data-out="14.0"><div class="h"><i>(c)</i>Energy scoreboard</div><div class="s">score, clock and every car's charge, live</div></div>
-    <div class="co copy" data-co="wall" style="left:120px; top:600px" data-in="left" data-at="14.3" data-out="16.6"><div class="h"><i>(d)</i>Safety walls</div><div class="s">polycarbonate glass; fans sit at the action</div></div>
-    <div class="quote copy" data-in="up" data-at="16.4">The arena is what venues buy. The game is why players come back.</div>
+    <div class="co copy" data-co="lane" style="left:120px; top:600px" data-in="left" data-at="4.2" data-out="7.8"><div class="h"><i>(a)</i>Charging lanes</div><div class="s">coils under the floor switch on only under a car</div></div>
+    <div class="co copy" data-co="cams" style="left:120px; top:640px" data-in="left" data-at="9.8" data-out="12.8"><div class="h"><i>(b)</i>Tracking cameras</div><div class="s">every car and the ball, 120 times a second</div></div>
+    <div class="co copy" data-co="board" style="left:120px; top:700px" data-in="left" data-at="13.3" data-out="16.0"><div class="h"><i>(c)</i>Energy scoreboard</div><div class="s">score, clock and every car's charge, live</div></div>
+    <div class="co copy" data-co="wall" style="left:120px; top:600px" data-in="left" data-at="16.5" data-out="18.6"><div class="h"><i>(d)</i>Safety walls</div><div class="s">polycarbonate glass; fans sit at the action</div></div>
+    <div class="quote copy" data-in="up" data-at="18.6">The arena is what venues buy. The game is why players come back.</div>
   </section>
 
   <!-- 4 · CHARGING LANE -->
@@ -295,7 +299,6 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
       <div class="tag" data-in="up" data-at="3.5">A car built to score.</div>
     </div>
     <div class="finfoot copy"><span data-in="up" data-at="4.6">Jason Jimenez</span><span class="sep" data-in="up" data-at="4.8"></span><span data-in="up" data-at="5.0">Thank you</span></div>
-    <div class="credit copy" data-in="up" data-at="5.6">Concept render; base 3D model “Ferrari 458 Italia” by vicent091036 (CC BY 4.0), restyled.</div>
   </section>
 
   <canvas id="grain" width="512" height="512"></canvas>
