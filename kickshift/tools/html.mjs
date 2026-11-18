@@ -1,5 +1,6 @@
 // Assemble the deck: inline the bundled CSS into the template and write
-// deck/index.html (double-click to open), deck/web.html (artifact page) and ../docs (GitHub Pages).
+// deck/index.html (double-click to open), deck/web.html (artifact page), ../docs (GitHub Pages)
+// and KickShift.html: the whole deck in ONE file, to email or put on a USB stick.
 import fs from 'fs';
 const tpl = fs.readFileSync('src/template.html', 'utf8');
 const css = fs.readFileSync('deck/deck.css', 'utf8');
@@ -11,4 +12,8 @@ fs.mkdirSync('../docs', { recursive: true });
 fs.writeFileSync('../docs/index.html', doc);
 fs.copyFileSync('deck/deck.js', '../docs/deck.js');
 fs.writeFileSync('../docs/.nojekyll', '');
+const js = fs.readFileSync('deck/deck.js', 'utf8').replace(/<\/script/gi, '<\\/script');
+const single = doc.replace(/<script src="deck\.js"><\/script>/, () => `<script>${js}</script>`);
+if (single === doc) throw new Error('deck.js tag not found');
+fs.writeFileSync('KickShift.html', single);
 console.log('html ok', (doc.length / 1024).toFixed(0) + 'KB');

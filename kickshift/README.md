@@ -6,6 +6,7 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 
 | Path | What it is |
 |---|---|
+| `KickShift.html` | **The whole deck in one file.** Email it, put it on Google Drive or a USB stick; on any computer, double-click it to open in Chrome or Edge. Works offline. |
 | `deck/index.html` | **The live presentation.** Double-click to open in Chrome/Edge. Runs fully offline. |
 | `../docs/` | The same deck, set up for GitHub Pages: **https://jasonj2609-oss.github.io/Jason-Jimenez/** once Pages is switched on (see below). |
 | `export/videos/*.mp4` | One 1080p, 60 fps video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
