@@ -30,6 +30,15 @@ md += `---
 | Projections | 0 → 1 → 5 → 15 → 35 arenas (years 1–5); revenue $0 → $0.67M → $2.45M → $5.49M → $10.85M | sales + recurring fees + flagship venue |
 | Break-even | year 4 (projected) | costs $0.25M → $1.3M → $2.6M → $4.7M → $8.4M |
 
+### Likely question: "What about damage to the cars? Does it still make money?"
+
+Say: "The first cars are 50 kilograms and remote-driven. A full-speed hit carries about 900 joules, around 200 times less than a real car. The front is a bumper shell that's made to be crushed and swapped for $150, like a hockey stick. Even if damage costs a venue $70,000 a year, it still makes about $290,000 and earns back its arena in under a year and a half. And every replacement shell is something we sell."
+
+- Physics: KE = ½mv² = ½ × 50 × 6² = 900 J (a 900 kg car at 20 m/s has 180,000 J). Impulse: F = Δp/Δt; p = 300 kg·m/s, so stopping in 5 ms means about 60 kN, while a shell that crushes over 30 ms brings it down to about 10 kN.
+- Cost per venue per year (estimate): 33,600 car-matches; one shell per 100 matches = 336 shells × $150 = $50K; other repairs about $18K (25% of the $72K fleet). Total about $68K, so the venue keeps about $290K and pays back in about 17 months (about 22 months if damage is double).
+- Upside: shells are a consumable we sell (about $50K a year per venue; at roughly $40 each to make, about $37K profit). This is not in the projections.
+- Full-size cars come later, with racing crash structures, and sponsors and the league fund repairs. The first year's 50 test matches measure the real damage rate.
+
 Biggest risks (be ready to name them): wireless-lane efficiency on moving cars, bumper durability, safety around crowds, and whether venues buy. The seed round tests the first three before big money is spent.
 
 Sources and caveats: the prototype numbers are illustrative. Supercapacitor and battery ranges are typical published values. Purdue University has reported wireless power transfer to a moving truck at highway speed; that supports the principle, not KickShift's specific design.
