@@ -1,144 +1,122 @@
-# KickShift — Speaker Script (~9 min)
+# KickShift — Speaker Script (~8 min)
 
-Press **N** in the HTML deck to see these notes with a running timer.
+Tip: the big title on each slide is your cue. Read it, then explain it in your own words. Press **N** in the HTML deck to see these notes while rehearsing.
 
-## 1. Intro: lights on  `0:00 – 0:35`
+## 1. Intro: lights on  `0:00 – 0:30`
 
-*(Room dark. Let the black screen and the light scan play.)*
+*(Room quiet. Let the black screen and the light play.)*
 
 "Introducing..."
 
-*(Wait for the headlight to ignite and the camera to pull back.)*
+*(Wait for the headlights to turn on.)*
 
 "KickShift. A car built to score."
 
-## 2. The idea  `0:35 – 0:55`
+## 2. The idea  `0:30 – 0:50`
 
-"Soccer is the most watched sport on earth. Supercars are what people put on their walls."
+"Everyone loves soccer, and everyone loves supercars. But car soccer only exists in video games."
 
-"Car-soccer already exists in video games. Nobody has built it for real, with real energy and real physics."
+"So we asked: what if the car was the player?"
 
-"So: what if the car was the player?"
-
-## 3. What we are pitching  `0:55 – 1:20`
+## 3. What we are pitching  `0:50 – 1:10`
 
 "KickShift is a new sport with three parts: the car, the arena, and the game."
 
-"Your investment builds a prototype of the whole system: two cars and one test arena. Let me show you what's in each."
+"Your investment builds a small test version: two cars and one test arena."
 
-## 4. The car: not just a car  `1:20 – 2:15`
+## 4. The car: not just a car  `1:10 – 2:05`
 
-*(Let the X-ray sweep finish, then point to each label as it appears.)*
+"It looks like a supercar, but inside it's built for the game."
 
-"From the outside it looks like a supercar. Inside, it's built for the game."
+*(Point at each label as it appears.)*
 
-"(a) A receiver coil under the floor picks up power from the charging lanes. (b) That power fills a supercapacitor, which fills in one pass and empties in one boost. (c) A battery runs the car for the whole match."
+"A coil underneath picks up power from the floor. A supercapacitor stores it for a quick boost. A battery runs the car all match. Motors in every wheel give the push."
 
-"(d) Four hub motors give instant torque at every wheel. (e) The front is a swappable strike shell: it takes the hits and swaps out in seconds. (f) Tracking markers let the arena see every car 120 times a second. (g) And a light bar shows the crowd how much energy you're carrying."
+"The nose swaps out when it gets hit. Markers let cameras track the car. And a light bar shows everyone how much energy you have."
 
-## 5. The arena: the field is the charger  `2:15 – 3:00`
+## 5. The arena: the field is the charger  `2:05 – 2:50`
 
-"And this is the arena: what a venue actually buys."
+"This is the arena, and this is what we sell."
 
-"(a) Charging lanes: coils under the floor that switch on only when a car is over them. Watch the tiles light up under the car."
+"The floor has charging lanes. They light up and charge a car only when it drives over them."
 
-"(b) Tracking cameras on the roof follow every car and the ball, so the referee is automatic and every joule is measured."
+"Cameras on the roof track every car and the ball, so the game referees itself. The scoreboard shows everyone's energy, and glass walls keep the fans safe."
 
-"(c) A scoreboard that shows the score and every car's energy, live. (d) Safety walls, so fans sit right next to the action."
+## 6. Physics 1: wireless charging  `2:50 – 3:25`
 
-"The arena is what venues buy. The game is why players come back."
+"How does the floor charge the car? It's the same idea as a wireless phone charger."
 
-## 6. Physics 1: wireless charging  `3:00 – 3:40`
+"Coils in the floor make a magnetic field that keeps flipping. A changing magnetic field through the car's coil makes electricity. That's Faraday's law, equation 1."
 
-"These demos use our 50 kilogram prototype."
+"The graph shows it: electricity only appears while the car is over the lane."
 
-"Coils under the lane carry alternating current. The dots and crosses are current coming out of and going into the page, and they swap as the current alternates. That makes a magnetic field above the lane that keeps flipping."
+## 7. Physics 2: battery and supercapacitor  `3:25 – 4:00`
 
-"The car's receiver coil sits in that changing field. A changing magnetic flux induces a voltage: Faraday's law, equation 1, the same idea as wireless phone charging."
+"The car stores energy two ways."
 
-"The graph shows that induced voltage. It only appears while the car is over the lane, and the energy collected is power times time, equation 2."
+"The battery is like a big water tank: it holds a lot, but fills and empties slowly. The supercapacitor is like a bucket: it holds less, but fills and empties almost instantly."
 
-## 7. Physics 2: battery and supercapacitor  `3:40 – 4:15`
+"So the battery lasts the whole match, and the supercapacitor is for quick boosts. Ours holds about 1,000 joules."
 
-"The car stores energy two ways. On this chart, across is energy per kilogram and up is power per kilogram, on log scales."
+## 8. Physics 3: the boost  `4:00 – 4:35`
 
-"Batteries hold far more energy per kilogram: that's endurance for the whole match. Supercapacitors hold less, but take it in and give it out much faster: that's the sprint."
+"When you boost, the wheels push back on the floor, and the floor pushes the car forward. That's Newton's third law."
 
-"The capacitor stores one half C V squared, equation 3. Watch it charge on the lane and empty in the boost. For the prototype, 0.87 farads at 48 volts holds 1,000 joules."
+"But there's a limit: grip. Push too hard and the tyres just spin, like a car on ice. So more power doesn't always mean more speed."
 
-## 8. Physics 3: the boost  `4:15 – 4:55`
+## 9. Physics 4: one pass  `4:35 – 5:05`
 
-"Pressing boost sends that stored power to the motor, which means more torque at the wheel."
+"Is one trip over a lane enough for a boost?"
 
-"The tyre pushes backward on the floor, and the floor pushes the car forward: Newton's third law, an equal and opposite pair."
+"One pass gives about 1,000 joules. A boost needs about 500. So even if half the energy is lost along the way, one pass pays for one boost."
 
-"But there's a limit: grip. The forward force can't exceed mu m g, equation 4. For the prototype that's about 440 newtons. On the graph, force rises with torque until the grip limit; push harder and the wheel slips, and the force actually drops."
+## 10. Physics 5: energy is a tactic  `5:05 – 5:40`
 
-"So boost is limited by stored energy, motor power and grip."
+"Here's the twist: the slower you drive over a lane, the more energy you collect, because you're on it longer."
 
-## 9. Physics 4: one pass  `4:55 – 5:30`
+"But if you go slow, the other team might get the ball first. That choice is the game."
 
-"Is one pass over a lane enough? The lane is 4 metres, the car crosses at 4 metres per second, so it spends 1 second on it. At 1,000 watts, that's 1,000 joules, equation 5."
+"Collect power from the field, store it, and decide when to spend it."
 
-"Speeding up from 4 to 6 metres per second needs one half m times v final squared minus v initial squared: 500 joules, equation 6."
+## 11. Business model  `5:40 – 6:20`
 
-"Even if half is lost in storage and the drivetrain, one pass pays for the boost. Wireless charging of moving vehicles has already been demonstrated, at highway speed by Purdue University. The prototype will measure what ours actually delivers."
+"How does it make money? We sell arenas to places like go-kart tracks."
 
-## 10. Physics 5: energy is a tactic  `5:30 – 6:05`
+"Players pay about $20 to play. The venue pays us $400,000 for the arena, plus a monthly fee and a small cut of every game."
 
-"Energy collected equals power times lane length divided by speed, equation 7. So slower means more energy."
+*(Point to the chart.) "One venue makes about $359,000 a year, so it earns back the arena in about a year."*
 
-"At 2 metres per second a car collects 2,000 joules; at 8, only 500. But the slow car spends 2 seconds on the lane, and its opponent might reach the ball first."
+## 12. Costs  `6:20 – 6:40`
 
-"KickShift turns energy management into gameplay: collect power from the field, store it onboard, and decide when to spend it."
+"It's cheap to run: a whole game uses less than a dollar of electricity."
 
-## 11. Business model  `6:05 – 6:50`
+"An arena costs us $250,000 to build, and we sell it for $400,000."
 
-"How does this make money? We start small. Full-size cars come later; first we sell KickShift arenas with the 50 kilogram remote-driven cars to entertainment venues, like go-kart and family entertainment centres."
+## 13. Roadmap  `6:40 – 7:00`
 
-"Players pay the venue about $20 each for a 10-minute match. The venue buys the arena package from us for $400,000, then pays us $2,000 a month for software and the league, plus 10% of match revenue. Later, sponsors and streaming pay us too."
+"First we build two test cars, test the charging lanes, and play 50 test games. That's the first year."
 
-*(Point to the chart.) "For one venue running 24 matches a day, that's about $672,000 a year. After staff, space, upkeep and our fees, the venue keeps about $359,000, so it earns back the arena in about 13 months. That's why a venue would buy one."*
+"Then we open our own arena, and then we sell arenas to other places."
 
-## 12. Costs  `6:50 – 7:15`
+## 14. Projections  `7:00 – 7:20`
 
-"This is a log scale, so each line is ten times the last."
+"These are predictions, not promises."
 
-"Running it is cheap: the electricity for a whole match is under a dollar. A replacement bumper shell is about $150, and a production car about $12,000."
+"By year 5 we could have 35 arenas and about $10.8 million a year in sales, and we start making a profit in year 4."
 
-"Building it: this round, the prototype system, is $250,000. Each venue arena costs us about $250,000 to build and sells for $400,000. A full-size pro arena, around $3 million, only comes later, once venues have proven the game."
+## 15. The numbers  `7:20 – 7:45`
 
-## 13. Roadmap  `7:15 – 7:35`
+"Here's everything on one page: what it costs on the left, and how it makes money on the right."
 
-"The plan, in five stages. Months 0 to 6: build two 50 kilogram prototype cars. Months 6 to 9: measure how many joules a real lane delivers per pass. Months 9 to 12: play 50 full test matches. That's this seed round."
+"The big takeaway: a venue earns its money back in about a year, and KickShift makes a profit by year 4."
 
-"Year 2: open our own flagship arena and prove players pay. Year 3: start selling arena packages to other venues."
+## 16. Close  `7:45 – 8:00`
 
-"Each stage ends with a number we either hit or don't, so problems show up early and cheaply."
+*(Let the car light up first.)*
 
-## 14. Projections  `7:35 – 8:05`
+"Collect power from the field, store it, and decide when to spend it. That's KickShift: a car built to score."
 
-"These are projections, not promises. We open our own flagship arena in year 2, then sell 4 arenas in year 3, 10 in year 4 and 20 in year 5."
-
-"That's 35 arenas open by year 5 and about $10.8 million in revenue, and the company becomes profitable in year 4."
-
-## 15. The numbers  `8:05 – 8:35`
-
-"So here's everything on one page."
-
-"What it takes: $250,000 for the prototype system, $250,000 to build each venue arena, under a dollar of electricity per match, and a full-size pro arena, around $3 million, only later. Years 1 and 2 together cost about $1.55 million."
-
-"What it makes: we sell each arena for $400,000, then every venue pays $2,000 a month plus 10% of every match, and sponsors and streaming come in once the league is running."
-
-"A venue earns its arena back in about 13 months, and KickShift turns a profit in year 4."
-
-## 16. Close  `8:35 – 8:55`
-
-*(Let the car light up and the title appear.)*
-
-"Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
-
-"Thank you. I'm happy to take your questions."
+"Thank you. Any questions?"
 
 *(If anyone asks about the car model: it's a concept render restyled from the 3D model "Ferrari 458 Italia" by vicent091036, licensed CC BY 4.0.)*
 

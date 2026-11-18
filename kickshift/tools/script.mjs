@@ -1,6 +1,6 @@
 import { NOTES } from '../src/notes.js';
 import fs from 'fs';
-let md = '# KickShift — Speaker Script (~9 min)\n\nPress **N** in the HTML deck to see these notes with a running timer.\n\n';
+let md = '# KickShift — Speaker Script (~8 min)\n\nTip: the big title on each slide is your cue. Read it, then explain it in your own words. Press **N** in the HTML deck to see these notes while rehearsing.\n\n';
 NOTES.forEach((n, i) => { md += `## ${i + 1}. ${n.title}  \`${n.time}\`\n\n${n.say.split('\n').map(l => l.startsWith('(') ? `*${l}*` : l).join('\n\n')}\n\n`; });
 md += `---
 ### Physics cheat-sheet (for Q&A)
