@@ -8,9 +8,10 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 |---|---|
 | `deck/index.html` | **The live presentation.** Double-click to open in Chrome/Edge. Runs fully offline. |
 | `../docs/` | The same deck, set up for GitHub Pages: **https://jasonj2609-oss.github.io/Jason-Jimenez/** once Pages is switched on (see below). |
-| `export/videos/*.mp4` | One 1080p video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
+| `export/videos/*.mp4` | One 1080p, 60 fps video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
 | `export/stills/*.png` | The final frame of every slide (a backup, or for thumbnails/handouts). |
 | `SCRIPT.md` | A ~9.5-minute speaker script plus physics and business cheat-sheets for Q&A. |
+| Presenter's guide | Slide-by-slide explanations, the physics and business in plain words, and a Q&A bank: https://claude.ai/artifact/PEoCkRkr6fhWd3kGwHyEsc |
 | `src/` | Source code (3D scene, physics canvases, speaker notes). |
 
 ## Presenting the HTML deck
