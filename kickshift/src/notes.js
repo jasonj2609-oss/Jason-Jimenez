@@ -67,26 +67,36 @@ export const NOTES = [
 "So choosing your car shape is choosing your play style."`,
   },
   {
-    title: 'Operating cost', time: '7:00 – 7:30',
-    say: `"What does a match cost to run? Energy is the area under the power curve, equation 9."
-"For a full 10-minute match that's about 1.5 kilowatt-hours per car, roughly 25 cents of electricity."`,
+    title: 'Business model', time: '7:00 – 7:45',
+    say: `"How does this make money? We start small. Full-size cars come later; first we sell KickShift arenas with the 50 kilogram remote-driven cars to entertainment venues, like go-kart and family entertainment centres."
+"Players pay the venue about $20 each for a 10-minute match. The venue buys the arena package from us for $400,000, then pays us $2,000 a month for software and the league, plus 10% of match revenue. Later, sponsors and streaming pay us too."
+(Point to the chart.) "For one venue running 24 matches a day, that's about $672,000 a year. After staff, space, upkeep and our fees, the venue keeps about $359,000, so it earns back the arena in about 13 months. That's why a venue would buy one."`,
   },
   {
-    title: 'Roadmap', time: '7:30 – 8:10',
-    say: `"The plan, in four stages."
-"Months 0 to 6: build two 50 kilogram prototype cars."
-"Months 6 to 9: charge. Measure how many joules a real lane delivers per pass, and how much reaches the wheels."
-"Months 9 to 12: play 50 full test matches."
-"Year 2: launch a full-size pilot league."
+    title: 'Costs', time: '7:45 – 8:15',
+    say: `"This is a log scale, so each line is ten times the last."
+"Running it is cheap: the electricity for a whole match is under a dollar. A replacement bumper shell is about $150, and a production car about $12,000."
+"Building it: this round, the prototype system, is $250,000. Each venue arena costs us about $250,000 to build and sells for $400,000. A full-size pro arena, around $3 million, only comes later, once venues have proven the game."`,
+  },
+  {
+    title: 'Roadmap', time: '8:15 – 8:35',
+    say: `"The plan, in five stages. Months 0 to 6: build two 50 kilogram prototype cars. Months 6 to 9: measure how many joules a real lane delivers per pass. Months 9 to 12: play 50 full test matches. That's this seed round."
+"Year 2: open our own flagship arena and prove players pay. Year 3: start selling arena packages to other venues."
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."`,
   },
   {
-    title: 'The ask', time: '8:10 – 8:50',
-    say: `"We're raising $250,000 in seed funding: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
-"For that, you get two prototype cars, a charging test arena, and 50 matches of real energy data that prove whether this sport works."`,
+    title: 'Projections', time: '8:35 – 9:10',
+    say: `"These are projections, not promises. If we sell 4 arenas in year 3, 10 in year 4 and 20 in year 5, revenue grows to about $10.8 million, and we become profitable in year 4."
+"You invest $250,000 for 20% of the company. We'd raise about $1.5 million more in year 2 to build the flagship, so your share would drop to about 13%."
+"If KickShift is valued at three times its year-5 revenue, that 13% would be worth roughly $4 million. It's a risky early-stage bet, and the first 12 months are designed to test those risks cheaply."`,
   },
   {
-    title: 'Close', time: '8:50 – 9:30',
+    title: 'The ask', time: '9:10 – 9:30',
+    say: `"So we're raising $250,000 for 20%: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
+"You get two prototype cars, a charging test arena, and 50 matches of real data to prove the sport works."`,
+  },
+  {
+    title: 'Close', time: '9:30 – 10:00',
     say: `(Let the car launch and hit the ball before speaking.)
 "Faraday's law to charge. A supercapacitor to store. Newton's third law to boost. Geometry to score."
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."

@@ -10,7 +10,7 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 | `../docs/` | The same deck, set up for GitHub Pages: **https://jasonj2609-oss.github.io/Jason-Jimenez/** once Pages is switched on (see below). |
 | `export/videos/*.mp4` | One 1080p video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
 | `export/stills/*.png` | The final frame of every slide (a backup, or for thumbnails/handouts). |
-| `SCRIPT.md` | A ~9-minute speaker script plus a physics cheat-sheet for Q&A. |
+| `SCRIPT.md` | A ~10-minute speaker script plus physics and business cheat-sheets for Q&A. |
 | `src/` | Source code (3D scene, physics canvases, speaker notes). |
 
 ## Presenting the HTML deck
@@ -31,7 +31,7 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 
 1. Create a 1920×1080 Presentation in Canva.
 2. Upload all `export/videos/*.mp4` files.
-3. Put one video per slide, full-bleed, in order (01 → 14).
+3. Put one video per slide, full-bleed, in order (01 → 16).
 4. Each video autoplays when you reach its slide. Preview it once to check how it behaves at the end of the clip.
 5. Text is baked into the videos. To change wording, edit `deck/index.html` (or ask for text-free "clean" versions) and add your own Canva text on top.
 
@@ -47,10 +47,12 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 8. One pass: 1,000 J collected against the 500 J needed to go from 4 to 6 m/s
 9. Energy is a tactic: E = PL/v
 10. Hitboxes: Wedge, Balanced and Wall shapes, with launch angle θ = arcsin((r − h)/r)
-11. Operating cost: power over a match, with energy as the area under the curve
-12. Roadmap
-13. The ask
-14. Close: the car launches the futuristic ball at the camera, then the final title
+11. Business model: how money flows from players to venues to KickShift, plus one venue's year (≈ $672K revenue, ≈ $359K profit, arena paid back in ≈ 13 months)
+12. Costs, on a log scale: under $1 of electricity a match, up to a $3M full-size arena later
+13. Roadmap: build, charge, play (this round), then a flagship venue and arena sales
+14. Projections and return: revenue and costs for years 1–5, plus the investor's stake (20% now, ≈ 13% after a Series A)
+15. The ask: $250K for 20%
+16. Close: the car launches the futuristic ball at the camera, then the final title
 
 ## Rebuilding
 

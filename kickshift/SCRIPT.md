@@ -94,33 +94,45 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "So choosing your car shape is choosing your play style."
 
-## 11. Operating cost  `7:00 – 7:30`
+## 11. Business model  `7:00 – 7:45`
 
-"What does a match cost to run? Energy is the area under the power curve, equation 9."
+"How does this make money? We start small. Full-size cars come later; first we sell KickShift arenas with the 50 kilogram remote-driven cars to entertainment venues, like go-kart and family entertainment centres."
 
-"For a full 10-minute match that's about 1.5 kilowatt-hours per car, roughly 25 cents of electricity."
+"Players pay the venue about $20 each for a 10-minute match. The venue buys the arena package from us for $400,000, then pays us $2,000 a month for software and the league, plus 10% of match revenue. Later, sponsors and streaming pay us too."
 
-## 12. Roadmap  `7:30 – 8:10`
+*(Point to the chart.) "For one venue running 24 matches a day, that's about $672,000 a year. After staff, space, upkeep and our fees, the venue keeps about $359,000, so it earns back the arena in about 13 months. That's why a venue would buy one."*
 
-"The plan, in four stages."
+## 12. Costs  `7:45 – 8:15`
 
-"Months 0 to 6: build two 50 kilogram prototype cars."
+"This is a log scale, so each line is ten times the last."
 
-"Months 6 to 9: charge. Measure how many joules a real lane delivers per pass, and how much reaches the wheels."
+"Running it is cheap: the electricity for a whole match is under a dollar. A replacement bumper shell is about $150, and a production car about $12,000."
 
-"Months 9 to 12: play 50 full test matches."
+"Building it: this round, the prototype system, is $250,000. Each venue arena costs us about $250,000 to build and sells for $400,000. A full-size pro arena, around $3 million, only comes later, once venues have proven the game."
 
-"Year 2: launch a full-size pilot league."
+## 13. Roadmap  `8:15 – 8:35`
+
+"The plan, in five stages. Months 0 to 6: build two 50 kilogram prototype cars. Months 6 to 9: measure how many joules a real lane delivers per pass. Months 9 to 12: play 50 full test matches. That's this seed round."
+
+"Year 2: open our own flagship arena and prove players pay. Year 3: start selling arena packages to other venues."
 
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."
 
-## 13. The ask  `8:10 – 8:50`
+## 14. Projections  `8:35 – 9:10`
 
-"We're raising $250,000 in seed funding: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
+"These are projections, not promises. If we sell 4 arenas in year 3, 10 in year 4 and 20 in year 5, revenue grows to about $10.8 million, and we become profitable in year 4."
 
-"For that, you get two prototype cars, a charging test arena, and 50 matches of real energy data that prove whether this sport works."
+"You invest $250,000 for 20% of the company. We'd raise about $1.5 million more in year 2 to build the flagship, so your share would drop to about 13%."
 
-## 14. Close  `8:50 – 9:30`
+"If KickShift is valued at three times its year-5 revenue, that 13% would be worth roughly $4 million. It's a risky early-stage bet, and the first 12 months are designed to test those risks cheaply."
+
+## 15. The ask  `9:10 – 9:30`
+
+"So we're raising $250,000 for 20%: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
+
+"You get two prototype cars, a charging test arena, and 50 matches of real data to prove the sport works."
+
+## 16. Close  `9:30 – 10:00`
 
 *(Let the car launch and hit the ball before speaking.)*
 
@@ -143,5 +155,22 @@ Press **N** in the HTML deck to see these notes with a running timer.
 | Tactics | E = P L / v | 2 m/s → 2,000 J; 4 m/s → 1,000 J; 8 m/s → 500 J |
 | Hitbox launch angle | θ = arcsin((r − h)/r), h < r | r = 0.75 m: Wedge h = 0.45 → 24°, Balanced 0.60 → 12°, Wall ≥ 0.75 → 0° |
 | Match energy | E = ∫ P dt | ≈ 1.5 kWh per car → ≈ $0.25 at $0.16/kWh |
+
+### Business cheat-sheet (for Q&A)
+
+| Item | Estimate | How we got it |
+|---|---|---|
+| Match price | $20 per player, 4 players (2v2), 10 minutes | in line with go-kart pricing |
+| Venue revenue | ≈ $672K a year | $80 a match × 24 matches a day × 350 days |
+| Venue costs | staff $120K, space $60K, upkeep + power $42K, our fees $91K | our fees = $2K/month + 10% of revenue |
+| Venue profit | ≈ $359K a year → arena pays back in ≈ 13 months | $400K ÷ $359K |
+| Arena package | costs us ≈ $250K, sells for $400K | 6 cars $72K, floor + lanes $120K, cameras/software $30K, barriers/install $28K |
+| Production car | ≈ $12K | 50 kg remote-driven car with coil, supercapacitor, battery, motors, telemetry |
+| Electricity per match | under $1 | 4 cars × ≈ 0.1 kWh at ≈ $0.16/kWh, plus lane losses |
+| Projections | 0 → 1 → 5 → 15 → 35 arenas (years 1–5); revenue $0 → $0.67M → $2.45M → $5.49M → $10.85M | sales + recurring fees + flagship venue |
+| Break-even | year 4 (projected) | costs $0.25M → $1.3M → $2.6M → $4.7M → $8.4M |
+| Terms | $250K for 20%; ≈ 13% after a $1.5M Series A | illustrative year-5 value at 3× revenue ≈ $4M |
+
+Biggest risks (be ready to name them): wireless-lane efficiency on moving cars, bumper durability, safety around crowds, and whether venues buy. The seed round tests the first three before big money is spent.
 
 Sources and caveats: the prototype numbers are illustrative. Supercapacitor and battery ranges are typical published values. Purdue University has reported wireless power transfer to a moving truck at highway speed; that supports the principle, not KickShift's specific design.

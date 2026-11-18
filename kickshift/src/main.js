@@ -4,6 +4,7 @@ import katex from 'katex';
 import { createStage } from './car3d.js';
 import * as S from './slides2d.js';
 import * as D from './demo2d.js';
+import * as B from './biz2d.js';
 import { NOTES } from './notes.js';
 import { clamp, prog, E } from './util.js';
 
@@ -23,7 +24,8 @@ const PLAN = {
   intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, meet: { gl: 'meet', dur: 14 },
   lane: { draw: D.sLane, dur: 10 }, store: { draw: D.sStore, dur: 9 }, boost: { draw: D.sBoost, dur: 11 },
   pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 }, hitbox: { gl: 'hitbox', overlay: D.sHitboxOverlay, dur: 12 },
-  cost: { draw: D.sCost, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
+  biz: { draw: B.sBiz, dur: 11 }, costs: { draw: B.sCosts, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, return: { draw: B.sReturn, dur: 10 },
+  ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
 };
 const DEF = slides.map(el => ({ el, id: el.dataset.id, ...PLAN[el.dataset.id] }));
 

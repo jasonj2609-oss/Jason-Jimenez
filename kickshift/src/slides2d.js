@@ -573,25 +573,26 @@ export const PHASES = [
   { a: 0, b: 6, name: 'Build', sub: 'two 50 kg prototype cars' },
   { a: 6, b: 9, name: 'Charge', sub: 'lane tests: joules per pass' },
   { a: 9, b: 12, name: 'Play', sub: '50 full test matches' },
-  { a: 12, b: 24, name: 'Launch', sub: 'full-size pilot league' },
+  { a: 12, b: 24, name: 'Flagship', sub: 'first venue, open to players' },
+  { a: 24, b: 36, name: 'Sell', sub: 'arena packages to venues' },
 ];
 export function sRoad(ctx, t) {
   bg(ctx, { gy: 300, glow: 0.05 });
-  const X0 = 440, X1 = 1780, Mx = 24, X = (mo) => X0 + (mo / Mx) * (X1 - X0);
-  const rowY = (i) => 420 + i * 115, bh = 46, y0 = 890;
+  const X0 = 440, X1 = 1780, Mx = 36, X = (mo) => X0 + (mo / Mx) * (X1 - X0);
+  const rowY = (i) => 400 + i * 96, bh = 46, y0 = 890;
   const pa = E.outCubic(prog(t, 0.2, 1.0));
   ctx.save(); ctx.globalAlpha = pa; ctx.strokeStyle = 'rgba(242,242,238,0.72)'; ctx.lineWidth = 1.4;
   ctx.beginPath(); ctx.moveTo(X0, y0); ctx.lineTo(X1, y0); ctx.stroke();
-  for (let mo = 0; mo <= Mx; mo += 3) { ctx.beginPath(); ctx.moveTo(X(mo), y0); ctx.lineTo(X(mo), y0 - 9); ctx.stroke(); }
+  for (let mo = 0; mo <= Mx; mo += 6) { ctx.beginPath(); ctx.moveTo(X(mo), y0); ctx.lineTo(X(mo), y0 - 9); ctx.stroke(); }
   ctx.strokeStyle = 'rgba(242,242,238,0.07)'; ctx.lineWidth = 1;
-  for (let mo = 3; mo <= Mx; mo += 3) { ctx.beginPath(); ctx.moveTo(X(mo), 350); ctx.lineTo(X(mo), y0); ctx.stroke(); }
+  for (let mo = 6; mo <= Mx; mo += 6) { ctx.beginPath(); ctx.moveTo(X(mo), 350); ctx.lineTo(X(mo), y0); ctx.stroke(); }
   ctx.restore();
-  for (let mo = 0; mo <= Mx; mo += 3) mtext(ctx, String(mo), X(mo), y0 + 28, { size: 21, color: C.silver, align: 'center', alpha: pa });
+  for (let mo = 0; mo <= Mx; mo += 6) mtext(ctx, String(mo), X(mo), y0 + 28, { size: 21, color: C.silver, align: 'center', alpha: pa });
   mtext(ctx, 'months from funding', (X0 + X1) / 2, y0 + 64, { size: 24, align: 'center', alpha: pa, italicAll: true });
   const cur = Mx * E.inOutSine(prog(t, 1.0, 7.4));
   PHASES.forEach((ph, i) => {
     const y = rowY(i), la = E.outCubic(prog(t, 0.5 + i * 0.15, 1.1 + i * 0.15));
-    mtext(ctx, ph.name, X0 - 40, y - 12, { size: 38, align: 'right', alpha: la });
+    mtext(ctx, ph.name, X0 - 40, y - 12, { size: 34, align: 'right', alpha: la });
     mtext(ctx, ph.sub, X0 - 40, y + 24, { size: 22, color: C.silver, align: 'right', alpha: la, italicAll: true });
     const end = clamp(cur, ph.a, ph.b); if (end <= ph.a) return;
     const r = new Path2D(); r.rect(X(ph.a), y - bh / 2, X(end) - X(ph.a), bh);
