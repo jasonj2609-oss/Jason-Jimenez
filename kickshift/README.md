@@ -31,24 +31,25 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 
 1. Create a 1920×1080 Presentation in Canva.
 2. Upload all `export/videos/*.mp4` files.
-3. Put one video per slide, full-bleed, in order (01 → 12).
+3. Put one video per slide, full-bleed, in order (01 → 13).
 4. Each video autoplays when you reach its slide. Preview it once to check how it behaves at the end of the clip.
 5. Text is baked into the videos. To change wording, edit `deck/index.html` (or ask for text-free "clean" versions) and add your own Canva text on top.
 
 ## Slide list
 
 1. Intro: "Introducing…", then a black screen, then the headlights turn on and the car is revealed
-2. The idea: soccer + supercars
-3. Meet the car: 3D turntable with callouts and specs
-4. Physics: momentum (car → ball collision, slow-mo)
-5. Physics: impulse (force–time graph, crush bumper)
-6. Physics: kinetic energy (speedometer + ½mv² curve, boost cap)
-7. Physics: collision angles (contact normal, θ = sin⁻¹(d/(R+r)))
-8. The arena: charging pads, live tracking
-9. Cost per match: energy flow, ≈1.5 kWh ≈ $0.25
-10. Roadmap
-11. The ask: $250K + use of funds
-12. Close: the car launches the ball at the camera, then the final title
+2. The idea
+3. Meet the car: 3D turntable with the supercapacitor, receiver coil, boost motors and strike-face nose labelled
+4. Wireless charging: coils under the lane, an alternating magnetic field and the induced voltage (Faraday's law), ε = −N dΦ/dt, E = Pt
+5. Energy storage: battery against supercapacitor on a log–log plot of energy and power per kilogram, plus E = ½CV²
+6. The boost: Newton's third law at the tyre, with the grip limit F ≤ μmg and the power limit F ≤ P/v
+7. One pass: 1,000 J collected against the 500 J needed to go from 4 to 6 m/s
+8. Energy is a tactic: E = PL/v; slower passes collect more energy but cost time
+9. Momentum: the car hits the ball, and total momentum is conserved
+10. Operating cost: power over a match, with energy as the area under the curve
+11. Roadmap
+12. The ask: $250K and the use of funds
+13. Close: the car launches the ball at the camera, then the final title
 
 ## Rebuilding
 
