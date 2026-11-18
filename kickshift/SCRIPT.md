@@ -147,9 +147,18 @@ Tip: the big title on each slide is your cue. Read it, then explain it in your o
 | Projections | 0 → 1 → 5 → 15 → 35 arenas (years 1–5); revenue $0 → $0.67M → $2.45M → $5.49M → $10.85M | sales + recurring fees + flagship venue |
 | Break-even | year 4 (projected) | costs $0.25M → $1.3M → $2.6M → $4.7M → $8.4M |
 
+### Likely question: "How fast does it go? Is there a top speed or a minimum speed?"
+
+Say: "There's no set speed. The driver chooses, and that choice is the game. Normal driving is about 4 metres per second, around 9 miles per hour, and a boost takes it to about 6, around 13 miles per hour. For safety, the software caps the prototype at 8 metres per second, about 18 miles per hour. There's no minimum, but driving slower than 4 doesn't give you a bigger boost, because one pass at 4 already fills the supercapacitor."
+
+- Top speed: a software limit of 8 m/s (≈ 29 km/h, 18 mph) for the 50 kg prototype, because the cars play near glass walls and fans. It's also the fastest speed on the tactics slide.
+- Speeding up: grip limits how fast you can speed up, not your top speed: a ≤ μg = 0.9 × 9.81 ≈ 8.8 m/s².
+- Minimum: none, but the supercapacitor holds about 1,000 J, and one pass at 4 m/s collects 1,000 J (E = P L / v = 1,000 × 4 ÷ 4). Going slower collects more (2,000 J at 2 m/s), but the extra only tops up the battery, and the other team gets to the ball first.
+- The full-size car comes later; its limit would be set after testing.
+
 ### Likely question: "What about damage to the cars? Does it still make money?"
 
-Say: "The first cars are 50 kilograms and remote-driven. A full-speed hit carries about 900 joules, around 200 times less than a real car. The front is a bumper shell that's made to be crushed and swapped for $150, like a hockey stick. Even if damage costs a venue $70,000 a year, it still makes about $290,000 and earns back its arena in under a year and a half. And every replacement shell is something we sell."
+Say: "The first cars are 50 kilograms and remote-driven. A hit at boost speed, 6 metres per second, carries about 900 joules, around 200 times less than a real car. The front is a bumper shell that's made to be crushed and swapped for $150, like a hockey stick. Even if damage costs a venue $70,000 a year, it still makes about $290,000 and earns back its arena in under a year and a half. And every replacement shell is something we sell."
 
 - Physics: KE = ½mv² = ½ × 50 × 6² = 900 J (a 900 kg car at 20 m/s has 180,000 J). Impulse: F = Δp/Δt; p = 300 kg·m/s, so stopping in 5 ms means about 60 kN, while a shell that crushes over 30 ms brings it down to about 10 kN.
 - Cost per venue per year (estimate): 33,600 car-matches; one shell per 100 matches = 336 shells × $150 = $50K; other repairs about $18K (25% of the $72K fleet). Total about $68K, so the venue keeps about $290K and pays back in about 17 months (about 22 months if damage is double).
