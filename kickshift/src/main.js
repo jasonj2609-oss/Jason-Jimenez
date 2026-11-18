@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import katex from 'katex';
 import { createStage } from './car3d.js';
 import * as S from './slides2d.js';
-import * as G from './energy2d.js';
+import * as D from './demo2d.js';
 import { NOTES } from './notes.js';
 import { clamp, prog, E } from './util.js';
 
@@ -20,10 +20,10 @@ fit(); addEventListener('resize', fit);
 
 const slides = [...document.querySelectorAll('.slide')];
 const PLAN = {
-  intro: { gl: 'intro', dur: 14 }, idea: { draw: S.sIdea, dur: 10 }, meet: { gl: 'meet', dur: 14 },
-  lane: { draw: G.sLane, dur: 10 }, store: { draw: G.sStore, dur: 10 }, boost: { draw: G.sBoost, dur: 11 },
-  pass: { draw: G.sPass, dur: 10 }, tactic: { draw: G.sTactic, dur: 10 }, momentum: { draw: S.sMomentum, dur: 10 },
-  cost: { draw: S.sCost, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
+  intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, meet: { gl: 'meet', dur: 14 },
+  lane: { draw: D.sLane, dur: 10 }, store: { draw: D.sStore, dur: 9 }, boost: { draw: D.sBoost, dur: 11 },
+  pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 }, hitbox: { gl: 'hitbox', overlay: D.sHitboxOverlay, dur: 12 },
+  cost: { draw: D.sCost, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
 };
 const DEF = slides.map(el => ({ el, id: el.dataset.id, ...PLAN[el.dataset.id] }));
 
@@ -97,7 +97,7 @@ function meetCallouts(d, t, stage) {
 
 // ---------- boot ----------
 let stage, SP, tls = [], ctxs = [], cur = -1, t0 = 0;
-const glEl = document.getElementById('gl'), flashEl = document.getElementById('flash');
+const glEl = document.getElementById('gl'), flashEl = document.getElementById('flash'), streakEl = document.getElementById('streak');
 
 function renderSlide(i, t) {
   const d = DEF[i];
@@ -109,9 +109,12 @@ function renderSlide(i, t) {
   } else {
     const r = stage[d.gl](t) || {};
     flashEl.style.opacity = r.flash || 0;
+    if (d.overlay && ctxs[i]) { const ctx = ctxs[i]; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.imageSmoothingQuality = 'high'; d.overlay(ctx, t, SP, r); }
+    if (d.id === 'intro') { const sk = r.streak || { a: 0 }; streakEl.style.opacity = sk.a; streakEl.style.transform = `translate(${sk.x - 900}px, ${sk.y - 2}px)`; }
     if (d.id === 'meet') meetCallouts(d, t, stage);
   }
   if (!d.gl) flashEl.style.opacity = 0;
+  if (d.id !== 'intro') streakEl.style.opacity = 0;
 }
 
 function show(i) {

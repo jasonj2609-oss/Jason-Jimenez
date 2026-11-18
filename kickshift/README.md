@@ -31,25 +31,26 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 
 1. Create a 1920×1080 Presentation in Canva.
 2. Upload all `export/videos/*.mp4` files.
-3. Put one video per slide, full-bleed, in order (01 → 13).
+3. Put one video per slide, full-bleed, in order (01 → 14).
 4. Each video autoplays when you reach its slide. Preview it once to check how it behaves at the end of the clip.
 5. Text is baked into the videos. To change wording, edit `deck/index.html` (or ask for text-free "clean" versions) and add your own Canva text on top.
 
 ## Slide list
 
-1. Intro: "Introducing…", then a black screen, then the headlights turn on and the car is revealed
+1. Intro: "Introducing…", a light scan across the car in the dark, a macro shot of the headlight igniting, then a pull-back to the title
 2. The idea
-3. Meet the car: 3D turntable with the supercapacitor, receiver coil, boost motors and strike-face nose labelled
-4. Wireless charging: coils under the lane, an alternating magnetic field and the induced voltage (Faraday's law), ε = −N dΦ/dt, E = Pt
-5. Energy storage: battery against supercapacitor on a log–log plot of energy and power per kilogram, plus E = ½CV²
-6. The boost: Newton's third law at the tyre, with the grip limit F ≤ μmg and the power limit F ≤ P/v
-7. One pass: 1,000 J collected against the 500 J needed to go from 4 to 6 m/s
-8. Energy is a tactic: E = PL/v; slower passes collect more energy but cost time
-9. Momentum: the car hits the ball, and total momentum is conserved
-10. Operating cost: power over a match, with energy as the area under the curve
-11. Roadmap
-12. The ask: $250K and the use of funds
-13. Close: the car launches the ball at the camera, then the final title
+3. What we're pitching: one sport, three parts (the car, the arena and the game)
+4. Meet the car: 3D turntable labelling the supercapacitor, receiver coil, boost motors and strike-face nose
+5. Wireless charging: coils under the lane and the induced voltage, ε = −N dΦ/dt
+6. Energy storage: battery against supercapacitor, plus a supercapacitor filling and emptying, E = ½CV²
+7. The boost: a real tyre close-up with Newton's third law at the contact patch and the grip limit F ≤ μmg
+8. One pass: 1,000 J collected against the 500 J needed to go from 4 to 6 m/s
+9. Energy is a tactic: E = PL/v
+10. Hitboxes: Wedge, Balanced and Wall shapes, with launch angle θ = arcsin((r − h)/r)
+11. Operating cost: power over a match, with energy as the area under the curve
+12. Roadmap
+13. The ask
+14. Close: the car launches the futuristic ball at the camera, then the final title
 
 ## Rebuilding
 

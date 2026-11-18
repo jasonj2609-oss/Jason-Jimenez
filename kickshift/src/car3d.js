@@ -54,45 +54,34 @@ function radialTex(inner, outer, size = 256) {
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 
-// Classic 32-panel match ball. Panels are computed per pixel from the truncated icosahedron,
-// so the seams stay crisp at any size.
+// Futuristic 12-panel ball: pearl-white ceramic panels, graphite grooves with a fine light inlay,
+// and an inset bevel line on every panel. Computed per pixel from the icosahedron directions.
 function makeBall(radius) {
-  const p = (1 + Math.sqrt(5)) / 2;
-  const verts = [];
-  for (const b of [[0, 1, 3 * p], [1, 2 + p, 2 * p], [p, 2, 2 * p + 1]]) {
-    for (let r = 0; r < 3; r++) {
-      const v = [b[r % 3], b[(r + 1) % 3], b[(r + 2) % 3]];
-      for (const sx of [1, -1]) for (const sy of [1, -1]) for (const sz of [1, -1]) {
-        const w = [v[0] * sx, v[1] * sy, v[2] * sz];
-        if (!verts.some(q => Math.hypot(q[0] - w[0], q[1] - w[1], q[2] - w[2]) < 1e-6)) verts.push(w);
-      }
-    }
-  }
-  const normals = [];
-  const add = (x, y, z) => { const n = V3(x, y, z).normalize(); if (!normals.some(m => m.distanceTo(n) < 1e-4)) normals.push(n); };
-  for (const [a, b] of [[1, p]]) for (const s1 of [1, -1]) for (const s2 of [1, -1]) { add(0, s1 * a, s2 * b); add(s1 * a, s2 * b, 0); add(s2 * b, 0, s1 * a); }
-  const nPent = normals.length; // 12
-  for (const sx of [1, -1]) for (const sy of [1, -1]) for (const sz of [1, -1]) add(sx, sy, sz);
-  for (const s1 of [1, -1]) for (const s2 of [1, -1]) { add(0, s1 * p, s2 / p); add(s1 * p, s2 / p, 0); add(s2 / p, 0, s1 * p); }
-  const dists = normals.map(n => Math.max(...verts.map(v => n.x * v[0] + n.y * v[1] + n.z * v[2])));
-  const mat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.42, metalness: 0, clearcoat: 0.6, clearcoatRoughness: 0.25 });
+  const p = (1 + Math.sqrt(5)) / 2, normals = [];
+  for (const s1 of [1, -1]) for (const s2 of [1, -1]) for (const v of [[0, s1, s2 * p], [s1, s2 * p, 0], [s2 * p, 0, s1]]) normals.push(V3(...v).normalize());
+  const mat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.28, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.06 });
   mat.onBeforeCompile = (sh) => {
-    sh.uniforms.uN = { value: normals }; sh.uniforms.uD = { value: dists };
+    sh.uniforms.uN = { value: normals };
     sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vObj;')
       .replace('#include <begin_vertex>', '#include <begin_vertex>\nvObj = position;');
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', `#include <common>
-        varying vec3 vObj; uniform vec3 uN[32]; uniform float uD[32];`)
+        varying vec3 vObj; uniform vec3 uN[12]; float gGroove; float gInlay;`)
       .replace('#include <color_fragment>', `#include <color_fragment>
-        vec3 u = normalize(vObj); float b1 = -1.0, b2 = -1.0; int bi = 0;
-        for (int i = 0; i < 32; i++) { float s = dot(u, uN[i]) / uD[i]; if (s > b1) { b2 = b1; b1 = s; bi = i; } else if (s > b2) { b2 = s; } }
-        float seam = smoothstep(0.0025, 0.012, b1 - b2);
-        vec3 panel = bi < ${nPent} ? vec3(0.018) : vec3(0.86, 0.86, 0.84);
-        diffuseColor.rgb = panel * mix(0.22, 1.0, seam);`)
+        vec3 u = normalize(vObj); float b1 = -2.0, b2 = -2.0;
+        for (int i = 0; i < 12; i++) { float s = dot(u, uN[i]); if (s > b1) { b2 = b1; b1 = s; } else if (s > b2) { b2 = s; } }
+        float d = b1 - b2;
+        gGroove = 1.0 - smoothstep(0.030, 0.042, d);
+        gInlay = 1.0 - smoothstep(0.004, 0.009, d);
+        float bevel = smoothstep(0.105, 0.112, d) * (1.0 - smoothstep(0.118, 0.125, d));
+        vec3 pearl = vec3(0.90, 0.905, 0.91), graphite = vec3(0.025, 0.027, 0.03);
+        diffuseColor.rgb = mix(pearl * (1.0 - 0.55 * bevel), graphite, gGroove);`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
-        roughnessFactor = mix(0.85, roughnessFactor, seam);`);
+        roughnessFactor = mix(roughnessFactor, 0.55, gGroove);`)
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+        totalEmissiveRadiance += vec3(0.95) * gInlay;`);
   };
-  return new THREE.Mesh(new THREE.SphereGeometry(radius, 128, 96), mat);
+  return new THREE.Mesh(new THREE.SphereGeometry(radius, 160, 120), mat);
 }
 
 function beamMaterial() {
@@ -259,6 +248,10 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     car.add(dust);
   }
 
+  // overhead light that travels along the body during the intro reveal
+  const sweep = new THREE.SpotLight(0xffffff, 0, 20, 0.2, 0.85, 1.4);
+  sweep.position.set(0.4, 4.4, 0); sweep.target.position.set(0, 0.6, 0); scene.add(sweep, sweep.target);
+
   // ---------- floor, turntable rings, fake mirror reflection ----------
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshStandardMaterial({ color: 0x060606, roughness: 0.24, metalness: 0.0, transparent: true, opacity: 0.92, envMap: scene.environment, envMapIntensity: 0.12 }));
   floor.rotation.x = -Math.PI / 2; scene.add(floor);
@@ -306,6 +299,24 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
+  // ---------- hitbox wireframes ----------
+  const hbEdgeMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false });
+  const hbFillMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide });
+  const hbGroup = new THREE.Group(); scene.add(hbGroup);
+  let hbEdges = null, hbFill = null;
+  function setHitbox(L, Hh, hf, ch, Wd = 2.1) {
+    const zr = bb.max.z + 0.05, zf = zr - L, y0 = 0.06, sh = new THREE.Shape();
+    sh.moveTo(zr, y0); sh.lineTo(zr, Hh);
+    if (ch > 0.02 && Hh - hf > 0.02) { sh.lineTo(zf + ch, Hh); sh.lineTo(zf, hf); } else sh.lineTo(zf, Hh);
+    sh.lineTo(zf, y0); sh.closePath();
+    const g = new THREE.ExtrudeGeometry(sh, { depth: Wd, bevelEnabled: false });
+    g.rotateY(-Math.PI / 2); g.translate(Wd / 2, 0, 0);
+    if (hbEdges) { hbGroup.remove(hbEdges, hbFill); hbEdges.geometry.dispose(); hbFill.geometry.dispose(); }
+    hbFill = new THREE.Mesh(g, hbFillMat); hbEdges = new THREE.LineSegments(new THREE.EdgesGeometry(g, 15), hbEdgeMat);
+    hbGroup.add(hbFill, hbEdges);
+    return zf;
+  }
+
   // ---------- state helpers ----------
   function lights({ drl = 0, head = 0, tail = 0, beam = 0, spot = null } = {}) {
     drlMat.emissiveIntensity = drl * 9;
@@ -314,6 +325,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     spots.forEach(s => (s.intensity = (spot ?? head) * 70));
     bMat.uniforms.uInt.value = beam * 0.11;
     dust.material.opacity = beam * 0.8;
+    sweep.intensity = 0; hbEdgeMat.opacity = 0; hbFillMat.opacity = 0;
   }
   function paint(name) { const p = PAINT[name]; bodyMat.color.setHex(p.color); bodyMat.metalness = p.metalness; bodyMat.roughness = p.roughness; }
   function setWheel(angle) { wheels.forEach(w => (w.rotation.x = -angle)); rWheels.forEach(w => (w.rotation.x = -angle)); }
@@ -342,25 +354,38 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     return E.outCubic(clamp((d - 0.34) / 0.18));
   }
 
+  // Intro: a light scan traces the body in the dark, a macro shot on the headlight as it ignites,
+  // then a long pull-back to the hero angle while the studio lights come up.
   function intro(t) {
     paint('silver'); ring.visible = false; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
-    const drl = flicker(t, 3.7);
-    const head = E.outExpo(prog(t, 4.55, 4.75));
-    const env = E.inOutCubic(prog(t, 5.2, 8.8));
+    const drl = flicker(t, 4.4);
+    const head = E.outExpo(prog(t, 5.2, 5.4));
+    const env = E.inOutCubic(prog(t, 6.0, 9.6));
     scene.environmentIntensity = 0.85 * env;
-    lights({ drl, head, beam: head * (1 - 0.4 * env), tail: prog(t, 6.2, 6.6) });
-    const sp = prog(t, 4.9, 7.3);
-    scan.z.value = lerp(NOSE - 0.6, TAIL + 0.6, E.inOutCubic(sp));
-    scan.amt.value = sp > 0 && sp < 1 ? Math.min(1, sp * 6, (1 - sp) * 6) : 0;
-    bloom.strength = 0.45 + 0.8 * Math.exp(-Math.pow((t - 4.62) * 5, 2));
-    const k = E.inOutCubic(prog(t, 3.4, 13));
-    const drift = Math.max(0, t - 9) * 0.02;
-    look(lerp(2.4, 5.6, k) + drift, lerp(0.42, 1.25, k), lerp(-6.4, -4.9, k), lerp(-0.2, 0.25, k), lerp(0.55, 0.85, k), lerp(-1.6, -0.1, k), lerp(26, 30, k));
+    lights({ drl, head, beam: head * (1 - 0.4 * env), tail: prog(t, 6.6, 7.0) });
+    const sp = prog(t, 2.9, 4.4);
+    scan.col.value.setScalar(2.6);
+    scan.z.value = lerp(TAIL + 0.6, NOSE - 0.6, E.inOutCubic(sp));
+    scan.amt.value = sp > 0 && sp < 1 ? Math.min(1, sp * 5, (1 - sp) * 5) : 0;
+    const sw = prog(t, 6.6, 9.4);
+    sweep.position.z = lerp(TAIL + 1.2, NOSE - 1.2, E.inOutSine(sw)); sweep.target.position.z = sweep.position.z;
+    sweep.intensity = 45 * Math.sin(Math.PI * sw);
+    bloom.strength = 0.45 + 0.9 * Math.exp(-Math.pow((t - 5.27) * 6, 2));
+    // camera: macro on the headlight, then pull back to the hero three-quarter view
+    const lamp = V3(0.62, 0.64, NOSE + 0.38);
+    const m = E.inOutSine(prog(t, 2.6, 5.6));
+    const macroP = V3(lerp(1.7, 1.18, m), lerp(0.86, 0.72, m), lerp(NOSE - 1.7, NOSE - 1.05, m));
+    const k = E.inOutCubic(prog(t, 5.7, 10.4)), drift = Math.max(0, t - 10.4) * 0.03;
+    const heroP = V3(5.6 + drift, 1.25, -4.9), heroT = V3(0.25, 0.85, -0.1);
+    const cp = macroP.clone().lerp(heroP, k), ct = lamp.clone().lerp(heroT, k);
+    look(cp.x, cp.y, cp.z, ct.x, ct.y, ct.z, lerp(24, 30, k));
     draw();
+    const lp = project(lamp.x + 0.02, lamp.y, lamp.z - 0.05);
+    return { streak: { x: lp.x, y: lp.y, a: Math.exp(-Math.pow((t - 5.3) * 3.2, 2)) } };
   }
 
   function meet(t) {
-    paint('silver'); ring.visible = true; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
+    scan.col.value.setScalar(1.6); paint('silver'); ring.visible = true; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
     const a = E.outCubic(prog(t, 0, 1.0));
     scene.environmentIntensity = 1.15 * a;
     ringMat.opacity = 0.45 * E.outCubic(prog(t, 0.3, 1.6));
@@ -424,6 +449,45 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
   OUT.end = OUT.launch + OUT.tc + 1.4;
 
+  // Hitbox presets: a simplified collision shape around the car. The front edge height h decides
+  // where the ball is struck, so the same car can play low chips or flat drives.
+  const HITBOX = {
+    presets: [
+      { name: 'Wedge', L: 4.9, H: 1.05, hf: 0.45, ch: 1.4 },
+      { name: 'Balanced', L: 4.6, H: 1.2, hf: 0.6, ch: 0.9 },
+      { name: 'Wall', L: 4.5, H: 1.35, hf: 1.35, ch: 0.0 },
+    ],
+    at(t) {
+      const P = this.presets, seg = [[0, 4.0], [4.8, 7.6], [8.4, 99]];
+      let i = 0, u = 0;
+      if (t >= 4.0 && t < 4.8) { i = 0; u = E.inOutCubic((t - 4.0) / 0.8); }
+      else if (t >= 4.8 && t < 7.6) i = 1;
+      else if (t >= 7.6 && t < 8.4) { i = 1; u = E.inOutCubic((t - 7.6) / 0.8); }
+      else if (t >= 8.4) i = 2;
+      const a = P[i], b = P[Math.min(2, i + 1)], mix = (k) => lerp(a[k], b[k], u);
+      return { i: u > 0.5 ? Math.min(2, i + 1) : i, L: mix('L'), H: mix('H'), hf: mix('hf'), ch: mix('ch') };
+    },
+  };
+  function hitbox(t) {
+    scan.col.value.setScalar(1.6); paint('silver'); ring.visible = false; placeCar(0); setWheel(0); scan.amt.value = 0;
+    const a = E.outCubic(prog(t, 0, 1.0));
+    scene.environmentIntensity = 1.1 * a;
+    lights({ drl: a, head: 0.4 * a, spot: 0, beam: 0, tail: a });
+    const st = HITBOX.at(t), zf = setHitbox(st.L, st.H, st.hf, st.ch);
+    const ha = E.outCubic(prog(t, 0.6, 1.4));
+    hbEdgeMat.opacity = 0.95 * ha; hbFillMat.opacity = 0.07 * ha;
+    const hc = Math.min(st.hf, BALL_R), gap = Math.sqrt(Math.max(0, BALL_R * BALL_R - (BALL_R - hc) * (BALL_R - hc)));
+    const zb = zf - gap;
+    placeBall(0, BALL_R, zb, 0.3, 0.2, true);
+    bloom.strength = 0.4;
+    // side view, so angles on screen match the real angles
+    const cz = -1.0, dist = lerp(13.2, 12.4, E.inOutSine(prog(t, 0, 12)));
+    look(dist, 1.25, cz, 0, 0.62, cz, 30, 110);
+    draw();
+    const P = (y, z) => project(1.06, y, z);
+    return { ...st, contact: P(hc, zf), center: P(BALL_R, zb), foot: P(0, zf), ballR: P(BALL_R * 2, zb).y };
+  }
+
   function project(x, y, z) {
     const v = V3(x, y, z).project(camera);
     return { x: (v.x + 1) * 960, y: (1 - v.y) * 540, z: v.z };
@@ -462,7 +526,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     model.traverse(o => { if (o.isMesh) { let p = o, inW = false; while (p) { if (p === fr) inW = true; p = p.parent; } o.visible = inW; } });
     const wp = new THREE.Vector3(); fr.getWorldPosition(wp);
     const wr = 0.4;
-    const wheel = shot(Math.round(wr * 2 * ppm), Math.round(wr * 2 * ppm), (o) => { o.left = -wr; o.right = wr; o.top = wr; o.bottom = -wr; o.position.set(20, wp.y, wp.z); o.up.set(0, 1, 0); o.lookAt(0, wp.y, wp.z); });
+    const wheel = shot(900, 900, (o) => { o.left = -wr; o.right = wr; o.top = wr; o.bottom = -wr; o.position.set(20, wp.y, wp.z); o.up.set(0, 1, 0); o.lookAt(0, wp.y, wp.z); });
     model.traverse(o => { if (o.isMesh) o.visible = o.userData.v; });
     parts.visible = true;
     const hh = 1.25;
@@ -473,7 +537,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     paint('silver');
     car.visible = false; placeBall(0, 0, 0, 0.5, 0.3, true); ballShadow.visible = false; ballRefl.visible = false;
     const br = 0.8;
-    const ballImg = shot(480, 480, (o) => { o.left = -br; o.right = br; o.top = br; o.bottom = -br; o.position.set(6, 6, 12); o.up.set(0, 1, 0); o.lookAt(0, 0, 0); });
+    const ballImg = shot(720, 720, (o) => { o.left = -br; o.right = br; o.top = br; o.bottom = -br; o.position.set(6, 6, 12); o.up.set(0, 1, 0); o.lookAt(0, 0, 0); });
     car.visible = true;
     hide.forEach((o, i) => (o.visible = vis[i]));
     scene.background = save.bg; scene.environmentIntensity = save.env;
@@ -481,14 +545,14 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     renderer.setPixelRatio(dpr); renderer.setSize(1920, 1080, false);
     return {
       side: { body, ppm, noseX: (hw - NOSE) * ppm, tailX: (hw - TAIL) * ppm, groundY: top * ppm, wheels: wheelPos, wheelR: 0.36 },
-      wheel: { img: wheel, ppm },
+      wheel: { img: wheel, ppm: 900 / (wr * 2) },
       top: { img: topImg, black: topBlack, ppm, length: TAIL - NOSE },
-      ball: { img: ballImg, ppm: 480 / (br * 2), r: BALL_R },
+      ball: { img: ballImg, ppm: 720 / (br * 2), r: BALL_R },
     };
   }
 
   return {
-    renderer, intro, meet, outro, project, bake, OUT, HB,
+    renderer, intro, meet, outro, hitbox, HITBOX, project, bake, OUT, HB,
     anchors: { nose: V3(0, 0.35, NOSE + 0.1), corner: V3(0.85, 0.35, NOSE + 0.55), sill: V3(1.0, 0.3, 0.2), wing: V3(0.45, deckY + 0.27, TAIL - 0.6), bb },
   };
 }

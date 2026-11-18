@@ -1,4 +1,4 @@
-<title>KickShift</title>
+<title>KickShift by Jason Jimenez</title>
 <meta name="description" content="KickShift: an electric supercar built for car-soccer. Investor pitch by Jason Jimenez.">
 <style>
 /*__LIB_CSS__*/
@@ -39,6 +39,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
 
 /* overlays */
 #grain { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: .05; mix-blend-mode: overlay; }
+#streak { position: absolute; left: 0; top: 0; width: 1800px; height: 4px; opacity: 0; pointer-events: none; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(235,242,255,0.95) 50%, rgba(255,255,255,0)); box-shadow: 0 0 24px 6px rgba(220,232,255,0.35); border-radius: 4px; }
 #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
 #bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--silver); transition: width .5s ease; }
 #count { position: absolute; right: 44px; bottom: 26px; font: 400 18px var(--serif); color: rgba(242,242,238,.35); }
@@ -114,11 +115,11 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
 
   <!-- 1 · INTRO -->
   <section class="slide" data-id="intro">
-    <div class="intro-word copy" data-in="chars" data-at="0.6" data-out="2.9" data-stagger="0.06">Introducing</div>
+    <div class="intro-word copy" data-in="chars" data-at="0.5" data-out="2.4" data-stagger="0.06">Introducing</div>
     <div class="hero-title copy">
-      <h1 class="mega" data-in="chars" data-at="7.7" data-stagger="0.07">KickShift</h1>
-      <div class="tag" data-in="up" data-at="8.8">A car built to score.</div>
-      <div class="smallcaps author" data-in="up" data-at="9.4">Jason Jimenez</div>
+      <h1 class="mega" data-in="chars" data-at="9.6" data-stagger="0.07">KickShift</h1>
+      <div class="tag" data-in="up" data-at="10.6">A car built to score.</div>
+      <div class="smallcaps author" data-in="up" data-at="11.2">Jason Jimenez</div>
     </div>
   </section>
 
@@ -130,6 +131,13 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
       <div class="w it" data-in="slam" data-at="1.3" data-out="3.0">Supercars.</div>
       <div class="q" data-in="chars" data-at="3.3" data-stagger="0.03">What if the car<br><em>was the player?</em></div>
     </div>
+  </section>
+
+  <!-- 2b · THE PITCH -->
+  <section class="slide" data-id="pitch">
+    <canvas class="c2d"></canvas>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2">What we are pitching</div><h2 class="title" data-in="chars" data-at="0.4">One sport, <em>three parts.</em></h2></div>
+    <div class="quote copy" style="bottom:110px" data-in="up" data-at="4.2">Your investment builds the prototype system: two cars and one test arena.</div>
   </section>
 
   <!-- 3 · MEET THE CAR -->
@@ -154,8 +162,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§2</b>Wireless charging</div><h2 class="title" data-in="chars" data-at="0.4">The field <em>charges the car.</em></h2></div>
     <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="\varepsilon = -N\,\dfrac{d\Phi_B}{dt}"></span><span class="no">(1)</span></div>
-    <div class="eqn sm copy" style="right:120px; top:215px" data-in="up" data-at="4.4"><span data-tex="E = P\,t"></span><span class="no">(2)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 1.</b>Side view, not to scale. Alternating current under the lane makes a changing magnetic field, which induces a voltage in the car's receiver coil (Faraday's law). AC drawn far slower than the real ~85 kHz.</div>
+    <div class="eqn sm copy" style="right:120px; top:215px" data-in="up" data-at="2.6"><span data-tex="E = P\,t"></span><span class="no">(2)</span></div>
   </section>
 
   <!-- 5 · STORAGE -->
@@ -163,7 +170,6 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§3</b>Energy storage</div><h2 class="title" data-in="chars" data-at="0.4">Endurance <em>and sprint.</em></h2></div>
     <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \tfrac12\,C V^{2}"></span><span class="no">(3)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 2.</b>(a) Typical ranges, log scales: batteries hold more energy per kilogram, supercapacitors move it faster. (b) The lane fills the supercapacitor; the boost empties it. Prototype: <i>C</i> ≈ 0.87 F at 48 V holds 1 kJ.</div>
   </section>
 
   <!-- 6 · BOOST -->
@@ -171,52 +177,44 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§4</b>The boost</div><h2 class="title" data-in="chars" data-at="0.4">Push the floor, <em>it pushes back.</em></h2></div>
     <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="F = \dfrac{\tau}{r} \le \mu\,m g"></span><span class="no">(4)</span></div>
-    <div class="eqn sm copy" style="right:120px; top:215px" data-in="up" data-at="2.4"><span data-tex="F \le \dfrac{P}{v}"></span><span class="no">(5)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 3.</b>Prototype: <i>m</i> = 50 kg, <i>μ</i> = 0.9, wheel radius 0.15 m. Newton's third law: the tyre pushes the floor back, the floor pushes the car forward. Boost is limited by stored energy, motor power, grip and heat.</div>
   </section>
 
   <!-- 7 · ONE PASS -->
   <section class="slide" data-id="pass">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§5</b>One pass</div><h2 class="title" data-in="chars" data-at="0.4">Is one pass <em>enough?</em></h2></div>
-    <div class="eqn sm copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = P\,t = (1000\ \mathrm{W})(1\ \mathrm{s}) = 1000\ \mathrm{J}"></span><span class="no">(6)</span></div>
-    <div class="eqn sm copy" style="right:120px; top:200px" data-in="up" data-at="5.6"><span data-tex="\Delta E_k = \tfrac12 m\,(v_f^2 - v_i^2) = \tfrac12(50)(6^2 - 4^2) = 500\ \mathrm{J}"></span><span class="no">(7)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 4.</b>Illustrative prototype numbers: 4 m lane at 4 m/s, 1 kW received, about half lost in storage and drivetrain. Charging a moving vehicle has been shown at highway speed (Purdue University); KickShift's design still has to be tested.</div>
+    <div class="eqn sm copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = P\,t = (1000\ \mathrm{W})(1\ \mathrm{s}) = 1000\ \mathrm{J}"></span><span class="no">(5)</span></div>
+    <div class="eqn sm copy" style="right:120px; top:200px" data-in="up" data-at="5.6"><span data-tex="\Delta E_k = \tfrac12 m\,(v_f^2 - v_i^2) = \tfrac12(50)(6^2 - 4^2) = 500\ \mathrm{J}"></span><span class="no">(6)</span></div>
   </section>
 
   <!-- 8 · TACTIC -->
   <section class="slide" data-id="tactic">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§6</b>Strategy</div><h2 class="title" data-in="chars" data-at="0.4">Energy is <em>a tactic.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \dfrac{P L}{v}"></span><span class="no">(8)</span></div>
-    <div class="quote copy" data-in="up" data-at="7.6">Collect power from the field, store it onboard, and decide when to spend it.</div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 5.</b>At constant charging power, a slower pass collects more energy (<i>P</i> = 1 kW, <i>L</i> = 4 m, <i>η</i> = 0.5) but costs time, and an opponent may reach the ball first.</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \dfrac{P L}{v}"></span><span class="no">(7)</span></div>
+    <div class="quote copy" data-in="up" data-at="7.0">Collect power from the field, store it onboard, and decide when to spend it.</div>
   </section>
 
-  <!-- 4 · MOMENTUM -->
-  <section class="slide" data-id="momentum">
+  <!-- 9 · HITBOX -->
+  <section class="slide" data-id="hitbox">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Momentum</div><h2 class="title" data-in="chars" data-at="0.4">Momentum does<br><em>the kicking.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="0.9"><span data-tex="M v_0 = M v_M + m\,v_m"></span><span class="no">(9)</span></div>
-    <div class="eqn copy" style="right:120px; top:215px" data-in="up" data-at="3.4"><span data-tex="v_m = \dfrac{(1+e)\,M v_0}{M+m} \approx 23.5\ \mathrm{m/s}"></span><span class="no">(10)</span></div>
-    <div class="cap copy" data-in="up" data-at="1.0"><b>Fig. 6.</b>Full-size car: a 900 kg car <i>M</i> meets a 20 kg ball <i>m</i> at 15 m/s, restitution <i>e</i> = 0.6, shown at half speed. (a) Velocities. (b) Total momentum is conserved.</div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Hitboxes</div><h2 class="title" data-in="chars" data-at="0.4">Shape decides <em>the shot.</em></h2></div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="\theta = \arcsin\!\left(\dfrac{r - h}{r}\right)"></span><span class="no">(8)</span></div>
   </section>
 
-  <!-- 9 · COST -->
+  <!-- 10 · COST -->
   <section class="slide" data-id="cost">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§8</b>Operating cost</div><h2 class="title" data-in="chars" data-at="0.4">What a match <em>costs.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \int_0^{T} P(t)\,dt"></span><span class="no">(11)</span></div>
-    <div class="stat copy" style="top:350px" data-in="up" data-at="7.4"><div class="v">≈ <span data-count="1.5" data-dec="1" data-at="7.4">0</span><small>kWh</small></div><div class="l">per car, per 10-minute match (est.)</div></div>
-    <div class="stat copy" style="top:600px" data-in="up" data-at="8.0"><div class="v">≈ $<span data-count="0.25" data-dec="2" data-at="8.0">0</span></div><div class="l">electricity per car, per match</div></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 7.</b>Simulated power draw for one car over a match: 40 hard accelerations, with regenerative braking below zero. The energy used is the area under <i>P</i>(<i>t</i>).</div>
+    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="E = \int_0^{T} P(t)\,dt"></span><span class="no">(9)</span></div>
+    <div class="stat copy" style="top:400px" data-in="up" data-at="7.2"><div class="v">≈ <span data-count="1.5" data-dec="1" data-at="7.2">0</span><small>kWh</small></div><div class="l">per car, per 10-minute match (est.)</div></div>
+    <div class="stat copy" style="top:640px" data-in="up" data-at="7.8"><div class="v">≈ $<span data-count="0.25" data-dec="2" data-at="7.8">0</span></div><div class="l">electricity per car, per match</div></div>
   </section>
 
   <!-- 10 · ROADMAP -->
   <section class="slide" data-id="road">
     <canvas class="c2d"></canvas>
     <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§9</b>Roadmap</div><h2 class="title" data-in="chars" data-at="0.4">The road to <em>kickoff.</em></h2></div>
-    <div class="cap copy" data-in="up" data-at="1.2"><b>Fig. 8.</b>Programme schedule. Each stage ends with a measurable result before the next begins.</div>
   </section>
 
   <!-- 11 · ASK -->
@@ -242,6 +240,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
   </section>
 
   <canvas id="grain" width="512" height="512"></canvas>
+  <div id="streak"></div>
   <div id="flash"></div>
   <div id="bar"></div>
   <div id="count"></div>
