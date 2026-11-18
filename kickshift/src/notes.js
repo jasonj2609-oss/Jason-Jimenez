@@ -1,4 +1,4 @@
-// Speaker script, one entry per slide. Target: ~9 minutes total at a relaxed pace.
+// Speaker script, one entry per slide. Target: about 9 minutes at a relaxed pace.
 export const NOTES = [
   {
     title: 'Intro: lights on', time: '0:00 – 0:40',
@@ -6,89 +6,92 @@ export const NOTES = [
 "Introducing..."
 (Pause while the headlights flicker on.)
 "KickShift. A car built to score."
-"Every sport has a ball and a player. We're replacing the player with a 900-kilogram electric car. Today I'll show you the physics that makes it work, what it costs to run, and what your money builds."`,
+"Every sport has a ball and a player. In KickShift the player is an electric car, and the field itself powers the game. Today I'll show you the physics that makes that work, and what your money builds."`,
   },
   {
-    title: 'The idea', time: '0:40 – 1:20',
+    title: 'The idea', time: '0:40 – 1:10',
     say: `"Soccer is the most watched sport on earth. Supercars are what people put on their walls."
-"Car-soccer already exists in video games, and millions of people play it. But nobody has built it for real, because a normal car would destroy itself, the ball, and the budget."
-"So the question we asked was: what if the car was the player? Not a road car modified for a stunt, but a car designed from zero for this one sport."
-"And this is not a copy of an existing sports car. A road supercar is built to go as fast as possible. KickShift is built to hit, survive, and aim. That's a completely different engineering problem, and that's the gap we want to own."`,
+"Car-soccer already exists in video games. Nobody has built it for real, with real energy and real physics."
+"So we asked: what if the car was the player, and the field was its fuel station?"`,
   },
   {
-    title: 'Meet the car', time: '1:20 – 2:20',
-    say: `"This is the KickShift. Four things make it different from any sports car you know."
-"One: boost on demand. Short bursts of extra power, but the arena controls when you get it."
-"Two: a lightweight EV chassis, about 900 kilograms, with the battery mounted low for a low centre of mass, so it doesn't roll over in a hit."
-"Three: swap-in bumpers that absorb hits and come off in about a minute."
-"Four: a strike-face nose. The front is shaped on purpose, because the curve decides where the ball goes."
-"Now let's look at why each of those choices is physics, not styling."`,
+    title: 'Meet the car', time: '1:10 – 2:00',
+    say: `"This is the KickShift concept car. The technologies inside it already exist. The invention is combining them into a competitive game."
+"(a) A supercapacitor, for short bursts of power."
+"(b) A receiver coil underneath, which collects energy from charging lanes in the field."
+"(c) Motors that turn that stored energy into a boost."
+"(d) And a curved strike-face nose for hitting the ball."
+"The whole design follows one chain: collect energy, store it, turn it into motion. Let's follow that chain."`,
   },
   {
-    title: 'Physics 1: momentum', time: '2:20 – 3:10',
-    say: `"Here's the collision as a lab demo: a 900-kilogram cart, our car, hits a 20-kilogram ball at 15 metres per second. Equation 1 is conservation of momentum."
-(Point to graph a.) "Watch the velocities. The car drops from 15 to about 14.5 metres per second. The ball jumps from zero to 23.5, about 85 km/h, faster than the car was going."
-(Point to graph b.) "And the bars show total momentum before and after is the same. The car hands over only about 3% of its momentum, but because the ball is so light, that's enough to launch it."
-"The strobe marks show it too: the ball's marks are spaced further apart, because it's moving faster."
-"So the car doesn't need extreme speed to hit hard. Mass does the kicking."`,
+    title: 'Physics 1: wireless charging', time: '2:00 – 3:00',
+    say: `"Under parts of the arena we place coils of wire. Alternating current flows through them. The dots and crosses show current coming out of and going into the page, and they swap as the current alternates."
+"That alternating current makes a changing magnetic field above the lane, the arrows flipping up and down."
+"The car has a receiver coil underneath. A changing magnetic flux through a coil induces a voltage. That is Faraday's law, equation 1, the same principle as wireless phone charging."
+(Point to the graphs.) "Graph a is the field. Graph b is the voltage in the car's coil: it only appears while the car is over the lane. Graph c is the energy collected: energy equals power times time, equation 2."
+"The charging lane transfers electrical energy through a magnetic field, so the car collects energy without plugging in. The energy comes from the arena's electricity supply."`,
   },
   {
-    title: 'Physics 2: impulse & bumpers', time: '3:10 – 4:00',
-    say: `"Impulse is force times time, and it equals the change in momentum, equation 3. To stop the car you must remove a fixed amount of momentum, but you choose how long that takes."
-"Top: a rigid bumper stops the car in 10 milliseconds, with a peak force of 707 kilonewtons and only 25 millimetres of crush."
-"Bottom: our crushable module stretches the stop to 50 milliseconds. Peak force falls to 141 kilonewtons, 80% less, with 125 millimetres of crush."
-"Same area under both curves, so same impulse. Equation 4 checks it with work and energy: average force times crush distance equals the 11.25 kilojoules of kinetic energy, for both."
-"The crushed module is the part designed to wear out. It swaps in about a minute, like changing tyres in Formula 1."`,
+    title: 'Physics 2: battery and supercapacitor', time: '3:00 – 3:50',
+    say: `"The car has two energy stores with different jobs."
+(Point to graph a.) "This is a standard chart for energy storage. Across is energy per kilogram, up is power per kilogram, both on log scales. Batteries store far more energy per kilogram. Supercapacitors store less, but take it in and give it out much faster."
+"So the battery is endurance: ordinary driving for the whole match. The supercapacitor is the sprint."
+(Point to b.) "The lane fills the supercapacitor; pressing boost empties it into the motor. A capacitor stores energy as one half C V squared, equation 3. For our prototype, about 0.87 farads at 48 volts holds 1,000 joules."`,
   },
   {
-    title: 'Physics 3: kinetic energy & boost', time: '4:00 – 4:50',
-    say: `"Kinetic energy is one half M v squared, equation 5, and the squared part is the whole story."
-"The graph: 30 km/h is 31 kilojoules. Double to 60 and it's not double, it's four times, 125 kilojoules."
-"The demo shows why that matters. Same car, same brakes, from 30, 60 and 80 km/h. The friction force does work over the stopping distance, so distance also grows with v squared, equation 6: 3.5 metres, then 14.2, then 25.2."
-"That's why boost is on a leash. Drivers get short bursts, but the arena caps speed at 80 km/h, so impacts and stopping distances stay inside what the arena is built for."`,
+    title: 'Physics 3: the boost', time: '3:50 – 4:50',
+    say: `"What actually makes the boost happen? The supercapacitor sends extra power to the motor, which means more torque at the wheel."
+"The tyre pushes backward on the floor, and the floor pushes the car forward. That's Newton's third law: the two forces are equal and opposite."
+"But there's a limit: grip. The force can't be more than mu times m g, equation 4. For our 50 kilogram prototype that's about 440 newtons. Watch graph a: push past that limit and the wheel spins, and the force actually drops."
+"Graph b shows the other limit: power. At speed, force is at most power divided by speed, equation 5. Boost doubles the power, but at 4 metres per second it's capped by grip anyway."
+"So boost depends on stored energy, motor power, tyre grip and heat. And extra wheel power can't make the car fly; that would need an upward force."`,
   },
   {
-    title: 'Physics 4: collision angles', time: '4:50 – 5:40',
-    say: `"This is a top view. The front of the car is a circle of radius R, 1.5 metres. The ball has radius r."
-"When two round surfaces collide, the force acts along the line through both centres, the contact normal n-hat, so the ball leaves along that line."
-"If the ball is centred, d equals zero, it goes straight. Offset it by 70 centimetres and it leaves at 18 degrees, up or down depending on the side."
-"The graph on the right is equation 7, theta equals arcsine of d over R plus r, and each shot lands on the curve. Skill matters: drivers aim with geometry, like a player using the side of their foot."`,
+    title: 'Physics 4: one pass, by the numbers', time: '4:50 – 5:40',
+    say: `"Can one pass over a lane give a useful boost? Let's check with illustrative numbers for a small, 50 kilogram, remotely driven prototype."
+"The lane is 4 metres long and the car crosses at 4 metres per second, so it spends 1 second over it. At 1,000 watts, it collects 1,000 joules, equation 6."
+"Speeding the car up from 4 to 6 metres per second needs one half m times v final squared minus v initial squared: 500 joules, equation 7."
+"Even if half the energy is lost in storage and the drivetrain, that's enough. So the boost is physically plausible at this scale."
+"Charging a vehicle while it moves has already been shown: Purdue reported wireless power to a truck at highway speed. That supports the principle. Our design still has to be proven, and that's what the prototype is for."`,
   },
   {
-    title: 'The arena', time: '5:40 – 6:20',
-    say: `"The car is only half the system. The arena is the pit crew."
-"Cameras sample each car 120 times a second. From the positions alone you get velocity, change in position over time, and acceleration, change in velocity over time. That's equation 8."
-"Watch the vectors: velocity is always tangent to the path, and in the turns the acceleration points inward. The dashed circle is the turn radius rho, and the centripetal acceleration is v squared over rho."
-"The graphs on the right are the live speed and acceleration. The same data runs the boost limiter, referees the goals, and tells the charging pads when a car is on top of them."`,
+    title: 'Physics 5: energy is a tactic', time: '5:40 – 6:30',
+    say: `"Here's why the physics makes the game interesting."
+"At constant charging power, energy collected equals power times length divided by speed, equation 8. Drive over the lane slowly and you collect more."
+"Three cars cross the same lane at 2, 4 and 8 metres per second. The slow one collects 2,000 joules; the fast one, only 500."
+"Graph b shows what that buys: crossing at 2 metres per second lets you boost to 6.6, while the fast car barely gains anything. But the slow car spent 2 seconds on the lane, and its opponent might reach the ball first."
+"KickShift turns energy management into gameplay: collect power from the field, store it onboard, and decide when to spend it."`,
   },
   {
-    title: 'Cost per match', time: '6:20 – 7:00',
-    say: `"Investors always ask what it costs to run. Physics answers that too."
-"The top graph is a simulated power trace for one car over a 10-minute match: 40 hard accelerations as spikes up, and regenerative braking below zero, where the motor puts energy back into the battery."
-"Energy is the area under the power curve, equation 9. The bottom graph adds it up: about 1.5 kilowatt-hours per match."
-"At typical electricity prices that's roughly 25 cents per car. The real operating cost is bumper wear, and that's exactly what the prototype will measure."`,
+    title: 'Physics 6: hitting the ball', time: '6:30 – 7:10',
+    say: `"And when you do reach the ball, momentum does the kicking. This is the full-size car, 900 kilograms, hitting a 20 kilogram ball at 15 metres per second."
+"Momentum is conserved, equation 9. The car slows only slightly, but the light ball leaves at about 23.5 metres per second, equation 10. The bars show the total momentum before and after is the same."`,
   },
   {
-    title: 'Roadmap', time: '7:00 – 7:50',
-    say: `"Here's the plan as a schedule."
-"Months 0 to 6: build two prototype cars."
-"Months 6 to 9: break them, with a thousand-hit bumper test to prove durability."
-"Months 9 to 12: play 50 full test matches and record real cost-per-match data. That's where the seed money ends."
-"Year 2: launch a pilot league in a real venue."
-"Every stage ends with a number we either hit or don't, so if something fails, like the bumpers wearing out too fast, we find out early and cheaply."`,
+    title: 'Operating cost', time: '7:10 – 7:40',
+    say: `"What does a match cost? Energy is the area under the power curve, equation 11."
+"This simulated trace gives about 1.5 kilowatt-hours per car for a 10-minute match, roughly 25 cents of electricity. Cheap enough that the game can run all day."`,
   },
   {
-    title: 'The ask', time: '7:50 – 8:40',
+    title: 'Roadmap', time: '7:40 – 8:20',
+    say: `"The plan, in four stages."
+"Months 0 to 6: build two 50 kilogram prototype cars."
+"Months 6 to 9: charge. Measure exactly how many joules a real lane delivers per pass, and how much survives to the wheels."
+"Months 9 to 12: play 50 full test matches."
+"Year 2: launch a full-size pilot league."
+"Each stage ends with a number we either hit or don't, so if something fails, we find out early and cheaply."`,
+  },
+  {
+    title: 'The ask', time: '8:20 – 9:00',
     say: `"We're raising $250,000 in seed funding."
-"Half builds the two prototype cars. A quarter builds the test arena and tracking system. 15% goes to durability testing, and 10% to safety."
-"For that, you get two working cars, one test arena, and the hard data that proves whether this sport can run at a reasonable cost."`,
+"40% builds the prototype cars, 30% the charging lanes, 20% testing, and 10% safety."
+"For that, you get two prototype cars, a charging test arena, and 50 matches of real energy data that prove whether this game works."`,
   },
   {
-    title: 'Close', time: '8:40 – 9:30',
+    title: 'Close', time: '9:00 – 9:40',
     say: `(Let the car launch and hit the ball before speaking.)
-"Four ideas from this class, one machine. Momentum to kick. Impulse to survive. Energy you can control. Geometry you can aim."
-"Imagine the first time a crowd watches a real car score a real goal. We want to build that moment, and we want you in the room when it happens."
-"That's KickShift: a car built to score."
-"Thank you. I'm happy to take your questions."`,
+"Faraday's law to charge. A supercapacitor to store. Newton's third law to boost. Momentum to score."
+"Collect power from the field, store it onboard, and decide when to spend it."
+"That's KickShift: a car built to score. Thank you. I'm happy to take your questions."`,
   },
 ];

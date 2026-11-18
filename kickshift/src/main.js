@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import katex from 'katex';
 import { createStage } from './car3d.js';
 import * as S from './slides2d.js';
+import * as G from './energy2d.js';
 import { NOTES } from './notes.js';
 import { clamp, prog, E } from './util.js';
 
@@ -20,9 +21,9 @@ fit(); addEventListener('resize', fit);
 const slides = [...document.querySelectorAll('.slide')];
 const PLAN = {
   intro: { gl: 'intro', dur: 14 }, idea: { draw: S.sIdea, dur: 10 }, meet: { gl: 'meet', dur: 14 },
-  momentum: { draw: S.sMomentum, dur: 12 }, impulse: { draw: S.sImpulse, dur: 12 }, energy: { draw: S.sEnergy, dur: 11 },
-  aim: { draw: S.sAim, dur: 11.5 }, arena: { draw: S.sArena, dur: 12 }, cost: { draw: S.sCost, dur: 10 },
-  road: { draw: S.sRoad, dur: 11 }, ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
+  lane: { draw: G.sLane, dur: 10 }, store: { draw: G.sStore, dur: 10 }, boost: { draw: G.sBoost, dur: 11 },
+  pass: { draw: G.sPass, dur: 10 }, tactic: { draw: G.sTactic, dur: 10 }, momentum: { draw: S.sMomentum, dur: 10 },
+  cost: { draw: S.sCost, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, ask: { draw: S.sAsk, dur: 10 }, outro: { gl: 'outro', dur: 13 },
 };
 const DEF = slides.map(el => ({ el, id: el.dataset.id, ...PLAN[el.dataset.id] }));
 

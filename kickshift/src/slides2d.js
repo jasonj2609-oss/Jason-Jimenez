@@ -570,10 +570,10 @@ export function sCost(ctx, t) {
 
 // ================= §8 ROADMAP: programme schedule =================
 export const PHASES = [
-  { a: 0, b: 6, name: 'Build', sub: 'two prototype cars' },
-  { a: 6, b: 9, name: 'Break', sub: '1,000-hit bumper test' },
+  { a: 0, b: 6, name: 'Build', sub: 'two 50 kg prototype cars' },
+  { a: 6, b: 9, name: 'Charge', sub: 'lane tests: joules per pass' },
   { a: 9, b: 12, name: 'Play', sub: '50 full test matches' },
-  { a: 12, b: 24, name: 'Launch', sub: 'pilot league and venue' },
+  { a: 12, b: 24, name: 'Launch', sub: 'full-size pilot league' },
 ];
 export function sRoad(ctx, t) {
   bg(ctx, { gy: 300, glow: 0.05 });
@@ -612,9 +612,9 @@ export function sRoad(ctx, t) {
 
 // ================= §9 THE ASK (donut) =================
 export const FUNDS = [
-  { pct: 50, label: 'prototype cars', col: '#F2F2EE' },
-  { pct: 25, label: 'arena and tracking', col: '#B9BDC3' },
-  { pct: 15, label: 'durability tests', col: '#80858B' },
+  { pct: 40, label: 'prototype cars', col: '#F2F2EE' },
+  { pct: 30, label: 'charging lanes', col: '#B9BDC3' },
+  { pct: 20, label: 'testing', col: '#80858B' },
   { pct: 10, label: 'safety', col: '#4A4D52' },
 ];
 export function sAsk(ctx, t) {
@@ -637,3 +637,5 @@ export function sAsk(ctx, t) {
   });
   mtext(ctx, 'Use of funds', cx, cy, { size: 34, align: 'center', alpha: E.outCubic(prog(t, 1.0, 1.6)), italicAll: true });
 }
+
+export { line, circle, hatchFill, ground, wall, dim, cart, ballD, spring, axes, plot, impact, hat };
