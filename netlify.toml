@@ -1,0 +1,4 @@
+# Netlify: serve the presentation in docs/ as a static site (no build step)
+[build]
+  publish = "docs"
+  command = ""
