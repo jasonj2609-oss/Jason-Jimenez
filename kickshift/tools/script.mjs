@@ -38,6 +38,24 @@ Say: "There's no set speed. The driver chooses, and that choice is the game. Nor
 - Minimum: none, but the supercapacitor holds about 1,000 J, and one pass at 4 m/s collects 1,000 J (E = P L / v = 1,000 × 4 ÷ 4). Going slower collects more (2,000 J at 2 m/s), but the extra only tops up the battery, and the other team gets to the ball first.
 - The full-size car comes later; its limit would be set after testing.
 
+### Likely question: "How big is the field?"
+
+Say: "The arena we sell is about 12 and a half by 19 and a half metres inside the walls, about the size of a tennis court. The video shows the same layout at full size for real cars, 30 by 48 metres, about the size of a hockey rink."
+
+| | Venue arena (50 kg cars, what we sell) | Full size (shown in the video, later) |
+|---|---|---|
+| Inside the walls | 12.5 × 19.6 m (41 × 64 ft), about 245 m² | 32.4 × 51 m |
+| Field lines | 11.5 × 18.5 m | 30 × 48 m |
+| Goals | 3.5 m wide × 1.6 m tall | 9.2 m wide × 4.2 m tall |
+| Charging lanes | 2, one down each side, each 11.5 m × 0.9 m | 2, each 30 m × 2.3 m |
+| Centre circle | 1.9 m radius | 5 m radius |
+| Ball | about 0.6 m across | 1.5 m across |
+| Car | 1.7 m long, 50 kg | 4.5 m long, 900 kg |
+
+- The venue arena is the full-size layout scaled down 2.6 times, the same scale as the 50 kg cars (1:2.6).
+- With seats and driver stations around it, a venue needs roughly 450–500 m² (about 5,000 sq ft), which is where the $60K a year for space comes from.
+- The physics slides look at a 4 m stretch of lane. A full lane is longer, so one full pass gives even more energy than the slide shows; the supercapacitor fills, and the rest tops up the battery.
+
 ### Likely question: "What about damage to the cars? Does it still make money?"
 
 Say: "The first cars are 50 kilograms and remote-driven. A hit at boost speed, 6 metres per second, carries about 900 joules, around 200 times less than a real car. The front is a bumper shell that's made to be crushed and swapped for $150, like a hockey stick. Even if damage costs a venue $70,000 a year, it still makes about $290,000 and earns back its arena in under a year and a half. And every replacement shell is something we sell."
