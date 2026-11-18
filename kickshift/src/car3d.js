@@ -47,6 +47,21 @@ function makeEnv(renderer) {
   return tex;
 }
 
+// Real floor reflections fade with distance from the contact point: darken mirrored fragments by depth.
+function mirrorFade(m) {
+  if (!m || m.userData.mf || !(m.isMeshStandardMaterial || m.isMeshPhysicalMaterial)) return;
+  m.userData.mf = true;
+  const prev = m.onBeforeCompile, key = m.customProgramCacheKey();
+  m.onBeforeCompile = (sh, r) => {
+    prev.call(m, sh, r);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vMfY;')
+      .replace('#include <fog_vertex>', '#include <fog_vertex>\nvMfY = (modelMatrix * vec4(transformed, 1.0)).y;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vMfY;')
+      .replace('#include <opaque_fragment>', '#include <opaque_fragment>\nif (vMfY < -0.002) gl_FragColor.rgb *= 0.95 * exp(vMfY * 2.6);');
+  };
+  m.customProgramCacheKey = () => key + '|mf';
+}
+
 function radialTex(inner, outer, size = 256) {
   const c = document.createElement('canvas'); c.width = c.height = size;
   const g = c.getContext('2d');
@@ -107,6 +122,8 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
@@ -255,7 +272,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   sweep.position.set(0.4, 4.4, 0); sweep.target.position.set(0, 0.6, 0); scene.add(sweep, sweep.target);
 
   // ---------- floor, turntable rings, fake mirror reflection ----------
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshStandardMaterial({ color: 0x060606, roughness: 0.24, metalness: 0.0, transparent: true, opacity: 0.92, envMap: scene.environment, envMapIntensity: 0.12 }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), new THREE.MeshStandardMaterial({ color: 0x060606, roughness: 0.24, metalness: 0.0, transparent: true, opacity: 0.86, envMap: scene.environment, envMapIntensity: 0.12 }));
   floor.rotation.x = -Math.PI / 2; scene.add(floor);
   const ringMat = new THREE.MeshBasicMaterial({ color: 0xbfc3c8, transparent: true, opacity: 0 });
   const ring = new THREE.Group();
@@ -287,7 +304,10 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
 
   // ---------- feature reveal + arena ----------
   const X = buildFeatures({ car, model, parts, reflection, bb, wheels, hit, renderer });
-  const AR = buildArena({ scene, car, keepChildren: [model, parts, shadow], bodyMat, blackPaint: PAINT.black, barPts: X.barPts, beamMaterial, radialTex });
+  [model, parts].forEach(r => r.traverse(o => { if (o.isMesh) { o.castShadow = true; mirrorFade(o.material); } }));
+  mirrorFade(ball.material); ball.castShadow = true;
+  const AR = buildArena({ scene, renderer, car, keepChildren: [model, parts, shadow], bodyMat, blackPaint: PAINT.black, barPts: X.barPts, beamMaterial, radialTex });
+  const studioEnv = scene.environment;
 
   // ---------- post ----------
   const rt = new THREE.WebGLRenderTarget(1920 * dpr, 1080 * dpr, { type: THREE.HalfFloatType, samples: 4 });
@@ -352,7 +372,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   function draw() { composer.render(); }
   // every scene starts from the same clean state
   function base() {
-    X.reset(); AR.reset(); scene.fog.near = 16; scene.fog.far = 40;
+    X.reset(); AR.reset(); scene.fog.near = 16; scene.fog.far = 40; scene.fog.color.setHex(0x000000); scene.environment = studioEnv;
     car.position.set(0, 0, 0); car.rotation.set(0, 0, 0); reflection.position.set(0, 0, 0); reflection.rotation.set(0, 0, 0);
     reflection.visible = true; floor.visible = true;
   }
@@ -532,8 +552,8 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
 ].map(([t, ...v]) => ({ t, v })));
   function arena(t, cam = null) {
     base(); floor.visible = false; reflection.visible = false; ring.visible = false; paint('silver'); scan.amt.value = 0;
-    scene.fog.near = 70; scene.fog.far = 180;
-    scene.environmentIntensity = 0.95;
+    scene.fog.near = 34; scene.fog.far = 150; scene.fog.color.setHex(0x0b0b0c);
+    scene.environment = AR.env; scene.environmentIntensity = 0.8;
     lights({ drl: 1, head: 0.5, beam: 0, spot: 0, tail: 1 });
     bloom.strength = 0.6;
     const coneAmt = E.outCubic(prog(t, 7.2, 8.0)) * (1 - E.inOutSine(prog(t, 10.6, 11.4)));
@@ -558,6 +578,28 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     }
     const pods = AR.pods.map(p => project(p.x, p.y, p.z)).filter(q => q.z < 1 && q.x > 0 && q.x < 1920 && q.y > 0 && q.y < 1080);
     return { amt, boxes, pods };
+  }
+
+  // Closing: one clean hero shot. The car is revealed by a light gliding over it, the lamps come on,
+  // the charge bar fills, and the camera eases in.
+  function finale(t) {
+    base(); paint('silver'); ring.visible = false; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0); scan.amt.value = 0;
+    const a = E.inOutSine(prog(t, 0.2, 2.8));
+    scene.environmentIntensity = 0.95 * a;
+    const on = E.outCubic(prog(t, 1.5, 2.1));
+    lights({ drl: on, head: 0.55 * on, beam: 0.1 * on, spot: 0, tail: on });
+    const sw = prog(t, 0.3, 3.6);
+    sweep.position.z = lerp(TAIL + 1.4, NOSE - 1.4, E.inOutSine(sw)); sweep.target.position.z = sweep.position.z;
+    sweep.intensity = 34 * Math.sin(Math.PI * sw);
+    X.bars.visible = true;
+    X.bars.userData.mat.uniforms.uOn.value = E.outCubic(prog(t, 2.2, 2.8));
+    X.bars.userData.mat.uniforms.uFill.value = 0.86 * E.inOutCubic(prog(t, 2.4, 6.0));
+    bloom.strength = 0.4;
+    const k = E.inOutSine(prog(t, 0, 10));
+    const phi = lerp(-0.6, -0.68, k), R = lerp(11.2, 10.0, k);
+    look(Math.cos(phi) * R, lerp(1.0, 0.92, k), Math.sin(phi) * R, 0, 1.5, 0.1, 27);
+    draw();
+    return {};
   }
 
   function project(x, y, z) {
@@ -629,7 +671,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
 
   return {
-    renderer, intro, meet, features, arena, outro, hitbox, HITBOX, project, bake, OUT, HB,
+    renderer, intro, meet, features, arena, outro, finale, hitbox, HITBOX, project, bake, OUT, HB,
     anchors: { ...X.anchors, ...AR.anchors, nose: V3(0, 0.35, NOSE + 0.1), corner: V3(0.85, 0.35, NOSE + 0.55), sill: V3(1.0, 0.3, 0.2), wing: V3(0.45, deckY + 0.27, TAIL - 0.6), bb },
   };
 }

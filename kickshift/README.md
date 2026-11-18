@@ -51,9 +51,9 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 12. Business model: how money flows from players to venues to KickShift, plus one venue's year (≈ $672K revenue, ≈ $359K profit, arena paid back in ≈ 13 months)
 13. Costs, on a log scale: under $1 of electricity a match, up to a $3M full-size arena later
 14. Roadmap: build, charge, play (this round), then a flagship venue and arena sales
-15. Projections and return: revenue and costs for years 1–5, plus the investor's stake (20% now, ≈ 13% after a Series A)
-16. The ask: $250K for 20%
-17. Close: the car launches the futuristic ball at the camera, then the final title
+15. Projections: revenue and costs for years 1–5 (35 arenas and about $10.8M revenue by year 5, profitable from year 4)
+16. The numbers: what it takes to build (prototype, each arena, running costs) and how it makes money (arena sales, monthly fees, match share, sponsors)
+17. Close: one clean hero shot as the car lights up, then the title and "Thank you"
 
 ## Rebuilding
 

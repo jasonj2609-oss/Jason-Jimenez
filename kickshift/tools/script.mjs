@@ -29,7 +29,6 @@ md += `---
 | Electricity per match | under $1 | 4 cars × ≈ 0.1 kWh at ≈ $0.16/kWh, plus lane losses |
 | Projections | 0 → 1 → 5 → 15 → 35 arenas (years 1–5); revenue $0 → $0.67M → $2.45M → $5.49M → $10.85M | sales + recurring fees + flagship venue |
 | Break-even | year 4 (projected) | costs $0.25M → $1.3M → $2.6M → $4.7M → $8.4M |
-| Terms | $250K for 20%; ≈ 13% after a $1.5M Series A | illustrative year-5 value at 3× revenue ≈ $4M |
 
 Biggest risks (be ready to name them): wireless-lane efficiency on moving cars, bumper durability, safety around crowds, and whether venues buy. The seed round tests the first three before big money is spent.
 

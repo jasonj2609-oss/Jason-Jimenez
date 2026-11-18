@@ -158,3 +158,10 @@ export function sReturn(ctx, t) {
   mtext(ctx, 'profitable from year 4', bx - 130, Y(7600) - 6, { size: 22, align: 'right', alpha: be, italicAll: true });
   mtext(ctx, 'Projections, not promises: assumptions are in the speaker notes.', x0, 960, { size: 20, color: C.silver, alpha: pa, italicAll: true });
 }
+
+// ================= §12 THE NUMBERS (ledger is DOM; the canvas adds the column rule) =================
+export function sNumbers(ctx, t) {
+  bg(ctx, { gx: 960, glow: 0.05 });
+  const a = E.inOutCubic(prog(t, 0.8, 2.0));
+  line(ctx, [[960, 300], [960, 300 + 560 * a]], { w: 1, color: 'rgba(242,242,238,0.16)' });
+}

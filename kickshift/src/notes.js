@@ -91,20 +91,20 @@ export const NOTES = [
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."`,
   },
   {
-    title: 'Projections', time: '8:15 – 8:50',
-    say: `"These are projections, not promises. If we sell 4 arenas in year 3, 10 in year 4 and 20 in year 5, revenue grows to about $10.8 million, and we become profitable in year 4."
-"You invest $250,000 for 20% of the company. We'd raise about $1.5 million more in year 2 to build the flagship, so your share would drop to about 13%."
-"If KickShift is valued at three times its year-5 revenue, that 13% would be worth roughly $4 million. It's a risky early-stage bet, and the first 12 months are designed to test those risks cheaply."`,
+    title: 'Projections', time: '8:15 – 8:45',
+    say: `"These are projections, not promises. We open our own flagship arena in year 2, then sell 4 arenas in year 3, 10 in year 4 and 20 in year 5."
+"That's 35 arenas open by year 5 and about $10.8 million in revenue, and the company becomes profitable in year 4."`,
   },
   {
-    title: 'The ask', time: '8:50 – 9:10',
-    say: `"So we're raising $250,000 for 20%: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
-"You get two prototype cars, a charging test arena, and 50 matches of real data to prove the sport works."`,
+    title: 'The numbers', time: '8:45 – 9:15',
+    say: `"So here's everything on one page."
+"What it takes: $250,000 for the prototype system, $250,000 to build each venue arena, under a dollar of electricity per match, and a full-size pro arena, around $3 million, only later. Years 1 and 2 together cost about $1.55 million."
+"What it makes: we sell each arena for $400,000, then every venue pays $2,000 a month plus 10% of every match, and sponsors and streaming come in once the league is running."
+"A venue earns its arena back in about 13 months, and KickShift turns a profit in year 4."`,
   },
   {
-    title: 'Close', time: '9:10 – 9:40',
-    say: `(Let the car launch and hit the ball before speaking.)
-"Faraday's law to charge. A supercapacitor to store. Newton's third law to boost. Geometry to score."
+    title: 'Close', time: '9:15 – 9:35',
+    say: `(Let the car light up and the title appear.)
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
 "Thank you. I'm happy to take your questions."`,
   },

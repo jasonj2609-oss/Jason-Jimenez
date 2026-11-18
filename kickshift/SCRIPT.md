@@ -126,25 +126,25 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."
 
-## 15. Projections  `8:15 – 8:50`
+## 15. Projections  `8:15 – 8:45`
 
-"These are projections, not promises. If we sell 4 arenas in year 3, 10 in year 4 and 20 in year 5, revenue grows to about $10.8 million, and we become profitable in year 4."
+"These are projections, not promises. We open our own flagship arena in year 2, then sell 4 arenas in year 3, 10 in year 4 and 20 in year 5."
 
-"You invest $250,000 for 20% of the company. We'd raise about $1.5 million more in year 2 to build the flagship, so your share would drop to about 13%."
+"That's 35 arenas open by year 5 and about $10.8 million in revenue, and the company becomes profitable in year 4."
 
-"If KickShift is valued at three times its year-5 revenue, that 13% would be worth roughly $4 million. It's a risky early-stage bet, and the first 12 months are designed to test those risks cheaply."
+## 16. The numbers  `8:45 – 9:15`
 
-## 16. The ask  `8:50 – 9:10`
+"So here's everything on one page."
 
-"So we're raising $250,000 for 20%: 40% for prototype cars, 30% for charging lanes, 20% for testing and 10% for safety."
+"What it takes: $250,000 for the prototype system, $250,000 to build each venue arena, under a dollar of electricity per match, and a full-size pro arena, around $3 million, only later. Years 1 and 2 together cost about $1.55 million."
 
-"You get two prototype cars, a charging test arena, and 50 matches of real data to prove the sport works."
+"What it makes: we sell each arena for $400,000, then every venue pays $2,000 a month plus 10% of every match, and sponsors and streaming come in once the league is running."
 
-## 17. Close  `9:10 – 9:40`
+"A venue earns its arena back in about 13 months, and KickShift turns a profit in year 4."
 
-*(Let the car launch and hit the ball before speaking.)*
+## 17. Close  `9:15 – 9:35`
 
-"Faraday's law to charge. A supercapacitor to store. Newton's third law to boost. Geometry to score."
+*(Let the car light up and the title appear.)*
 
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
 
@@ -177,7 +177,6 @@ Press **N** in the HTML deck to see these notes with a running timer.
 | Electricity per match | under $1 | 4 cars × ≈ 0.1 kWh at ≈ $0.16/kWh, plus lane losses |
 | Projections | 0 → 1 → 5 → 15 → 35 arenas (years 1–5); revenue $0 → $0.67M → $2.45M → $5.49M → $10.85M | sales + recurring fees + flagship venue |
 | Break-even | year 4 (projected) | costs $0.25M → $1.3M → $2.6M → $4.7M → $8.4M |
-| Terms | $250K for 20%; ≈ 13% after a $1.5M Series A | illustrative year-5 value at 3× revenue ≈ $4M |
 
 Biggest risks (be ready to name them): wireless-lane efficiency on moving cars, bumper durability, safety around crowds, and whether venues buy. The seed round tests the first three before big money is spent.
 
