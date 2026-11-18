@@ -65,12 +65,15 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
 .idea .q em { color: var(--silver); }
 
 /* 3 meet */
-#callouts { position: absolute; inset: 0; pointer-events: none; }
+.callouts { position: absolute; inset: 0; pointer-events: none; }
 .co { position: absolute; width: 400px; }
 .co .h { font: 400 38px/1.05 var(--serif); }
 .co .h i { color: var(--silver); margin-right: 10px; }
 .co .s { font: italic 400 21px var(--serif); color: var(--dim); margin-top: 6px; }
 .co.r { text-align: right; }
+.slide[data-id=arena] .co, .slide[data-id=arena] .quote, .slide[data-id=arena] .hdr { text-shadow: 0 0 14px #000, 0 0 30px #000, 0 0 4px #000; }
+.topfade { position: absolute; left: 0; right: 0; top: 0; height: 330px; background: linear-gradient(180deg, rgba(0,0,0,.82), rgba(0,0,0,.5) 55%, rgba(0,0,0,0)); pointer-events: none; }
+.botfade { position: absolute; left: 0; right: 0; bottom: 0; height: 260px; background: linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,0)); pointer-events: none; }
 .meetfade { position: absolute; left: 0; right: 0; bottom: 0; height: 330px; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.88) 70%); pointer-events: none; }
 .specs { position: absolute; left: 120px; right: 120px; bottom: 74px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); padding-top: 26px; }
 .specs > div { font: 400 50px var(--serif); color: var(--ink); white-space: nowrap; }
@@ -140,21 +143,37 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <div class="quote copy" style="bottom:110px" data-in="up" data-at="4.2">Your investment builds the prototype system: two cars and one test arena.</div>
   </section>
 
-  <!-- 3 · MEET THE CAR -->
-  <section class="slide" data-id="meet">
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.4"><b>§1</b>The machine</div><h2 class="title" data-in="chars" data-at="0.6">Meet the car</h2></div>
-    <svg id="callouts" class="copy" viewBox="0 0 1920 1080"></svg>
-    <div class="co copy" data-co="wing" style="left:120px; top:400px" data-in="left" data-at="2.2"><div class="h"><i>(a)</i>Supercapacitor</div><div class="s">stores lane energy for the boost</div></div>
-    <div class="co copy" data-co="sill" style="left:120px; top:640px" data-in="left" data-at="2.8"><div class="h"><i>(b)</i>Receiver coil</div><div class="s">collects energy from the lanes</div></div>
-    <div class="co r copy" data-co="corner" style="left:1400px; top:300px" data-in="right" data-at="3.4"><div class="h"><i>(c)</i>Boost motors</div><div class="s">extra torque, limited by grip</div></div>
-    <div class="co r copy" data-co="nose" style="left:1400px; top:640px" data-in="right" data-at="4.0"><div class="h"><i>(d)</i>Strike-face nose</div><div class="s">curved to aim the ball</div></div>
-    <div class="meetfade copy"></div>
-    <div class="specs copy" data-in="up" data-at="5.0">
-      <div><span data-tex="m =">m =</span> <span data-count="900" data-at="5.0">0</span><span class="u">kg</span><span class="l">mass</span></div>
-      <div><span data-tex="P_{\max} =">P =</span> <span data-count="150" data-at="5.2">0</span><span class="u">kW</span><span class="l">peak power</span></div>
-      <div><span data-tex="E_{\mathrm{sc}} =">E =</span> <span data-count="20" data-at="5.4">0</span><span class="u">kJ</span><span class="l">supercapacitor</span></div>
-      <div><span data-tex="E_{\mathrm{bat}} =">E =</span> <span data-count="8" data-at="5.6">0</span><span class="u">kWh</span><span class="l">battery</span></div>
+  <!-- 3 · WHAT'S INSIDE THE CAR -->
+  <section class="slide" data-id="features">
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.3"><b>§1.1</b>The car</div><h2 class="title" data-in="chars" data-at="0.5">Not just <em>a car.</em></h2></div>
+    <svg class="callouts copy" viewBox="0 0 1920 1080"></svg>
+    <div class="co copy" data-co="coil" style="left:120px; top:730px" data-in="left" data-at="3.0"><div class="h"><i>(a)</i>Receiver coil</div><div class="s">picks up power from the floor lanes</div></div>
+    <div class="co copy" data-co="cap" style="left:120px; top:410px" data-in="left" data-at="4.5"><div class="h"><i>(b)</i>Supercapacitor</div><div class="s">fills in one pass, empties in one boost</div></div>
+    <div class="co copy" data-co="bat" style="left:120px; top:570px" data-in="left" data-at="6.0"><div class="h"><i>(c)</i>Battery</div><div class="s">runs the car for the whole match</div></div>
+    <div class="co r copy" data-co="motor" style="left:1400px; top:520px" data-in="right" data-at="7.5"><div class="h"><i>(d)</i>Hub motors</div><div class="s">instant torque at every wheel</div></div>
+    <div class="co r copy" data-co="shell" style="left:1400px; top:740px" data-in="right" data-at="9.0"><div class="h"><i>(e)</i>Strike shell</div><div class="s">swappable: it sets the hitbox</div></div>
+    <div class="co copy" data-co="tag" style="left:120px; top:250px" data-in="left" data-at="10.8"><div class="h"><i>(f)</i>Tracking markers</div><div class="s">the arena sees every car, 120 times a second</div></div>
+    <div class="co r copy" data-co="bar" style="left:1400px; top:300px" data-in="right" data-at="12.3"><div class="h"><i>(g)</i>Charge light bar</div><div class="s">the crowd can see your energy</div></div>
+    <div class="meetfade copy" data-in="up" data-at="14.2"></div>
+    <div class="specs copy" data-in="up" data-at="14.4">
+      <div><span data-tex="m =">m =</span> <span data-count="900" data-at="14.4">0</span><span class="u">kg</span><span class="l">mass</span></div>
+      <div><span data-tex="P_{\max} =">P =</span> <span data-count="150" data-at="14.6">0</span><span class="u">kW</span><span class="l">peak power</span></div>
+      <div><span data-tex="E_{\mathrm{sc}} =">E =</span> <span data-count="20" data-at="14.8">0</span><span class="u">kJ</span><span class="l">supercapacitor</span></div>
+      <div><span data-tex="E_{\mathrm{bat}} =">E =</span> <span data-count="8" data-at="15.0">0</span><span class="u">kWh</span><span class="l">battery</span></div>
     </div>
+  </section>
+
+  <!-- 3b · THE ARENA -->
+  <section class="slide" data-id="arena">
+    <canvas class="c2d"></canvas>
+    <div class="topfade copy"></div><div class="botfade copy"></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.3"><b>§1.2</b>The arena</div><h2 class="title" data-in="chars" data-at="0.5">The field <em>is the charger.</em></h2></div>
+    <svg class="callouts copy" viewBox="0 0 1920 1080"></svg>
+    <div class="co copy" data-co="lane" style="left:120px; top:600px" data-in="left" data-at="3.9" data-out="7.4"><div class="h"><i>(a)</i>Charging lanes</div><div class="s">coils under the floor switch on only under a car</div></div>
+    <div class="co copy" data-co="cams" style="left:120px; top:640px" data-in="left" data-at="7.8" data-out="10.8"><div class="h"><i>(b)</i>Tracking cameras</div><div class="s">every car and the ball, 120 times a second</div></div>
+    <div class="co copy" data-co="board" style="left:120px; top:640px" data-in="left" data-at="11.1" data-out="14.0"><div class="h"><i>(c)</i>Energy scoreboard</div><div class="s">score, clock and every car's charge, live</div></div>
+    <div class="co copy" data-co="wall" style="left:120px; top:600px" data-in="left" data-at="14.3" data-out="16.6"><div class="h"><i>(d)</i>Safety walls</div><div class="s">polycarbonate glass; fans sit at the action</div></div>
+    <div class="quote copy" data-in="up" data-at="16.4">The arena is what venues buy. The game is why players come back.</div>
   </section>
 
   <!-- 4 · CHARGING LANE -->

@@ -84,25 +84,17 @@ export function sPitch(ctx, t, SP) {
     floorLine(ctx, cols[0] - 250, cols[0] + 250, 600, a0);
     carSide(ctx, SP, nose, 600, px, 0, { alpha: a0 });
   }
-  // 2 · the arena (perspective floor with a charging lane)
+  // 2 · the arena (a render of the 3D venue)
   const a1 = a(1);
-  if (a1 > 0) {
-    const cx = cols[1], Pp = (u, v) => [cx + u * lerp(240, 140, v), lerp(620, 390, v)];
-    const quad = (u0, u1, v0, v1) => { const p = new Path2D(); const q = [Pp(u0, v0), Pp(u1, v0), Pp(u1, v1), Pp(u0, v1)]; p.moveTo(...q[0]); q.slice(1).forEach(z => p.lineTo(...z)); p.closePath(); return p; };
+  if (a1 > 0 && SP.arena) {
+    const cx = cols[1], w = 470, h = w * 9 / 16, x0 = cx - w / 2, y0 = 640 - h - 8 + (1 - a1) * 30;
     ctx.save(); ctx.globalAlpha = a1;
-    const fl = quad(-1, 1, 0, 1); const g = ctx.createLinearGradient(0, 390, 0, 620); g.addColorStop(0, '#0d0d0f'); g.addColorStop(1, '#1b1c1f'); ctx.fillStyle = g; ctx.fill(fl);
-    ctx.strokeStyle = 'rgba(242,242,238,0.6)'; ctx.lineWidth = 1.4; ctx.stroke(fl);
-    ctx.strokeStyle = 'rgba(242,242,238,0.08)'; ctx.lineWidth = 1;
-    for (let u = -0.75; u <= 0.76; u += 0.25) { ctx.beginPath(); ctx.moveTo(...Pp(u, 0)); ctx.lineTo(...Pp(u, 1)); ctx.stroke(); }
-    for (let v = 0.2; v < 1; v += 0.2) { ctx.beginPath(); ctx.moveTo(...Pp(-1, v)); ctx.lineTo(...Pp(1, v)); ctx.stroke(); }
-    const pulse = 0.55 + 0.45 * Math.sin(t * 3);
-    for (let k = 0; k < 6; k++) {
-      const v0 = 0.1 + k * 0.14, cell = quad(-0.16, 0.16, v0, v0 + 0.1);
-      ctx.fillStyle = `rgba(242,242,238,${0.08 + 0.12 * pulse})`; ctx.fill(cell); ctx.strokeStyle = 'rgba(242,242,238,0.85)'; ctx.stroke(cell);
-    }
+    const clip = new Path2D(); clip.roundRect(x0, y0, w, h, 6); ctx.clip(clip);
+    ctx.drawImage(SP.arena, x0, y0, w, h);
+    const g = ctx.createLinearGradient(0, y0, 0, y0 + h); g.addColorStop(0, 'rgba(5,5,5,0.35)'); g.addColorStop(0.3, 'rgba(5,5,5,0)'); g.addColorStop(1, 'rgba(5,5,5,0.15)');
+    ctx.fillStyle = g; ctx.fillRect(x0, y0, w, h);
     ctx.restore();
-    for (const [u, v] of [[-1, 1], [1, 1]]) { const [x, y] = Pp(u, v); circle(ctx, x, y - 14, 7, { fill: '#050505', w: 1.4, alpha: a1 }); line(ctx, [[x, y - 14], Pp(0, 0.5)], { w: 0.8, alpha: 0.25 * a1 }); }
-    mtext(ctx, 'charging lane', cx, 650, { size: 19, color: C.silver, align: 'center', alpha: a1, italicAll: true });
+    ctx.save(); ctx.globalAlpha = a1 * 0.5; ctx.strokeStyle = '#F2F2EE'; ctx.lineWidth = 1; const r = new Path2D(); r.roundRect(x0, y0, w, h, 6); ctx.stroke(r); ctx.restore();
   }
   // 3 · the game (top view: grab energy, then race for the ball)
   const a2 = a(2);
@@ -359,6 +351,32 @@ export function sTactic(ctx, t, SP) {
 }
 
 // ================= §7 HITBOXES (2D overlay on the 3D scene) =================
+// Arena tracking overlay: corner brackets on every car and the ball, sight lines to the camera truss.
+export function sArenaOverlay(ctx, t, SP, st) {
+  ctx.clearRect(0, 0, W, H);
+  if (!st || !st.amt) return;
+  const a = st.amt;
+  ctx.save(); ctx.globalAlpha = a;
+  st.boxes.forEach((b, i) => {
+    const pad = 8, x0 = b.x0 - pad, y0 = b.y0 - pad, x1 = b.x1 + pad, y1 = b.y1 + pad, k = Math.min(22, (x1 - x0) * 0.25, (y1 - y0) * 0.3);
+    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    ctx.setLineDash([3, 7]); ctx.strokeStyle = 'rgba(242,242,238,0.32)'; ctx.lineWidth = 1;
+    st.pods.forEach(p => { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(cx, y0); ctx.stroke(); });
+    ctx.setLineDash([]); ctx.strokeStyle = '#F2F2EE'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0 + k); ctx.lineTo(x0, y0); ctx.lineTo(x0 + k, y0);
+    ctx.moveTo(x1 - k, y0); ctx.lineTo(x1, y0); ctx.lineTo(x1, y0 + k);
+    ctx.moveTo(x1, y1 - k); ctx.lineTo(x1, y1); ctx.lineTo(x1 - k, y1);
+    ctx.moveTo(x0 + k, y1); ctx.lineTo(x0, y1); ctx.lineTo(x0, y1 - k);
+    ctx.stroke();
+    ctx.restore(); ctx.save(); ctx.globalAlpha = a;
+    mtext(ctx, b.label, x0, y0 - 16, { size: 19, alpha: 1 });
+    if (b.sub) mtext(ctx, b.sub, x0 + (b.label.length * 11 + 12), y0 - 16, { size: 17, color: C.silver, alpha: 1, italicAll: true });
+  });
+  st.pods.forEach(p => { circle(ctx, p.x, p.y, 7, { stroke: '#F2F2EE', w: 1.6, alpha: 1 }); });
+  ctx.restore();
+}
+
 export function sHitboxOverlay(ctx, t, SP, st) {
   ctx.clearRect(0, 0, W, H);
   if (!st || !st.contact) return;

@@ -12,6 +12,8 @@ import dracoWrapper from '../assets/draco_wrapper.txt';
 import dracoWasm from '../assets/draco_decoder.wasm';
 import aoUrl from '../assets/ferrari_ao.png';
 import { clamp, lerp, prog, E } from './util.js';
+import { buildFeatures } from './xray3d.js';
+import { buildArena, track } from './arena3d.js';
 
 const V3 = (x, y, z) => new THREE.Vector3(x, y, z);
 const WHITE = new THREE.Color(0xffffff);
@@ -274,7 +276,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
 
   const ao = await new THREE.TextureLoader().loadAsync(aoUrl);
   const shadow = new THREE.Mesh(new THREE.PlaneGeometry(0.655 * 4, 1.3 * 4), new THREE.MeshBasicMaterial({ map: ao, blending: THREE.MultiplyBlending, toneMapped: false, transparent: true, premultipliedAlpha: true }));
-  shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.002; shadow.renderOrder = 2; car.add(shadow);
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.012; shadow.renderOrder = 2; car.add(shadow);
 
   // ---------- ball ----------
   const BALL_R = 0.75;
@@ -282,6 +284,10 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   const ballRefl = ball.clone(); ballRefl.scale.y = -1; scene.add(ballRefl);
   const ballShadow = new THREE.Mesh(new THREE.CircleGeometry(1, 48), new THREE.MeshBasicMaterial({ map: radialTex('rgba(0,0,0,0.9)', 'rgba(0,0,0,0)'), transparent: true, depthWrite: false }));
   ballShadow.rotation.x = -Math.PI / 2; ballShadow.position.y = 0.003; scene.add(ballShadow);
+
+  // ---------- feature reveal + arena ----------
+  const X = buildFeatures({ car, model, parts, reflection, bb, wheels, hit, renderer });
+  const AR = buildArena({ scene, car, keepChildren: [model, parts, shadow], bodyMat, blackPaint: PAINT.black, barPts: X.barPts, beamMaterial, radialTex });
 
   // ---------- post ----------
   const rt = new THREE.WebGLRenderTarget(1920 * dpr, 1080 * dpr, { type: THREE.HalfFloatType, samples: 4 });
@@ -344,6 +350,12 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     camera.updateProjectionMatrix(); camera.lookAt(tx, ty, tz);
   }
   function draw() { composer.render(); }
+  // every scene starts from the same clean state
+  function base() {
+    X.reset(); AR.reset(); scene.fog.near = 16; scene.fog.far = 40;
+    car.position.set(0, 0, 0); car.rotation.set(0, 0, 0); reflection.position.set(0, 0, 0); reflection.rotation.set(0, 0, 0);
+    reflection.visible = true; floor.visible = true;
+  }
 
   const NOSE = bb.min.z, TAIL = bb.max.z;
 
@@ -357,6 +369,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   // Intro: a light scan traces the body in the dark, a macro shot on the headlight as it ignites,
   // then a long pull-back to the hero angle while the studio lights come up.
   function intro(t) {
+    base();
     paint('silver'); ring.visible = false; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
     const drl = flicker(t, 4.4);
     const head = E.outExpo(prog(t, 5.2, 5.4));
@@ -385,6 +398,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
 
   function meet(t) {
+    base();
     scan.col.value.setScalar(1.6); paint('silver'); ring.visible = true; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
     const a = E.outCubic(prog(t, 0, 1.0));
     scene.environmentIntensity = 1.15 * a;
@@ -407,6 +421,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   OUT.vc = OUT.acc * OUT.tc;
   OUT.cam = V3(-4.6, 1.15, -15.6);
   function outro(t) {
+    base();
     paint('silver'); ring.visible = false; scan.amt.value = 0;
     const tC = OUT.launch + OUT.tc;
     let flash = 0;
@@ -469,6 +484,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     },
   };
   function hitbox(t) {
+    base();
     scan.col.value.setScalar(1.6); paint('silver'); ring.visible = false; placeCar(0); setWheel(0); scan.amt.value = 0;
     const a = E.outCubic(prog(t, 0, 1.0));
     scene.environmentIntensity = 1.1 * a;
@@ -486,6 +502,62 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     draw();
     const P = (y, z) => project(1.06, y, z);
     return { ...st, contact: P(hc, zf), center: P(BALL_R, zb), foot: P(0, zf), ballR: P(BALL_R * 2, zb).y };
+  }
+
+  // What's inside: X-ray sweep, then each part is called out in turn.
+  function features(t) {
+    base(); paint('silver'); ring.visible = true; placeBall(0, 0, 0, 0, 0, false); placeCar(0); setWheel(0);
+    const a = E.outCubic(prog(t, 0, 1.0));
+    scene.environmentIntensity = 1.1 * a;
+    ringMat.opacity = 0.32 * E.outCubic(prog(t, 0.3, 1.6));
+    ring.scale.setScalar(lerp(0.85, 1, E.outExpo(prog(t, 0.3, 1.6)))); ring.rotation.z = t * 0.03;
+    lights({ drl: a, head: 0.4 * a, beam: 0.08 * a, tail: a, spot: 0 });
+    const sp = prog(t, 1.1, 2.9);
+    scan.col.value.setScalar(2.4);
+    scan.z.value = lerp(NOSE - 0.4, TAIL + 0.4, E.inOutCubic(sp));
+    scan.amt.value = sp > 0 && sp < 1 ? Math.min(1, sp * 6, (1 - sp) * 6) : 0;
+    bloom.strength = 0.32;
+    X.frame(t);
+    const phi = lerp(-0.82, -0.46, E.inOutSine(prog(t, 0, 18)));
+    const R = lerp(10.4, 9.7, E.outCubic(prog(t, 0, 4)));
+    look(Math.cos(phi) * R, 2.3, Math.sin(phi) * R, 0, 0.5, 0.1, 30);
+    draw();
+  }
+
+  // The arena: a match in progress; the camera tours lanes, tracking cameras, scoreboard and walls.
+  const ARENA_CAM = track([
+    [0, 13, 12, 26, 0, 0, -3, 44], [3.0, 16, 4.5, -10, 10.6, 0.3, 4, 38], [5.4, 16.8, 2.6, -17, 10.6, 0.4, -2, 36],
+    [7.2, 18, 9, -12, 2, 3, 0, 40], [9.2, 29, 10.5, -6, -4, 7.0, 2, 40], [11.8, 6.5, 9.4, 16.5, 0, 10.4, 2.5, 32],
+    [14.8, -11.4, 2.4, 21, -16, 2.6, 6, 36], [18, -12, 12.5, 24, 1, 0, -2, 42],
+].map(([t, ...v]) => ({ t, v })));
+  function arena(t, cam = null) {
+    base(); floor.visible = false; reflection.visible = false; ring.visible = false; paint('silver'); scan.amt.value = 0;
+    scene.fog.near = 70; scene.fog.far = 180;
+    scene.environmentIntensity = 0.95;
+    lights({ drl: 1, head: 0.5, beam: 0, spot: 0, tail: 1 });
+    bloom.strength = 0.6;
+    const coneAmt = E.outCubic(prog(t, 7.2, 8.0)) * (1 - E.inOutSine(prog(t, 10.6, 11.4)));
+    const st = AR.frame(t, { car, wheels, bars: X.bars, coneAmt: 0 });
+    placeBall(0.5 - 0.08 * t, BALL_R, 1.5 - 0.06 * t, -t * 0.13, t * 0.1, true);
+    const c = cam || ARENA_CAM(t);
+    look(c[0], c[1], c[2], c[3], c[4], c[5], c[6]);
+    draw();
+    // tracking overlay: what the arena cameras see (screen-space boxes around every car and the ball)
+    const amt = cam ? 0 : coneAmt, boxes = [];
+    if (amt > 0) {
+      st.poses.forEach((p, i) => {
+        const cs = Math.cos(p.ry), sn = Math.sin(p.ry); let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, front = true;
+        for (const lx of [bb.min.x, bb.max.x]) for (const ly of [0, 1.2]) for (const lz of [NOSE, TAIL]) {
+          const q = project(p.x + lx * cs + lz * sn, ly, p.z - lx * sn + lz * cs);
+          if (q.z > 1) front = false; x0 = Math.min(x0, q.x); y0 = Math.min(y0, q.y); x1 = Math.max(x1, q.x); y1 = Math.max(y1, q.y);
+        }
+        if (front) boxes.push({ x0, y0, x1, y1, label: `#${i + 1}`, sub: `${st.speeds[i].toFixed(1)} m/s` });
+      });
+      const b0 = project(ball.position.x, ball.position.y, ball.position.z), br = Math.abs(project(ball.position.x, ball.position.y + BALL_R, ball.position.z).y - b0.y);
+      if (b0.z < 1) boxes.push({ x0: b0.x - br, y0: b0.y - br, x1: b0.x + br, y1: b0.y + br, label: 'ball', sub: '' });
+    }
+    const pods = AR.pods.map(p => project(p.x, p.y, p.z)).filter(q => q.z < 1 && q.x > 0 && q.x < 1920 && q.y > 0 && q.y < 1080);
+    return { amt, boxes, pods };
   }
 
   function project(x, y, z) {
@@ -543,7 +615,12 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
     scene.background = save.bg; scene.environmentIntensity = save.env;
     renderer.setClearColor(0x000000, 1);
     renderer.setPixelRatio(dpr); renderer.setSize(1920, 1080, false);
+    arena(9.2, [12, 11, 25, 0, 0, -2, 46]);
+    const arenaImg = document.createElement('canvas'); arenaImg.width = 960; arenaImg.height = 540;
+    arenaImg.getContext('2d').drawImage(renderer.domElement, 0, 0, 960, 540);
+    base();
     return {
+      arena: arenaImg,
       side: { body, ppm, noseX: (hw - NOSE) * ppm, tailX: (hw - TAIL) * ppm, groundY: top * ppm, wheels: wheelPos, wheelR: 0.36 },
       wheel: { img: wheel, ppm: 900 / (wr * 2) },
       top: { img: topImg, black: topBlack, ppm, length: TAIL - NOSE },
@@ -552,7 +629,7 @@ export async function createStage(canvas, { dpr = 1, capture = false } = {}) {
   }
 
   return {
-    renderer, intro, meet, outro, hitbox, HITBOX, project, bake, OUT, HB,
-    anchors: { nose: V3(0, 0.35, NOSE + 0.1), corner: V3(0.85, 0.35, NOSE + 0.55), sill: V3(1.0, 0.3, 0.2), wing: V3(0.45, deckY + 0.27, TAIL - 0.6), bb },
+    renderer, intro, meet, features, arena, outro, hitbox, HITBOX, project, bake, OUT, HB,
+    anchors: { ...X.anchors, ...AR.anchors, nose: V3(0, 0.35, NOSE + 0.1), corner: V3(0.85, 0.35, NOSE + 0.55), sill: V3(1.0, 0.3, 0.2), wing: V3(0.45, deckY + 0.27, TAIL - 0.6), bb },
   };
 }

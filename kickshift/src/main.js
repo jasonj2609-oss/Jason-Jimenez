@@ -21,7 +21,7 @@ fit(); addEventListener('resize', fit);
 
 const slides = [...document.querySelectorAll('.slide')];
 const PLAN = {
-  intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, meet: { gl: 'meet', dur: 14 },
+  intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, features: { gl: 'features', dur: 18 }, arena: { gl: 'arena', overlay: D.sArenaOverlay, dur: 18 },
   lane: { draw: D.sLane, dur: 10 }, store: { draw: D.sStore, dur: 9 }, boost: { draw: D.sBoost, dur: 11 },
   pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 }, hitbox: { gl: 'hitbox', overlay: D.sHitboxOverlay, dur: 12 },
   biz: { draw: B.sBiz, dur: 11 }, costs: { draw: B.sCosts, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, return: { draw: B.sReturn, dur: 10 },
@@ -77,8 +77,8 @@ function counters(d, t) {
 }
 
 // ---------- per-slide extras ----------
-function meetCallouts(d, t, stage) {
-  const svg = d.el.querySelector('#callouts'); if (!svg) return;
+function callouts(d, t, stage) {
+  const svg = d.el.querySelector('svg.callouts'); if (!svg) return;
   let html = '';
   d.el.querySelectorAll('[data-co]').forEach(el => {
     const a = stage.anchors[el.dataset.co], p = stage.project(a.x, a.y, a.z);
@@ -86,13 +86,15 @@ function meetCallouts(d, t, stage) {
     const top = parseFloat(el.style.top), left = parseFloat(el.style.left);
     const lx = right ? left - 24 : left + 420, ly = top + 22;
     const t0 = Number(el.dataset.at), pr = E.outCubic(prog(t, t0 - 0.2, t0 + 0.7));
-    if (pr <= 0) return;
+    const fade = el.dataset.out ? 1 - prog(t, Number(el.dataset.out) - 0.1, Number(el.dataset.out) + 0.35) : 1;
+    if (pr <= 0 || fade <= 0 || p.z > 1) return;
     const ex = right ? lx - 60 : lx + 60;
     const pts = [[lx, ly], [ex, ly], [p.x, p.y]];
     let len = 0; for (let i = 1; i < 3; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-    const pulse = 10 + 14 * ((t * 0.9) % 1);
-    html += `<polyline points="${pts.map(q => q.join(',')).join(' ')}" fill="none" stroke="#F2F2EE" stroke-width="1.4" stroke-dasharray="${len}" stroke-dashoffset="${len * (1 - pr)}" opacity=".7"/>`;
-    if (pr > 0.95) html += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="#F2F2EE"/><circle cx="${p.x}" cy="${p.y}" r="${pulse}" fill="none" stroke="#F2F2EE" stroke-width="1.2" opacity="${0.8 * (1 - ((t * 0.9) % 1))}"/>`;
+    const ph = (t * 0.9) % 1, pulse = 10 + 14 * ph;
+    html += `<g opacity="${fade.toFixed(3)}"><polyline points="${pts.map(q => q.map(v => v.toFixed(1)).join(',')).join(' ')}" fill="none" stroke="#F2F2EE" stroke-width="1.4" stroke-dasharray="${len}" stroke-dashoffset="${len * (1 - pr)}" opacity=".7"/>`;
+    if (pr > 0.95) html += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="#F2F2EE"/><circle cx="${p.x}" cy="${p.y}" r="${pulse}" fill="none" stroke="#F2F2EE" stroke-width="1.2" opacity="${0.8 * (1 - ph)}"/>`;
+    html += '</g>';
   });
   svg.innerHTML = html;
 }
@@ -113,7 +115,7 @@ function renderSlide(i, t) {
     flashEl.style.opacity = r.flash || 0;
     if (d.overlay && ctxs[i]) { const ctx = ctxs[i]; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.imageSmoothingQuality = 'high'; d.overlay(ctx, t, SP, r); }
     if (d.id === 'intro') { const sk = r.streak || { a: 0 }; streakEl.style.opacity = sk.a; streakEl.style.transform = `translate(${sk.x - 900}px, ${sk.y - 2}px)`; }
-    if (d.id === 'meet') meetCallouts(d, t, stage);
+    callouts(d, t, stage);
   }
   if (!d.gl) flashEl.style.opacity = 0;
   if (d.id !== 'intro') streakEl.style.opacity = 0;
@@ -148,7 +150,7 @@ async function boot() {
     count: DEF.length, durations: DEF.map(d => d.dur), ids: DEF.map(d => d.id),
     render(i, t) { if (cur !== i) show(i); renderSlide(i, t); },
   };
-  if (CAPTURE) { window.KS_READY = true; return; }
+  if (CAPTURE) { window.KS.stage = stage; window.KS_READY = true; return; }
   show(Number(qs.get('s') || 1) - 1);
   const loop = (now) => { renderSlide(cur, (now - t0) / 1000); const c = document.getElementById('clock'); if (c) c.textContent = clockText(); requestAnimationFrame(loop); };
   requestAnimationFrame(loop);
