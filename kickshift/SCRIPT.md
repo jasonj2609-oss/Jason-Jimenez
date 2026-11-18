@@ -34,7 +34,7 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "(a) A receiver coil under the floor picks up power from the charging lanes. (b) That power fills a supercapacitor, which fills in one pass and empties in one boost. (c) A battery runs the car for the whole match."
 
-"(d) Four hub motors give instant torque at every wheel. (e) The front is a swappable strike shell: change it and you change the hitbox. (f) Tracking markers let the arena see every car 120 times a second. (g) And a light bar shows the crowd how much energy you're carrying."
+"(d) Four hub motors give instant torque at every wheel. (e) The front is a swappable strike shell: it takes the hits and swaps out in seconds. (f) Tracking markers let the arena see every car 120 times a second. (g) And a light bar shows the crowd how much energy you're carrying."
 
 ## 5. The arena: the field is the charger  `2:15 – 3:00`
 
@@ -92,17 +92,7 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "KickShift turns energy management into gameplay: collect power from the field, store it onboard, and decide when to spend it."
 
-## 11. Physics 6: hitboxes  `6:05 – 6:45`
-
-"Like in Rocket League, different cars have different hitboxes: the simplified shape the game uses to decide what touched the ball. In KickShift the hitbox is real: it's the shape of the bumper shell, and the arena uses the same box to referee."
-
-"The key number is h, the height of the front edge. If the edge is below the centre of the ball, the contact pushes up through the ball's centre, so the ball leaves at an angle theta equals arcsine of r minus h over r, equation 8."
-
-"Wedge: a low edge at 45 centimetres chips the ball up at about 24 degrees. Balanced: 60 centimetres, about 12 degrees. Wall: a flat face taller than the ball's centre drives it straight."
-
-"So choosing your car shape is choosing your play style."
-
-## 12. Business model  `6:45 – 7:30`
+## 11. Business model  `6:05 – 6:50`
 
 "How does this make money? We start small. Full-size cars come later; first we sell KickShift arenas with the 50 kilogram remote-driven cars to entertainment venues, like go-kart and family entertainment centres."
 
@@ -110,7 +100,7 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 *(Point to the chart.) "For one venue running 24 matches a day, that's about $672,000 a year. After staff, space, upkeep and our fees, the venue keeps about $359,000, so it earns back the arena in about 13 months. That's why a venue would buy one."*
 
-## 13. Costs  `7:30 – 7:55`
+## 12. Costs  `6:50 – 7:15`
 
 "This is a log scale, so each line is ten times the last."
 
@@ -118,7 +108,7 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "Building it: this round, the prototype system, is $250,000. Each venue arena costs us about $250,000 to build and sells for $400,000. A full-size pro arena, around $3 million, only comes later, once venues have proven the game."
 
-## 14. Roadmap  `7:55 – 8:15`
+## 13. Roadmap  `7:15 – 7:35`
 
 "The plan, in five stages. Months 0 to 6: build two 50 kilogram prototype cars. Months 6 to 9: measure how many joules a real lane delivers per pass. Months 9 to 12: play 50 full test matches. That's this seed round."
 
@@ -126,13 +116,13 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."
 
-## 15. Projections  `8:15 – 8:45`
+## 14. Projections  `7:35 – 8:05`
 
 "These are projections, not promises. We open our own flagship arena in year 2, then sell 4 arenas in year 3, 10 in year 4 and 20 in year 5."
 
 "That's 35 arenas open by year 5 and about $10.8 million in revenue, and the company becomes profitable in year 4."
 
-## 16. The numbers  `8:45 – 9:15`
+## 15. The numbers  `8:05 – 8:35`
 
 "So here's everything on one page."
 
@@ -142,13 +132,15 @@ Press **N** in the HTML deck to see these notes with a running timer.
 
 "A venue earns its arena back in about 13 months, and KickShift turns a profit in year 4."
 
-## 17. Close  `9:15 – 9:35`
+## 16. Close  `8:35 – 8:55`
 
 *(Let the car light up and the title appear.)*
 
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
 
 "Thank you. I'm happy to take your questions."
+
+*(If anyone asks about the car model: it's a concept render restyled from the 3D model "Ferrari 458 Italia" by vicent091036, licensed CC BY 4.0.)*
 
 ---
 ### Physics cheat-sheet (for Q&A)
@@ -161,7 +153,6 @@ Press **N** in the HTML deck to see these notes with a running timer.
 | Grip limit | F = τ/r ≤ μ m g | m = 50 kg, μ = 0.9 → 441 N; r = 0.15 m → τ ≈ 66 N·m |
 | Boost energy | ΔE = ½ m (v_f² − v_i²) | ½(50)(6² − 4²) = 500 J |
 | Tactics | E = P L / v | 2 m/s → 2,000 J; 4 m/s → 1,000 J; 8 m/s → 500 J |
-| Hitbox launch angle | θ = arcsin((r − h)/r), h < r | r = 0.75 m: Wedge h = 0.45 → 24°, Balanced 0.60 → 12°, Wall ≥ 0.75 → 0° |
 | Match energy | E = ∫ P dt | ≈ 1.5 kWh per car → ≈ $0.25 at $0.16/kWh |
 
 ### Business cheat-sheet (for Q&A)

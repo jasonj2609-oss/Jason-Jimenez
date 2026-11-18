@@ -1,4 +1,4 @@
-// Speaker script, one entry per slide. Target: about 9.5 minutes at a relaxed pace.
+// Speaker script, one entry per slide. Target: about 9 minutes at a relaxed pace.
 export const NOTES = [
   {
     title: 'Intro: lights on', time: '0:00 – 0:35',
@@ -23,7 +23,7 @@ export const NOTES = [
     say: `(Let the X-ray sweep finish, then point to each label as it appears.)
 "From the outside it looks like a supercar. Inside, it's built for the game."
 "(a) A receiver coil under the floor picks up power from the charging lanes. (b) That power fills a supercapacitor, which fills in one pass and empties in one boost. (c) A battery runs the car for the whole match."
-"(d) Four hub motors give instant torque at every wheel. (e) The front is a swappable strike shell: change it and you change the hitbox. (f) Tracking markers let the arena see every car 120 times a second. (g) And a light bar shows the crowd how much energy you're carrying."`,
+"(d) Four hub motors give instant torque at every wheel. (e) The front is a swappable strike shell: it takes the hits and swaps out in seconds. (f) Tracking markers let the arena see every car 120 times a second. (g) And a light bar shows the crowd how much energy you're carrying."`,
   },
   {
     title: 'The arena: the field is the charger', time: '2:15 – 3:00',
@@ -66,44 +66,37 @@ export const NOTES = [
 "KickShift turns energy management into gameplay: collect power from the field, store it onboard, and decide when to spend it."`,
   },
   {
-    title: 'Physics 6: hitboxes', time: '6:05 – 6:45',
-    say: `"Like in Rocket League, different cars have different hitboxes: the simplified shape the game uses to decide what touched the ball. In KickShift the hitbox is real: it's the shape of the bumper shell, and the arena uses the same box to referee."
-"The key number is h, the height of the front edge. If the edge is below the centre of the ball, the contact pushes up through the ball's centre, so the ball leaves at an angle theta equals arcsine of r minus h over r, equation 8."
-"Wedge: a low edge at 45 centimetres chips the ball up at about 24 degrees. Balanced: 60 centimetres, about 12 degrees. Wall: a flat face taller than the ball's centre drives it straight."
-"So choosing your car shape is choosing your play style."`,
-  },
-  {
-    title: 'Business model', time: '6:45 – 7:30',
+    title: 'Business model', time: '6:05 – 6:50',
     say: `"How does this make money? We start small. Full-size cars come later; first we sell KickShift arenas with the 50 kilogram remote-driven cars to entertainment venues, like go-kart and family entertainment centres."
 "Players pay the venue about $20 each for a 10-minute match. The venue buys the arena package from us for $400,000, then pays us $2,000 a month for software and the league, plus 10% of match revenue. Later, sponsors and streaming pay us too."
 (Point to the chart.) "For one venue running 24 matches a day, that's about $672,000 a year. After staff, space, upkeep and our fees, the venue keeps about $359,000, so it earns back the arena in about 13 months. That's why a venue would buy one."`,
   },
   {
-    title: 'Costs', time: '7:30 – 7:55',
+    title: 'Costs', time: '6:50 – 7:15',
     say: `"This is a log scale, so each line is ten times the last."
 "Running it is cheap: the electricity for a whole match is under a dollar. A replacement bumper shell is about $150, and a production car about $12,000."
 "Building it: this round, the prototype system, is $250,000. Each venue arena costs us about $250,000 to build and sells for $400,000. A full-size pro arena, around $3 million, only comes later, once venues have proven the game."`,
   },
   {
-    title: 'Roadmap', time: '7:55 – 8:15',
+    title: 'Roadmap', time: '7:15 – 7:35',
     say: `"The plan, in five stages. Months 0 to 6: build two 50 kilogram prototype cars. Months 6 to 9: measure how many joules a real lane delivers per pass. Months 9 to 12: play 50 full test matches. That's this seed round."
 "Year 2: open our own flagship arena and prove players pay. Year 3: start selling arena packages to other venues."
 "Each stage ends with a number we either hit or don't, so problems show up early and cheaply."`,
   },
   {
-    title: 'Projections', time: '8:15 – 8:45',
+    title: 'Projections', time: '7:35 – 8:05',
     say: `"These are projections, not promises. We open our own flagship arena in year 2, then sell 4 arenas in year 3, 10 in year 4 and 20 in year 5."
 "That's 35 arenas open by year 5 and about $10.8 million in revenue, and the company becomes profitable in year 4."`,
   },
   {
-    title: 'The numbers', time: '8:45 – 9:15',
+    title: 'The numbers', time: '8:05 – 8:35',
     say: `"So here's everything on one page."
 "What it takes: $250,000 for the prototype system, $250,000 to build each venue arena, under a dollar of electricity per match, and a full-size pro arena, around $3 million, only later. Years 1 and 2 together cost about $1.55 million."
 "What it makes: we sell each arena for $400,000, then every venue pays $2,000 a month plus 10% of every match, and sponsors and streaming come in once the league is running."
 "A venue earns its arena back in about 13 months, and KickShift turns a profit in year 4."`,
   },
   {
-    title: 'Close', time: '9:15 – 9:35',
+    title: 'Close', time: '8:35 – 8:55',
     say: `(Let the car light up and the title appear.)
 "Collect power from the field, store it onboard, and decide when to spend it. That's KickShift: a car built to score."
 "Thank you. I'm happy to take your questions."

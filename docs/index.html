@@ -179,7 +179,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <div class="co copy" data-co="cap" style="left:120px; top:410px" data-in="left" data-at="4.5"><div class="h"><i>(b)</i>Supercapacitor</div><div class="s">fills in one pass, empties in one boost</div></div>
     <div class="co copy" data-co="bat" style="left:120px; top:570px" data-in="left" data-at="6.0"><div class="h"><i>(c)</i>Battery</div><div class="s">runs the car for the whole match</div></div>
     <div class="co r copy" data-co="motor" style="left:1400px; top:520px" data-in="right" data-at="7.5"><div class="h"><i>(d)</i>Hub motors</div><div class="s">instant torque at every wheel</div></div>
-    <div class="co r copy" data-co="shell" style="left:1400px; top:740px" data-in="right" data-at="9.0"><div class="h"><i>(e)</i>Strike shell</div><div class="s">swappable: it sets the hitbox</div></div>
+    <div class="co r copy" data-co="shell" style="left:1400px; top:740px" data-in="right" data-at="9.0"><div class="h"><i>(e)</i>Strike shell</div><div class="s">swappable nose that takes the hits</div></div>
     <div class="co copy" data-co="tag" style="left:120px; top:250px" data-in="left" data-at="10.8"><div class="h"><i>(f)</i>Tracking markers</div><div class="s">the arena sees every car, 120 times a second</div></div>
     <div class="co r copy" data-co="bar" style="left:1400px; top:300px" data-in="right" data-at="12.3"><div class="h"><i>(g)</i>Charge light bar</div><div class="s">the crowd can see your energy</div></div>
     <div class="meetfade copy" data-in="up" data-at="14.2"></div>
@@ -242,35 +242,28 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
     <div class="quote copy" data-in="up" data-at="7.0">Collect power from the field, store it onboard, and decide when to spend it.</div>
   </section>
 
-  <!-- 9 · HITBOX -->
-  <section class="slide" data-id="hitbox">
-    <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Hitboxes</div><h2 class="title" data-in="chars" data-at="0.4">Shape decides <em>the shot.</em></h2></div>
-    <div class="eqn copy" style="right:120px; top:110px" data-in="up" data-at="1.0"><span data-tex="\theta = \arcsin\!\left(\dfrac{r - h}{r}\right)"></span><span class="no">(8)</span></div>
-  </section>
-
   <!-- 10 · BUSINESS MODEL -->
   <section class="slide" data-id="biz">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§8</b>Business model</div><h2 class="title" data-in="chars" data-at="0.4">How it <em>makes money.</em></h2></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§7</b>Business model</div><h2 class="title" data-in="chars" data-at="0.4">How it <em>makes money.</em></h2></div>
   </section>
 
   <!-- 11 · COSTS -->
   <section class="slide" data-id="costs">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§9</b>Costs</div><h2 class="title" data-in="chars" data-at="0.4">Cheap to run, <em>built to sell.</em></h2></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§8</b>Costs</div><h2 class="title" data-in="chars" data-at="0.4">Cheap to run, <em>built to sell.</em></h2></div>
   </section>
 
   <!-- 10 · ROADMAP -->
   <section class="slide" data-id="road">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§10</b>Roadmap</div><h2 class="title" data-in="chars" data-at="0.4">The road to <em>kickoff.</em></h2></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§9</b>Roadmap</div><h2 class="title" data-in="chars" data-at="0.4">The road to <em>kickoff.</em></h2></div>
   </section>
 
   <!-- 13 · RETURN -->
   <section class="slide" data-id="return">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§11</b>Projections</div><h2 class="title" data-in="chars" data-at="0.4">Where it's <em>headed.</em></h2></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§10</b>Projections</div><h2 class="title" data-in="chars" data-at="0.4">Where it's <em>headed.</em></h2></div>
     <div class="stat copy" style="left:1330px; top:360px" data-in="up" data-at="4.6"><div class="v" style="font-size:96px"><span data-count="35" data-at="4.6">0</span><small>arenas</small></div><div class="l">open by year 5</div></div>
     <div class="stat copy" style="left:1330px; top:560px" data-in="up" data-at="5.2"><div class="v" style="font-size:80px">$<span data-count="10.8" data-dec="1" data-at="5.2">0</span>M</div><div class="l">revenue in year 5</div></div>
     <div class="stat copy" style="left:1330px; top:730px" data-in="up" data-at="5.8"><div class="v" style="font-size:80px">Year 4</div><div class="l">first profitable year</div></div>
@@ -279,7 +272,7 @@ canvas.c2d { position: absolute; inset: 0; width: 1920px; height: 1080px; }
   <!-- 11 · THE NUMBERS -->
   <section class="slide" data-id="numbers">
     <canvas class="c2d"></canvas>
-    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§12</b>The numbers</div><h2 class="title" data-in="chars" data-at="0.4">What it takes. <em>What it makes.</em></h2></div>
+    <div class="hdr copy"><div class="sec" data-in="left" data-at="0.2"><b>§11</b>The numbers</div><h2 class="title" data-in="chars" data-at="0.4">What it takes. <em>What it makes.</em></h2></div>
     <div class="ledger copy" style="left:120px">
       <div class="hd" data-in="up" data-at="1.0">Cost to build</div>
       <div class="row" data-in="up" data-at="1.3"><div class="k">Prototype system<i>two cars and a test arena</i></div><div class="n">$<span data-count="250" data-at="1.3">0</span>K</div></div>

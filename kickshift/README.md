@@ -11,7 +11,7 @@ Investor-pitch deck for a car-soccer supercar, built as an animated HTML present
 | `../docs/` | The same deck, set up for GitHub Pages: **https://jasonj2609-oss.github.io/Jason-Jimenez/** once Pages is switched on (see below). |
 | `export/videos/*.mp4` | One 1080p, 60 fps video per slide, **for Canva** (Upload → drag onto a blank slide → stretch to fill). |
 | `export/stills/*.png` | The final frame of every slide (a backup, or for thumbnails/handouts). |
-| `SCRIPT.md` | A ~9.5-minute speaker script plus physics and business cheat-sheets for Q&A. |
+| `SCRIPT.md` | A ~9-minute speaker script plus physics and business cheat-sheets for Q&A. |
 | Presenter's guide | Slide-by-slide explanations, the physics and business in plain words, and a Q&A bank: https://claude.ai/artifact/PEoCkRkr6fhWd3kGwHyEsc |
 | `src/` | Source code (3D scene, physics canvases, speaker notes). |
 
@@ -33,7 +33,7 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 
 1. Create a 1920×1080 Presentation in Canva.
 2. Upload all `export/videos/*.mp4` files.
-3. Put one video per slide, full-bleed, in order (01 → 17).
+3. Put one video per slide, full-bleed, in order (01 → 16).
 4. Each video autoplays when you reach its slide. Preview it once to check how it behaves at the end of the clip.
 5. Text is baked into the videos. To change wording, edit `deck/index.html` (or ask for text-free "clean" versions) and add your own Canva text on top.
 
@@ -49,13 +49,12 @@ Canva can't run HTML, so every slide is exported as an MP4 that keeps all the an
 8. The boost: a real tyre close-up with Newton's third law at the contact patch and the grip limit F ≤ μmg
 9. One pass: 1,000 J collected against the 500 J needed to go from 4 to 6 m/s
 10. Energy is a tactic: E = PL/v
-11. Hitboxes: Wedge, Balanced and Wall shapes, with launch angle θ = arcsin((r − h)/r)
-12. Business model: how money flows from players to venues to KickShift, plus one venue's year (≈ $672K revenue, ≈ $359K profit, arena paid back in ≈ 13 months)
-13. Costs, on a log scale: under $1 of electricity a match, up to a $3M full-size arena later
-14. Roadmap: build, charge, play (this round), then a flagship venue and arena sales
-15. Projections: revenue and costs for years 1–5 (35 arenas and about $10.8M revenue by year 5, profitable from year 4)
-16. The numbers: what it takes to build (prototype, each arena, running costs) and how it makes money (arena sales, monthly fees, match share, sponsors)
-17. Close: one clean hero shot as the car lights up, then the title and "Thank you"
+11. Business model: how money flows from players to venues to KickShift, plus one venue's year (≈ $672K revenue, ≈ $359K profit, arena paid back in ≈ 13 months)
+12. Costs, on a log scale: under $1 of electricity a match, up to a $3M full-size arena later
+13. Roadmap: build, charge, play (this round), then a flagship venue and arena sales
+14. Projections: revenue and costs for years 1–5 (35 arenas and about $10.8M revenue by year 5, profitable from year 4)
+15. The numbers: what it takes to build (prototype, each arena, running costs) and how it makes money (arena sales, monthly fees, match share, sponsors)
+16. Close: one clean hero shot as the car lights up, then the title and "Thank you"
 
 ## Rebuilding
 

@@ -23,7 +23,7 @@ const slides = [...document.querySelectorAll('.slide')];
 const PLAN = {
   intro: { gl: 'intro', dur: 15 }, idea: { draw: S.sIdea, dur: 9 }, pitch: { draw: D.sPitch, dur: 10 }, features: { gl: 'features', dur: 18 }, arena: { gl: 'arena', overlay: D.sArenaOverlay, dur: 20 },
   lane: { draw: D.sLane, dur: 10 }, store: { draw: D.sStore, dur: 9 }, boost: { draw: D.sBoost, dur: 11 },
-  pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 }, hitbox: { gl: 'hitbox', overlay: D.sHitboxOverlay, dur: 12 },
+  pass: { draw: D.sPass, dur: 10 }, tactic: { draw: D.sTactic, dur: 10 },
   biz: { draw: B.sBiz, dur: 11 }, costs: { draw: B.sCosts, dur: 10 }, road: { draw: S.sRoad, dur: 10 }, return: { draw: B.sReturn, dur: 10 },
   numbers: { draw: B.sNumbers, dur: 10 }, outro: { gl: 'finale', dur: 10 },
 };
